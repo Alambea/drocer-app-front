@@ -1,5 +1,5 @@
 const App = (): React.ReactElement => {
-  return <h1>Drocer</h1>;
+  return <div className="container"></div>;
 };
 
 export default App;
