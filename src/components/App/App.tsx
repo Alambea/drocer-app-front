@@ -1,3 +1,5 @@
+import "./App.scss";
+
 const App = (): React.ReactElement => {
   return <div className="container"></div>;
 };
