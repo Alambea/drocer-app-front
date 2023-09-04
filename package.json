@@ -1,5 +1,5 @@
 {
-  "name": "records",
+  "name": "drocer",
   "private": true,
   "version": "1.0.0",
   "type": "module",
@@ -11,13 +11,17 @@
     "prepare": "husky install",
     "test:dev": "vitest",
     "test": "vitest run --passWithNoTests",
-    "test:coverage": "vitest run --coverage --passWithNoTests"
+    "test:coverage": "vitest run --coverage --passWithNoTests",
+    "build-styles": "npx sass src/sass/styles.scss dist/styles/styles.css --no-source-map",
+    "build-styles:dev": "npx sass src/sass/styles.scss public/styles/styles.css --watch"
   },
   "dependencies": {
+    "@fontsource-variable/karla": "^5.0.9",
     "@reduxjs/toolkit": "^1.9.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-redux": "^8.1.2"
+    "react-redux": "^8.1.2",
+    "sass": "^1.66.1"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.6.7",
