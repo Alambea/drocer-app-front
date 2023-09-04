@@ -10,8 +10,8 @@
     "preview": "vite preview",
     "prepare": "husky install",
     "test:dev": "vitest",
-    "test": "vitest run --passWithNoTests",
-    "test:coverage": "vitest run --coverage --passWithNoTests",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage",
     "build-styles": "npx sass src/sass/styles.scss dist/styles/styles.css --no-source-map",
     "build-styles:dev": "npx sass src/sass/styles.scss public/styles/styles.css --watch"
   },
