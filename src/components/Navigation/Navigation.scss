@@ -2,7 +2,7 @@
 @use "../../sass/variables/colors";
 
 .nav-bar {
-  background-color: #fff;
+  background-color: colors.$color-main-background;
 
   &__list {
     position: fixed;
