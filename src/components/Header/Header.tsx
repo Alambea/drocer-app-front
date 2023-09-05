@@ -1,14 +1,15 @@
 import React from "react";
-import "./Header.scss";
+import { Link } from "react-router-dom";
 import { paths } from "../../routers/paths";
+import "./Header.scss";
 
 const Header = (): React.ReactElement => {
   return (
     <header className="header">
-      <a href={paths.home}>
+      <Link to={paths.home}>
         <h1 className="header__title">Drocer</h1>
-      </a>
-      <a href={paths.home}>
+      </Link>
+      <Link to={paths.home}>
         <img
           src="./images/drocer_logo.svg"
           alt="Drocer's app logo"
@@ -16,7 +17,7 @@ const Header = (): React.ReactElement => {
           width="37"
           height="26"
         />
-      </a>
+      </Link>
     </header>
   );
 };
