@@ -17,6 +17,13 @@ jobs:
         run: npm ci
       - name: Coverage
         run: npm run test:coverage
+        env:
+          VITE_FIREBASE_API_KEY: ${{ secrets.VITE_FIREBASE_API_KEY }}
+          VITE_FIREBASE_API_AUTHDOMAIN: ${{ secrets.VITE_FIREBASE_API_AUTHDOMAIN }}
+          VITE_FIREBASE_API_PROJECTID: ${{ secrets.VITE_VITE_FIREBASE_API_PROJECTIDAPI_URL }}
+          VITE_FIREBASE_API_STORAGEBUCKET: ${{ secrets.VITE_FIREBASE_API_STORAGEBUCKET }}
+          VITE_FIREBASE_API_MESSAGINGSENDERID: ${{ secrets.VITE_FIREBASE_API_MESSAGINGSENDERID }}
+          VITE_FIREBASE_API_APPID: ${{ secrets.VITE_FIREBASE_API_APPID }}
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:
