@@ -1,7 +1,7 @@
 interface ButtonProps {
   className: string;
   actionOnClick: () => void;
-  children: React.ReactElement;
+  children: React.ReactElement | string;
 }
 
 const Button = ({

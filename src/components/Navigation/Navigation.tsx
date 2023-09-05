@@ -1,5 +1,6 @@
 import React from "react";
 import "./Navigation.scss";
+import Button from "../Button/Button";
 
 const Navigation = (): React.ReactElement => {
   return (
@@ -30,16 +31,18 @@ const Navigation = (): React.ReactElement => {
           </a>
         </li>
         <li className="nav-bar__element">
-          <button className="nav-bar__button" onClick={() => {}}>
-            <img
-              className="nav-bar__icon"
-              src="../images/logout_icon.svg"
-              alt="Logout icon"
-              width="25"
-              height="25"
-            />
-            <span className="nav-bar__text">Logout</span>
-          </button>
+          <Button className="nav-bar__button" actionOnClick={() => {}}>
+            <>
+              <img
+                className="nav-bar__icon"
+                src="../images/logout_icon.svg"
+                alt="Logout icon"
+                width="25"
+                height="25"
+              />
+              <span className="nav-bar__text">Logout</span>
+            </>
+          </Button>
         </li>
       </ul>
     </nav>
