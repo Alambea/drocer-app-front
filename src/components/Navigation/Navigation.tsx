@@ -1,13 +1,14 @@
 import React from "react";
 import "./Navigation.scss";
 import Button from "../Button/Button";
+import { paths } from "../../routers/paths";
 
 const Navigation = (): React.ReactElement => {
   return (
     <nav className="nav-bar">
       <ul className="nav-bar__list">
         <li className="nav-bar__element">
-          <a href="/add-new-record" className="nav-bar__link">
+          <a href={paths.addRecord} className="nav-bar__link">
             <img
               className="nav-bar__icon"
               src="../images/add_icon.svg"
@@ -19,7 +20,7 @@ const Navigation = (): React.ReactElement => {
           </a>
         </li>
         <li className="nav-bar__element">
-          <a href="/records" className="nav-bar__link">
+          <a href={paths.records} className="nav-bar__link">
             <img
               className="nav-bar__icon"
               src="../images/record_icon.svg"
