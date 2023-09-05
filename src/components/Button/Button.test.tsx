@@ -4,7 +4,7 @@ import Button from "./Button";
 
 describe("Given a Button component", () => {
   describe("When it is rendered", () => {
-    test("It should show a text 'Click here'", () => {
+    test("Then it should show a text 'Click here'", () => {
       const mockFunction = vi.fn();
       const buttonText = "Click here";
 
@@ -19,7 +19,7 @@ describe("Given a Button component", () => {
       expect(button).toBeInTheDocument();
     });
 
-    test("It should show an alt text 'Logo'", () => {
+    test("Then it should show an alt text 'Logo'", () => {
       const mockFunction = vi.fn();
       const buttonAlt = "Logo";
 

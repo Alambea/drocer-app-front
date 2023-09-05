@@ -2,10 +2,12 @@
 @use "../../sass/utils";
 
 .header {
+  position: absolute;
   display: flex;
   flex-direction: row;
   align-items: flex-end;
   justify-content: space-between;
+  width: 100%;
   padding: 25px 20px 10px 22px;
   background: colors.$color-main-background;
   box-shadow: 0px 5px 32px 0px rgba(9, 9, 9, 0.25);
