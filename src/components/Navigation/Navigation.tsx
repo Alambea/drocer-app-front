@@ -3,8 +3,14 @@ import "./Navigation.scss";
 import Button from "../Button/Button";
 import { paths } from "../../routers/paths";
 import { NavLink } from "react-router-dom";
+import { signOut } from "firebase/auth";
+import { auth } from "../../firebase";
 
 const Navigation = (): React.ReactElement => {
+  const logout = async () => {
+    await signOut(auth);
+  };
+
   return (
     <nav className="nav-bar">
       <ul className="nav-bar__list">
@@ -33,7 +39,7 @@ const Navigation = (): React.ReactElement => {
           </NavLink>
         </li>
         <li className="nav-bar__element">
-          <Button className="nav-bar__button" actionOnClick={() => {}}>
+          <Button className="nav-bar__button" actionOnClick={logout}>
             <>
               <img
                 className="nav-bar__icon"
