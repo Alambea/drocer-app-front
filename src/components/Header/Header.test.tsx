@@ -6,7 +6,7 @@ describe("Given a Header component", () => {
     test("It should show a heading 'Drocer'", () => {
       const expectedHeading = "Drocer";
 
-      render(<Header></Header>);
+      render(<Header />);
 
       const heading = screen.getByRole("heading", {
         level: 1,
@@ -19,7 +19,7 @@ describe("Given a Header component", () => {
     test("It should show an alternative text 'Drocer's app logo'", () => {
       const expectedAltText = "Drocer's app logo";
 
-      render(<Header></Header>);
+      render(<Header />);
 
       const image = screen.getByAltText(expectedAltText);
 
