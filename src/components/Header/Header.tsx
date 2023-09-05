@@ -1,6 +1,7 @@
+import React from "react";
 import "./Header.scss";
 
-const Header = () => {
+const Header = (): React.ReactElement => {
   return (
     <header className="header">
       <a href="/home">
