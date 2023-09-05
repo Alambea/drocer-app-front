@@ -1,0 +1,47 @@
+@use "../../sass/variables/colors";
+@use "../../sass/utils";
+
+.sign-in {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+
+  &__container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(colors.$color-primary-light, 0.1);
+    padding: 0 45px;
+    height: 280px;
+    gap: 15px;
+    border-radius: 4px;
+  }
+
+  &__title {
+    margin: 0;
+    font-weight: 700;
+    font-size: utils.pxToRem(36);
+    line-height: 46.8px;
+    background-color: rgba(colors.$font-color-heading, 0.1);
+  }
+
+  &__text {
+    font-weight: 400;
+    text-align: center;
+    color: colors.$font-color-text;
+    line-height: 19.5px;
+  }
+
+  &__button {
+    width: 157px;
+    height: 48px;
+    background-color: colors.$color-primary;
+    border-radius: 4px;
+    color: colors.$color-main-background;
+    font-size: utils.pxToRem(22);
+    font-weight: 500;
+    line-height: 28.6px;
+  }
+}
