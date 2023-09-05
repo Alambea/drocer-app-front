@@ -1,5 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import Navigation from "./Navigation";
+import { BrowserRouter } from "react-router-dom";
 
 describe("Given a Navigation component", () => {
   describe("When it's rendered", () => {
@@ -7,7 +8,11 @@ describe("Given a Navigation component", () => {
       const expectedAddText = /add/i;
       const expectedRecordsText = /records/i;
 
-      render(<Navigation />);
+      render(
+        <BrowserRouter>
+          <Navigation />
+        </BrowserRouter>,
+      );
 
       const addLink = screen.getByRole("link", { name: expectedAddText });
       const recordsLink = screen.getByRole("link", {
@@ -21,7 +26,11 @@ describe("Given a Navigation component", () => {
     test("Then it should show a button with the text 'Logout'", () => {
       const expectedLogoutButton = /logout/i;
 
-      render(<Navigation />);
+      render(
+        <BrowserRouter>
+          <Navigation />
+        </BrowserRouter>,
+      );
 
       const button = screen.getByRole("button", {
         name: expectedLogoutButton,
@@ -35,7 +44,11 @@ describe("Given a Navigation component", () => {
       const expectedVinylImgAlt = "Vinyl icon";
       const expectedLogoutImgAlt = "Logout icon";
 
-      render(<Navigation />);
+      render(
+        <BrowserRouter>
+          <Navigation />
+        </BrowserRouter>,
+      );
 
       const addImage = screen.getByAltText(expectedAddImgAlt);
       const vinylImage = screen.getByAltText(expectedVinylImgAlt);
