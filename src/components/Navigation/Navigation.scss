@@ -19,6 +19,7 @@
   }
 
   &__element {
+    position: relative;
     width: 75px;
   }
 
@@ -32,4 +33,14 @@
     justify-content: space-between;
     gap: 10px;
   }
+}
+
+.nav-bar__link.active::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 5.5px;
+  bottom: 2.5px;
+  background-color: rgba(colors.$color-primary-light, 0.7);
+  z-index: -1;
 }
