@@ -5,6 +5,7 @@ import Navigation from "../Navigation/Navigation";
 import "./App.scss";
 import { auth } from "../../firebase";
 import { Navigate, Route, Routes } from "react-router-dom";
+import RecordsListPage from "../../pages/RecordsListPage/RecordsListPage";
 
 const App = (): React.ReactElement => {
   const [user] = useAuthState(auth);
@@ -16,6 +17,7 @@ const App = (): React.ReactElement => {
         <Routes>
           <Route path="/" element={<Navigate to="/home" />} />
           <Route path="/home" element={<HomePage />} />
+          <Route path="/records" element={<RecordsListPage />} />
         </Routes>
         {user && <Navigation />}
       </main>
