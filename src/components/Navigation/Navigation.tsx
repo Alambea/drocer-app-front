@@ -2,13 +2,16 @@ import React from "react";
 import "./Navigation.scss";
 import Button from "../Button/Button";
 import { paths } from "../../routers/paths";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { signOut } from "firebase/auth";
 import { auth } from "../../firebase";
 
 const Navigation = (): React.ReactElement => {
+  const navigate = useNavigate();
+
   const logout = async () => {
     await signOut(auth);
+    navigate(paths.home);
   };
 
   return (
