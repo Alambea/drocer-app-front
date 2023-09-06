@@ -4,6 +4,7 @@ import { BrowserRouter, MemoryRouter } from "react-router-dom";
 import App from "./App";
 import { User } from "firebase/auth";
 import auth, { AuthStateHook } from "react-firebase-hooks/auth";
+import { paths } from "../../routers/paths";
 
 vi.mock("firebase/auth");
 
@@ -110,7 +111,7 @@ describe("Given an App component", () => {
     ];
 
     test("Then it should show a heading 'Welcome'", async () => {
-      const initialPath = "/records";
+      const initialPath = paths.records;
       const buttonText = /logout/i;
       const expectedHeading = "Welcome";
 
