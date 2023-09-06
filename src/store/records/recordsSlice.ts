@@ -21,4 +21,4 @@ export const recordsSlice = createSlice({
 });
 
 export const recordsReducer = recordsSlice.reducer;
-export const { loadRecords: loadRecords } = recordsSlice.actions;
+export const { loadRecords: loadRecordsActionCreator } = recordsSlice.actions;
