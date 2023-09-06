@@ -1,6 +1,6 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, MemoryRouter } from "react-router-dom";
 import App from "./App";
 import { User } from "firebase/auth";
 import auth, { AuthStateHook } from "react-firebase-hooks/auth";
@@ -97,6 +97,42 @@ describe("Given an App component", () => {
 
         expect(heading).toBeInTheDocument();
       });
+    });
+  });
+
+  describe("When the user is logged, it renders the records page '/records' and clicks the logout button", () => {
+    const user: Partial<User> = {};
+
+    const authStateHookMock: Partial<AuthStateHook> = [
+      user as User,
+      false,
+      new Error(""),
+    ];
+
+    test("Then it should show a heading 'Welcome'", async () => {
+      const initialPath = "/records";
+      const buttonText = /logout/i;
+      const expectedHeading = "Welcome";
+
+      auth.useAuthState = vi.fn().mockReturnValue(authStateHookMock);
+
+      render(
+        <MemoryRouter initialEntries={[initialPath]}>
+          <App />
+        </MemoryRouter>,
+      );
+
+      const button = screen.getByRole("button", { name: buttonText });
+
+      await waitFor(async () => {
+        await userEvent.click(button);
+      });
+
+      const heading = await screen.findByRole("heading", {
+        name: expectedHeading,
+      });
+
+      expect(heading).toBeInTheDocument();
     });
   });
 
