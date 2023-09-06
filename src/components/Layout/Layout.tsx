@@ -3,6 +3,7 @@ import { auth } from "../../firebase";
 import { PropsWithChildren } from "react";
 import Header from "../Header/Header";
 import Navigation from "../Navigation/Navigation";
+import "./Layout.scss";
 
 const Layout = ({ children }: PropsWithChildren): React.ReactElement => {
   const [user] = useAuthState(auth);

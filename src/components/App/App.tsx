@@ -2,7 +2,6 @@ import HomePage from "../../pages/HomePage/HomePage";
 import { Navigate, Route, Routes } from "react-router-dom";
 import RecordsListPage from "../../pages/RecordsListPage/RecordsListPage";
 import Layout from "../Layout/Layout";
-import "./App.scss";
 
 const App = (): React.ReactElement => {
   return (
