@@ -9,7 +9,6 @@ import RecordsListPage from "../../pages/RecordsListPage/RecordsListPage";
 
 const App = (): React.ReactElement => {
   const [user] = useAuthState(auth);
-
   return (
     <div className="container">
       <Header />
