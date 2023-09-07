@@ -44,6 +44,7 @@ describe("Given a Button component", () => {
       );
 
       const button = screen.getByRole("button", { name: buttonAlt });
+
       await userEvent.click(button);
 
       expect(mockFunction).toHaveBeenCalled();
