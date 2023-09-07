@@ -1,5 +1,5 @@
-@use "../../sass/variables/colors";
-@use "../../sass/utils";
+@use "../../styles/variables/colors";
+@use "../../styles/utils";
 
 .header {
   position: absolute;
@@ -17,6 +17,5 @@
     color: colors.$color-primary;
     font-size: utils.pxToRem(24);
     font-weight: 500;
-    margin-bottom: 2px;
   }
 }

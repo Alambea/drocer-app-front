@@ -12,8 +12,8 @@
     "test:dev": "vitest",
     "test": "vitest run",
     "test:coverage": "vitest run --coverage",
-    "build-styles": "npx sass src/sass/styles.scss dist/styles/styles.css --no-source-map",
-    "build-styles:dev": "npx sass src/sass/styles.scss public/styles/styles.css --watch"
+    "build-styles": "npx sass src/styles/styles.scss dist/styles/styles.css --no-source-map",
+    "build-styles:dev": "npx sass src/styles/styles.scss public/styles/styles.css --watch"
   },
   "dependencies": {
     "@fontsource-variable/karla": "^5.0.9",
