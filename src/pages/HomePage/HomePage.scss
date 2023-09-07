@@ -3,21 +3,14 @@
 
 .sign-in {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100%;
-
-  &__container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background-color: rgba(colors.$color-primary-light, 0.1);
-    padding: 0 45px;
-    height: 280px;
-    gap: 15px;
-    border-radius: 4px;
-  }
+  background-color: rgba(colors.$color-primary-light, 0.1);
+  padding: 0 45px;
+  height: 280px;
+  gap: 15px;
+  border-radius: 4px;
 
   &__title {
     margin: 0;

@@ -1,5 +1,5 @@
 interface ButtonProps {
-  className: string;
+  className?: string;
   actionOnClick: () => void;
   children: React.ReactElement | string;
 }
@@ -10,7 +10,7 @@ const Button = ({
   children,
 }: ButtonProps): React.ReactElement => {
   return (
-    <button className={className} onClick={actionOnClick}>
+    <button className={`button ${className}`} onClick={actionOnClick}>
       {children}
     </button>
   );
