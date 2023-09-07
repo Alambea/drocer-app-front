@@ -1,12 +1,10 @@
 .records-page {
   display: flex;
   flex-direction: column;
-  width: 100%;
   padding-top: 40px;
   gap: 50px;
 
   &__title {
     text-align: center;
-    width: 100%;
   }
 }
