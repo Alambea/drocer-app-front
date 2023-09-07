@@ -1,5 +1,6 @@
 import React from "react";
 import { Record } from "../../types";
+import "./RecordCard.scss";
 
 interface RecordCardProps {
   record: Record;
@@ -19,7 +20,7 @@ const RecordCard = ({
       />
       <div className="record__information">
         <h3 className="record__title">{artist}</h3>
-        <span>{`${record}, ${releaseDate}`}</span>
+        <span className="record__record-release-date">{`${record}, ${releaseDate}`}</span>
       </div>
     </article>
   );
