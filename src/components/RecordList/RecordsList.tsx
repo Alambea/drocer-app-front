@@ -1,4 +1,5 @@
 import { useAppSelector } from "../../store";
+import "./RecordList.scss";
 
 const RecordsList = (): React.ReactElement => {
   const records = useAppSelector((state) => state.recordsState.records);
