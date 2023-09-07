@@ -1,4 +1,5 @@
 import { useAppSelector } from "../../store";
+import RecordCard from "../RecordCard/RecordCard";
 import "./RecordList.scss";
 
 const RecordsList = (): React.ReactElement => {
@@ -8,7 +9,7 @@ const RecordsList = (): React.ReactElement => {
     <ul className="records">
       {records.map((record) => (
         <li key={record.id} className="records__record">
-          <h3>{record.record}</h3>
+          <RecordCard record={record} />
         </li>
       ))}
     </ul>
