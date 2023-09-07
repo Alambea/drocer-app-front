@@ -10,7 +10,7 @@ const RecordsListPage = (): React.ReactElement => {
   const dispatch = useAppDispatch();
   const records = useAppSelector((state) => state.recordsState.records);
 
-  const hasRecords = records.length < 0;
+  const hasRecords = records.length > 0;
 
   useEffect(() => {
     const records = recordsData;

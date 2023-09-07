@@ -1,4 +1,5 @@
 import React from "react";
+import "./AddFirstRecord.scss";
 
 const AddFirstRecord = (): React.ReactElement => {
   return (
