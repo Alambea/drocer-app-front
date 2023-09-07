@@ -21,11 +21,7 @@ describe("Given an App component", () => {
   describe("When it is rendered and the user is logged", () => {
     const user: Partial<User> = {};
 
-    const authStateHookMock: Partial<AuthStateHook> = [
-      user as User,
-      false,
-      new Error(""),
-    ];
+    const authStateHookMock: Partial<AuthStateHook> = [user as User];
 
     auth.useAuthState = vi.fn().mockReturnValue(authStateHookMock);
 
@@ -108,14 +104,10 @@ describe("Given an App component", () => {
     });
   });
 
-  describe("When the user is logged, it renders the records page '/records' and clicks the logout button", () => {
+  describe("When the path is '/records', the user is logged and clicks the logout button", () => {
     const user: Partial<User> = {};
 
-    const authStateHookMock: Partial<AuthStateHook> = [
-      user as User,
-      false,
-      new Error(""),
-    ];
+    const authStateHookMock: Partial<AuthStateHook> = [user as User];
 
     test("Then it should show a heading 'Welcome'", async () => {
       const initialPath = paths.records;
@@ -147,11 +139,7 @@ describe("Given an App component", () => {
   });
 
   describe("When it is rendered and the user isn't logged", () => {
-    const authStateHookMock: Partial<AuthStateHook> = [
-      undefined,
-      false,
-      new Error(""),
-    ];
+    const authStateHookMock: Partial<AuthStateHook> = [undefined];
 
     test("Then it shouldn't show two links with the text 'Add' and 'Records'", () => {
       const expectedAddText = /add/i;
