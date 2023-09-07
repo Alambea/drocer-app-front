@@ -5,6 +5,9 @@ import App from "./App";
 import { User } from "firebase/auth";
 import auth, { AuthStateHook } from "react-firebase-hooks/auth";
 import { paths } from "../../routers/paths";
+import { setupStore } from "../../store";
+import { recordsMock } from "../../mocks/recordsMock";
+import { Provider } from "react-redux";
 
 vi.mock("firebase/auth");
 
@@ -13,6 +16,8 @@ beforeEach(() => {
 });
 
 describe("Given an App component", () => {
+  const store = setupStore({ recordsState: { records: recordsMock } });
+
   describe("When it is rendered and the user is logged", () => {
     const user: Partial<User> = {};
 
@@ -73,14 +78,16 @@ describe("Given an App component", () => {
     });
 
     describe("And the user clicks on the 'Sign in' button", () => {
-      test("Then it should show a heading Records", async () => {
+      test("Then it should show a heading 'Records'", async () => {
         const signInButtonText = "Sign in";
         const expectedHeading = "Records";
 
         render(
-          <BrowserRouter>
-            <App />
-          </BrowserRouter>,
+          <Provider store={store}>
+            <BrowserRouter>
+              <App />
+            </BrowserRouter>
+          </Provider>,
         );
         screen;
 
@@ -118,9 +125,11 @@ describe("Given an App component", () => {
       auth.useAuthState = vi.fn().mockReturnValue(authStateHookMock);
 
       render(
-        <MemoryRouter initialEntries={[initialPath]}>
-          <App />
-        </MemoryRouter>,
+        <Provider store={store}>
+          <MemoryRouter initialEntries={[initialPath]}>
+            <App />
+          </MemoryRouter>
+        </Provider>,
       );
 
       const button = screen.getByRole("button", { name: buttonText });
