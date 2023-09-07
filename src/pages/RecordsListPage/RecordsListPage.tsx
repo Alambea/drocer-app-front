@@ -15,8 +15,8 @@ const RecordsListPage = (): React.ReactElement => {
   });
 
   return (
-    <section className="records">
-      <h2 className="records__title">Records</h2>
+    <section className="records-page">
+      <h2 className="records-page__title">Records</h2>
       <RecordsList />
     </section>
   );
