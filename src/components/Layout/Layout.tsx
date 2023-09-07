@@ -9,13 +9,13 @@ const Layout = ({ children }: PropsWithChildren): React.ReactElement => {
   const [user] = useAuthState(auth);
 
   return (
-    <div className="container">
+    <>
       <Header />
       <main className="main-container">
         {children}
         {user && <Navigation />}
       </main>
-    </div>
+    </>
   );
 };
 
