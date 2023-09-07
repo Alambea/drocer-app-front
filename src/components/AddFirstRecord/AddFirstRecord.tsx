@@ -9,8 +9,8 @@ const AddFirstRecord = (): React.ReactElement => {
           src="./images/drocer_logo.svg"
           alt="Drocer's app logo"
           className="add-first-record__logo"
-          width="37"
-          height="26"
+          width="165"
+          height="114"
         />
         <h2 className="add-first-record__title">Add your first record</h2>
       </article>
