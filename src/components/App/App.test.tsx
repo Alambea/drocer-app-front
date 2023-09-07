@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { BrowserRouter, MemoryRouter } from "react-router-dom";
 import App from "./App";
@@ -91,9 +91,7 @@ describe("Given an App component", () => {
           name: signInButtonText,
         });
 
-        await waitFor(async () => {
-          await userEvent.click(button);
-        });
+        userEvent.click(button);
 
         const heading = await screen.findByRole("heading", {
           name: expectedHeading,
@@ -126,9 +124,7 @@ describe("Given an App component", () => {
 
       const button = screen.getByRole("button", { name: buttonText });
 
-      await waitFor(async () => {
-        await userEvent.click(button);
-      });
+      userEvent.click(button);
 
       const heading = await screen.findByRole("heading", {
         name: expectedHeading,
