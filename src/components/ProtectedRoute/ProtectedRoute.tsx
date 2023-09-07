@@ -4,13 +4,22 @@ import { auth } from "../../firebase";
 import { Navigate } from "react-router-dom";
 import { paths } from "../../routers/paths";
 
+interface ProtectedRouteProps extends PropsWithChildren {
+  destinationPath: string;
+}
+
 const ProtectedRoute = ({
   children,
-}: PropsWithChildren): React.ReactElement => {
-  const [user] = useAuthState(auth);
+  destinationPath,
+}: ProtectedRouteProps): React.ReactElement => {
+  const [user, isLoading] = useAuthState(auth);
 
-  if (!user) {
+  if (!user && !isLoading && destinationPath !== paths.home) {
     return <Navigate to={paths.home} />;
+  }
+
+  if (user && !isLoading && destinationPath === paths.home) {
+    return <Navigate to={paths.records} />;
   }
 
   return <>{children}</>;
