@@ -19,7 +19,7 @@ const RecordsListPage = (): React.ReactElement => {
   });
 
   return (
-    <section className="records-page">
+    <>
       {hasRecords ? (
         <>
           <h2 className="records-page__title">Records</h2>
@@ -28,7 +28,7 @@ const RecordsListPage = (): React.ReactElement => {
       ) : (
         <AddFirstRecord />
       )}
-    </section>
+    </>
   );
 };
 
