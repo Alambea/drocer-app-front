@@ -1,0 +1,20 @@
+@use "../../sass/variables/colors";
+@use "../../sass/utils";
+
+.add-first-record {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  &__logo {
+    width: 165px;
+    height: auto;
+  }
+
+  &__title {
+    font-size: utils.pxToRem(32);
+    text-align: center;
+    color: colors.$font-color-text-light;
+    width: 200px;
+  }
+}
