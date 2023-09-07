@@ -7,7 +7,7 @@ import RecordsList from "./RecordsList";
 
 describe("Given a RecordList component", () => {
   describe("When it is rendered", () => {
-    test("Then it should show an 'In Rainbows' and 'Third' heading", () => {
+    test("Then it should show an 'IRadiohead' and 'Portishead' heading", () => {
       const store = setupStore({ recordsState: { records: recordsMock } });
 
       render(
@@ -19,7 +19,7 @@ describe("Given a RecordList component", () => {
       );
 
       recordsMock.forEach((record) => {
-        const heading = screen.getByRole("heading", { name: record.record });
+        const heading = screen.getByRole("heading", { name: record.artist });
 
         expect(heading).toBeInTheDocument();
       });

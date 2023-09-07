@@ -1,5 +1,18 @@
 import { Record } from "../types";
 
+export const recordMock: Record = {
+  id: "1",
+  record: "LP1",
+  artist: "FKA Twigs",
+  cover: "http://example.com/image.png",
+  description: "August",
+  genres: "Avant-pop, electronic, art pop R&B, trip hop",
+  label: "Young Turks",
+  length: "40:46",
+  rating: 4,
+  releaseDate: 2014,
+};
+
 export const recordsMock: Record[] = [
   {
     id: "1",
