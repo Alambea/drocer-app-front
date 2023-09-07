@@ -2,6 +2,7 @@ import { Record } from "../types";
 
 export const recordsData: Record[] = [
   {
+    id: "1",
     record: "In Rainbows",
     artist: "Radiohead",
     cover: "http://example.com/image.png",
@@ -15,6 +16,7 @@ export const recordsData: Record[] = [
     releaseDate: 2007,
   },
   {
+    id: "2",
     record: "Third",
     artist: "Portishead",
     cover: "http://example.com/image.png",
