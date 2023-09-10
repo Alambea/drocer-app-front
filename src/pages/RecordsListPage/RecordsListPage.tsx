@@ -15,7 +15,7 @@ const RecordsListPage = (): React.ReactElement => {
   useEffect(() => {
     const records = recordsData;
     dispatch(loadRecordsActionCreator(records));
-  });
+  }, [dispatch]);
 
   return (
     <>

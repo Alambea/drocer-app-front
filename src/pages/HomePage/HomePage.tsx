@@ -1,16 +1,11 @@
 import { signInWithPopup } from "firebase/auth";
 import Button from "../../components/Button/Button";
-import "./HomePage.scss";
 import { auth, gitHubProvider } from "../../firebase";
-import { useNavigate } from "react-router-dom";
-import { paths } from "../../routers/paths";
+import "./HomePage.scss";
 
 const HomePage = (): React.ReactElement => {
-  const navigate = useNavigate();
-
   const login = async () => {
     await signInWithPopup(auth, gitHubProvider);
-    navigate(paths.records);
   };
 
   return (
