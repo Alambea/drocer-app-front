@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from "../../store";
 import { recordsData } from "../../data/recordData";
 import { loadRecordsActionCreator } from "../../store/records/recordsSlice";
 import RecordsList from "../../components/RecordList/RecordsList";
-import AddFirstRecord from "../../components/AddFirstRecord/AddFirstRecord";
+import NoRecordsInformation from "../../components/NoRecordsInformation/NoRecordsInformation";
 
 const RecordsListPage = (): React.ReactElement => {
   const dispatch = useAppDispatch();
@@ -21,11 +21,11 @@ const RecordsListPage = (): React.ReactElement => {
     <>
       {hasRecords ? (
         <>
-          <h2 className="records-page__title">Records</h2>
+          <h1 className="records-page__title">Records</h1>
           <RecordsList />
         </>
       ) : (
-        <AddFirstRecord />
+        <NoRecordsInformation />
       )}
     </>
   );
