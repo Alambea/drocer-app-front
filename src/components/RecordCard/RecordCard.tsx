@@ -19,7 +19,7 @@ const RecordCard = ({
         height="250"
       />
       <div className="record__information">
-        <h3 className="record__title">{artist}</h3>
+        <h2 className="record__title">{artist}</h2>
         <span className="record__record-release-date">{`${record}, ${releaseDate}`}</span>
       </div>
     </article>
