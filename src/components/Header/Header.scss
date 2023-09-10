@@ -18,4 +18,8 @@
     font-size: utils.pxToRem(24);
     font-weight: 500;
   }
+
+  &__logo {
+    padding-bottom: 4px;
+  }
 }
