@@ -41,4 +41,30 @@ export const recordsMock: Record[] = [
     rating: 4,
     releaseDate: 2008,
   },
+  {
+    id: "3",
+    record: "Mezzanine",
+    artist: "Massive Attack",
+    cover: "http://example.com/image.png",
+    description:
+      "Mezzanine is the third studio album by English electronic music group Massive Attack, released on 20 April 1998 by Circa and Virgin Records.",
+    genres: "Trip-hop, electronica",
+    label: "Virgin - Circa",
+    length: "63:29",
+    rating: 4,
+    releaseDate: 1998,
+  },
+  {
+    id: "4",
+    record: "Heliocentric",
+    artist: "The Ocean",
+    cover: "http://example.com/image.png",
+    description:
+      "Heliocentric is the fourth studio album by German progressive metal band The Ocean, released on 9 April 2010.",
+    genres: "Post-metal, post-rock, sludge metal, progressive metal",
+    label: "Pelagic, Metal Blade",
+    length: "	50:58",
+    rating: 4,
+    releaseDate: 2010,
+  },
 ];

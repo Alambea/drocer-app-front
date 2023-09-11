@@ -1,9 +1,10 @@
-import HomePage from "../../pages/HomePage/HomePage";
+import { HomePagePreview } from "../../pages/HomePage/HomePage";
 import { Navigate, Route, Routes } from "react-router-dom";
-import RecordsListPage from "../../pages/RecordsListPage/RecordsListPage";
+import { RecordsListPagePreview } from "../../pages/RecordsListPage/RecordsListPage";
 import Layout from "../Layout/Layout";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import { paths } from "../../routers/paths";
+import { Suspense } from "react";
 
 const App = (): React.ReactElement => {
   return (
@@ -21,7 +22,9 @@ const App = (): React.ReactElement => {
           path={paths.home}
           element={
             <ProtectedRoute destinationPath={paths.home}>
-              <HomePage />
+              <Suspense>
+                <HomePagePreview />
+              </Suspense>
             </ProtectedRoute>
           }
         />
@@ -29,7 +32,9 @@ const App = (): React.ReactElement => {
           path={paths.records}
           element={
             <ProtectedRoute destinationPath={paths.records}>
-              <RecordsListPage />
+              <Suspense>
+                <RecordsListPagePreview />
+              </Suspense>
             </ProtectedRoute>
           }
         />
