@@ -1,12 +1,12 @@
-import { Suspense, useEffect, lazy } from "react";
+import { Suspense, useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../store";
 import { recordsData } from "../../data/recordData";
 import { loadRecordsActionCreator } from "../../store/records/recordsSlice";
-import { RecordsListPreview } from "../../components/RecordList/RecordsList";
-import { NoRecordsInformationPreview } from "../../components/NoRecordsInformation/NoRecordsInformation";
+import {
+  LazyNoRecordsInformation,
+  LazyRecordsList,
+} from "../../routers/lazyComponents";
 import "./RecordsListPage.scss";
-
-export const RecordsListPagePreview = lazy(() => import("./RecordsListPage"));
 
 const RecordsListPage = (): React.ReactElement => {
   const dispatch = useAppDispatch();
@@ -25,12 +25,12 @@ const RecordsListPage = (): React.ReactElement => {
         <>
           <h1 className="records-page__title">Records</h1>
           <Suspense>
-            <RecordsListPreview />
+            <LazyRecordsList />
           </Suspense>
         </>
       ) : (
         <Suspense>
-          <NoRecordsInformationPreview />
+          <LazyNoRecordsInformation />
         </Suspense>
       )}
     </>

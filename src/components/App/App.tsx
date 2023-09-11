@@ -1,10 +1,12 @@
-import { HomePagePreview } from "../../pages/HomePage/HomePage";
 import { Navigate, Route, Routes } from "react-router-dom";
-import { RecordsListPagePreview } from "../../pages/RecordsListPage/RecordsListPage";
 import Layout from "../Layout/Layout";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import { paths } from "../../routers/paths";
 import { Suspense } from "react";
+import {
+  LazyHomePage,
+  LazyRecordsListPage,
+} from "../../routers/lazyComponents";
 
 const App = (): React.ReactElement => {
   return (
@@ -23,7 +25,7 @@ const App = (): React.ReactElement => {
           element={
             <ProtectedRoute destinationPath={paths.home}>
               <Suspense>
-                <HomePagePreview />
+                <LazyHomePage />
               </Suspense>
             </ProtectedRoute>
           }
@@ -33,7 +35,7 @@ const App = (): React.ReactElement => {
           element={
             <ProtectedRoute destinationPath={paths.records}>
               <Suspense>
-                <RecordsListPagePreview />
+                <LazyRecordsListPage />
               </Suspense>
             </ProtectedRoute>
           }

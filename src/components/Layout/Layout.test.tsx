@@ -33,7 +33,7 @@ describe("Given an Layout component", () => {
       expect(heading).toBeInTheDocument();
     });
 
-    test("Then it should show two links with the text 'Add' and 'Records'", () => {
+    test("Then it should show two links with the text 'Add' and 'Records'", async () => {
       const expectedAddText = /add/i;
       const expectedRecordsText = /records/i;
 
@@ -42,8 +42,10 @@ describe("Given an Layout component", () => {
           <Layout />
         </BrowserRouter>,
       );
-      const addLink = screen.getByRole("link", { name: expectedAddText });
-      const recordsLink = screen.getByRole("link", {
+      const addLink = await screen.findByRole("link", {
+        name: expectedAddText,
+      });
+      const recordsLink = await screen.findByRole("link", {
         name: expectedRecordsText,
       });
 
