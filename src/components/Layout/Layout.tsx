@@ -2,8 +2,8 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../firebase";
 import { PropsWithChildren, Suspense } from "react";
 import Header from "../Header/Header";
-import "./Layout.scss";
 import { LazyNavigation } from "../../routers/lazyComponents";
+import "./Layout.scss";
 
 const Layout = ({ children }: PropsWithChildren): React.ReactElement => {
   const [user] = useAuthState(auth);
