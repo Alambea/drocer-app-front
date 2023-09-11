@@ -8,7 +8,7 @@ import { Provider } from "react-redux";
 
 describe("Given a ProtectedRoute component", () => {
   describe("When the user isn't logged and try to enter to '/records' page", () => {
-    test("Then it should redirect to /home and show a heading 'Welcome'", () => {
+    test("Then it should redirect to /home and show a heading 'Welcome'", async () => {
       const initialPath = paths.records;
       const headingText = "Welcome";
       const store = setupStore({ recordsState: { records: [] } });
@@ -25,7 +25,7 @@ describe("Given a ProtectedRoute component", () => {
         </Provider>,
       );
 
-      const heading = screen.getByRole("heading", { name: headingText });
+      const heading = await screen.findByRole("heading", { name: headingText });
 
       expect(heading).toBeInTheDocument();
     });
