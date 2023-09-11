@@ -1,9 +1,9 @@
 import { rest } from "msw";
-import { recordsMock } from "./recordsMock";
+import { recordsApiMock } from "./recordsMock";
 
 export const handlers = [
   rest.get(`${import.meta.env.VITE_API_URL}/records`, (_req, res, ctx) => {
-    return res(ctx.json(recordsMock));
+    return res(ctx.json(recordsApiMock));
   }),
 ];
 
