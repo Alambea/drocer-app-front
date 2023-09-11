@@ -1,9 +1,4 @@
-import React, { lazy } from "react";
 import "./NoRecordsInformation.scss";
-
-export const NoRecordsInformationPreview = lazy(
-  () => import("./NoRecordsInformation"),
-);
 
 const NoRecordsInformation = (): React.ReactElement => {
   return (

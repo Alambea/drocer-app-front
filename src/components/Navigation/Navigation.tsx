@@ -1,12 +1,10 @@
-import React, { lazy } from "react";
+import React from "react";
 import Button from "../Button/Button";
 import { paths } from "../../routers/paths";
 import { NavLink } from "react-router-dom";
 import { signOut } from "firebase/auth";
 import { auth } from "../../firebase";
 import "./Navigation.scss";
-
-export const NavigationPreview = lazy(() => import("./Navigation"));
 
 const Navigation = (): React.ReactElement => {
   const logout = async () => {

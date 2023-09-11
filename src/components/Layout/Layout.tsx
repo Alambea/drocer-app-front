@@ -2,8 +2,8 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../firebase";
 import { PropsWithChildren, Suspense } from "react";
 import Header from "../Header/Header";
-import { NavigationPreview } from "../Navigation/Navigation";
 import "./Layout.scss";
+import { LazyNavigation } from "../../routers/lazyComponents";
 
 const Layout = ({ children }: PropsWithChildren): React.ReactElement => {
   const [user] = useAuthState(auth);
@@ -14,7 +14,7 @@ const Layout = ({ children }: PropsWithChildren): React.ReactElement => {
         {children}
         {user && (
           <Suspense>
-            <NavigationPreview />
+            <LazyNavigation />
           </Suspense>
         )}
       </main>

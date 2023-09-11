@@ -1,10 +1,7 @@
 import { signInWithPopup } from "firebase/auth";
 import Button from "../../components/Button/Button";
 import { auth, gitHubProvider } from "../../firebase";
-import { lazy } from "react";
 import "./HomePage.scss";
-
-export const HomePagePreview = lazy(() => import("./HomePage"));
 
 const HomePage = (): React.ReactElement => {
   const login = async () => {

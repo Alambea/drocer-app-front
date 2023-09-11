@@ -67,7 +67,7 @@ describe("Given an App component", () => {
       expect(image).toBeInTheDocument();
     });
 
-    test("Then it should show two links with the text 'Add' and 'Records'", () => {
+    test("Then it should show two links with the text 'Add' and 'Records'", async () => {
       const expectedAddText = /add/i;
       const expectedRecordsText = /records/i;
 
@@ -79,8 +79,10 @@ describe("Given an App component", () => {
         </Provider>,
       );
 
-      const addLink = screen.getByRole("link", { name: expectedAddText });
-      const recordsLink = screen.getByRole("link", {
+      const addLink = await screen.findByRole("link", {
+        name: expectedAddText,
+      });
+      const recordsLink = await screen.findByRole("link", {
         name: expectedRecordsText,
       });
 
@@ -106,7 +108,7 @@ describe("Given an App component", () => {
         </Provider>,
       );
 
-      const button = screen.getByRole("button", { name: buttonText });
+      const button = await screen.findByRole("button", { name: buttonText });
 
       await userEvent.click(button);
 
@@ -132,7 +134,9 @@ describe("Given an App component", () => {
         </Provider>,
       );
 
-      const heading = screen.getByRole("heading", { name: expectedHeading });
+      const heading = await screen.findByRole("heading", {
+        name: expectedHeading,
+      });
 
       expect(heading).toBeInTheDocument();
     });
@@ -180,7 +184,7 @@ describe("Given an App component", () => {
         </BrowserRouter>,
       );
 
-      const button = screen.getByRole("button", { name: buttonText });
+      const button = await screen.findByRole("button", { name: buttonText });
 
       await userEvent.click(button);
 
