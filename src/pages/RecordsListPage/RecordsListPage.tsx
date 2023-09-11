@@ -1,10 +1,12 @@
-import { useEffect } from "react";
-import "./RecordsListPage.scss";
+import { Suspense, useEffect, lazy } from "react";
 import { useAppDispatch, useAppSelector } from "../../store";
 import { recordsData } from "../../data/recordData";
 import { loadRecordsActionCreator } from "../../store/records/recordsSlice";
-import RecordsList from "../../components/RecordList/RecordsList";
-import NoRecordsInformation from "../../components/NoRecordsInformation/NoRecordsInformation";
+import { RecordsListPreview } from "../../components/RecordList/RecordsList";
+import { NoRecordsInformationPreview } from "../../components/NoRecordsInformation/NoRecordsInformation";
+import "./RecordsListPage.scss";
+
+export const RecordsListPagePreview = lazy(() => import("./RecordsListPage"));
 
 const RecordsListPage = (): React.ReactElement => {
   const dispatch = useAppDispatch();
@@ -22,10 +24,14 @@ const RecordsListPage = (): React.ReactElement => {
       {hasRecords ? (
         <>
           <h1 className="records-page__title">Records</h1>
-          <RecordsList />
+          <Suspense>
+            <RecordsListPreview />
+          </Suspense>
         </>
       ) : (
-        <NoRecordsInformation />
+        <Suspense>
+          <NoRecordsInformationPreview />
+        </Suspense>
       )}
     </>
   );

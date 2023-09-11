@@ -1,6 +1,9 @@
 import { useAppSelector } from "../../store";
 import RecordCard from "../RecordCard/RecordCard";
+import { lazy } from "react";
 import "./RecordList.scss";
+
+export const RecordsListPreview = lazy(() => import("./RecordsList"));
 
 const RecordsList = (): React.ReactElement => {
   const records = useAppSelector((state) => state.recordsState.records);
