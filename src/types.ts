@@ -10,3 +10,11 @@ export interface Record {
   rating: number;
   releaseDate: number;
 }
+
+export interface RecordApi extends Omit<Record, "id"> {
+  _id: string;
+}
+
+export interface RecordsApi {
+  records: RecordApi[];
+}
