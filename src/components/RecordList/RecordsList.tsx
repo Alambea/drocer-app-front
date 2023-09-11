@@ -10,9 +10,9 @@ const RecordsList = (): React.ReactElement => {
 
   return (
     <ul className="records">
-      {records.map((record) => (
+      {records.map((record, recordPosition) => (
         <li key={record.id} className="records__record">
-          <RecordCard record={record} />
+          <RecordCard record={record} recordPosition={recordPosition} />
         </li>
       ))}
     </ul>

@@ -4,10 +4,12 @@ import "./RecordCard.scss";
 
 interface RecordCardProps {
   record: Record;
+  recordPosition: number;
 }
 
 const RecordCard = ({
   record: { artist, record, releaseDate, cover },
+  recordPosition,
 }: RecordCardProps): React.ReactElement => {
   return (
     <article className="record">
@@ -17,6 +19,7 @@ const RecordCard = ({
         className="record__cover-image"
         width="250"
         height="250"
+        loading={recordPosition > 2 ? "lazy" : "eager"}
       />
       <div className="record__information">
         <h2 className="record__title">{artist}</h2>
