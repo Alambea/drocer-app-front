@@ -8,14 +8,13 @@ import Layout from "./Layout";
 
 describe("Given an Layout component", () => {
   describe("When it is rendered and the user is logged", () => {
-    const user: Partial<User> = {};
-
-    const authStateHookMock: Partial<AuthStateHook> = [user as User];
-
-    auth.useAuthState = vi.fn().mockReturnValue(authStateHookMock);
-
     test("Then it should show a heading 'Drocer'", () => {
       const expectedHeading = "Drocer";
+      const user: Partial<User> = {};
+
+      const authStateHookMock: Partial<AuthStateHook> = [user as User];
+
+      auth.useAuthState = vi.fn().mockReturnValue(authStateHookMock);
 
       render(
         <Provider store={store}>
@@ -36,6 +35,11 @@ describe("Given an Layout component", () => {
     test("Then it should show two links with the text 'Add' and 'Records'", async () => {
       const expectedAddText = /add/i;
       const expectedRecordsText = /records/i;
+      const user: Partial<User> = {};
+
+      const authStateHookMock: Partial<AuthStateHook> = [user as User];
+
+      auth.useAuthState = vi.fn().mockReturnValue(authStateHookMock);
 
       render(
         <Provider store={store}>
@@ -53,6 +57,33 @@ describe("Given an Layout component", () => {
 
       expect(addLink).toBeInTheDocument();
       expect(recordsLink).toBeInTheDocument();
+    });
+  });
+
+  describe("When it is rendered and the user is loading", () => {
+    test("Then it should show the loading modal", () => {
+      const expectAriaLabelText = "loading";
+
+      const user: Partial<User> = {};
+      const isLoading = true;
+      const authStateHookMock: Partial<AuthStateHook> = [
+        user as User,
+        isLoading,
+      ];
+
+      auth.useAuthState = vi.fn().mockReturnValue(authStateHookMock);
+
+      render(
+        <Provider store={store}>
+          <BrowserRouter>
+            <Layout />
+          </BrowserRouter>
+        </Provider>,
+      );
+
+      const loading = screen.getByLabelText(expectAriaLabelText);
+
+      expect(loading).toBeInTheDocument();
     });
   });
 });

@@ -18,16 +18,15 @@ const useRecordsApi = () => {
   const getRecords = useCallback(async () => {
     dispatch(showLoadingActionCreator());
 
-    if (!user) {
-      dispatch(hideLoadingActionCreator());
-
-      showFeedback("There's no user", "error");
-      throw new Error("There's no user");
-    }
-
-    const token = await user.getIdToken();
-
     try {
+      if (!user) {
+        dispatch(hideLoadingActionCreator());
+
+        throw new Error();
+      }
+
+      const token = await user.getIdToken();
+
       const { data: apiRecords } = await axios.get<{ records: RecordApi[] }>(
         `${apiUrl}/records`,
         { headers: { Authorization: `Bearer ${token}` } },
@@ -41,12 +40,11 @@ const useRecordsApi = () => {
       dispatch(hideLoadingActionCreator());
 
       return records;
-    } catch (error: unknown) {
-      const message = (error as Error).message;
-
+    } catch (error) {
+      const message = "Couldn't load records";
       dispatch(hideLoadingActionCreator());
 
-      showFeedback("Couldn't load records", "error");
+      showFeedback(message, "error");
       throw new Error(message);
     }
   }, [apiUrl, dispatch, user]);

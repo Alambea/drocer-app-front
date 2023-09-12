@@ -2,7 +2,10 @@ import { render, screen } from "@testing-library/react";
 import { BrowserRouter, MemoryRouter } from "react-router-dom";
 import userEvent from "@testing-library/user-event";
 import { Auth, User, signInWithPopup, signOut } from "firebase/auth";
-import authHook, { AuthStateHook } from "react-firebase-hooks/auth";
+import authHook, {
+  AuthStateHook,
+  IdTokenHook,
+} from "react-firebase-hooks/auth";
 import { Provider } from "react-redux";
 import App from "./App";
 import { paths } from "../../routers/paths";
@@ -26,14 +29,12 @@ describe("Given an App component", () => {
   const store = setupStore({ recordsState: { records: recordsMock } });
 
   describe("When it is rendered and the user is logged", () => {
-    const user: Partial<User> = {};
-
-    const authStateHookMock: Partial<AuthStateHook> = [user as User];
-
-    authHook.useAuthState = vi.fn().mockReturnValue(authStateHookMock);
-
     test("Then it should show a heading 'Drocer'", () => {
       const expectedHeading = "Drocer";
+      const user: Partial<User> = {};
+      const authStateHookMock: Partial<AuthStateHook> = [user as User];
+
+      authHook.useAuthState = vi.fn().mockReturnValue(authStateHookMock);
 
       render(
         <Provider store={store}>
@@ -53,6 +54,10 @@ describe("Given an App component", () => {
 
     test("Then it should show an image with an alternative text 'Drocer's app logo'", () => {
       const expectedAltText = "Drocer's app logo";
+      const user: Partial<User> = {};
+      const authStateHookMock: Partial<AuthStateHook> = [user as User];
+
+      authHook.useAuthState = vi.fn().mockReturnValue(authStateHookMock);
 
       render(
         <Provider store={store}>
@@ -70,6 +75,10 @@ describe("Given an App component", () => {
     test("Then it should show two links with the text 'Add' and 'Records'", async () => {
       const expectedAddText = /add/i;
       const expectedRecordsText = /records/i;
+      const user: Partial<User> = {};
+      const authStateHookMock: Partial<AuthStateHook> = [user as User];
+
+      authHook.useAuthState = vi.fn().mockReturnValue(authStateHookMock);
 
       render(
         <Provider store={store}>
@@ -120,11 +129,13 @@ describe("Given an App component", () => {
     test("Then it should show a heading 'Records'", async () => {
       const initialPath = paths.home;
       const expectedHeading = "Records";
-      const user: Partial<User> = {};
 
-      const authStateHookMock: Partial<AuthStateHook> = [user as User];
+      const user: Partial<User> = {
+        getIdToken: vi.fn().mockResolvedValue("token"),
+      };
 
-      authHook.useAuthState = vi.fn().mockReturnValue(authStateHookMock);
+      const ifTokenHookMock: Partial<IdTokenHook> = [user as User];
+      authHook.useIdToken = vi.fn().mockReturnValue(ifTokenHookMock);
 
       render(
         <Provider store={store}>
@@ -143,12 +154,11 @@ describe("Given an App component", () => {
   });
 
   describe("When it's rendered and the user isn't logged", () => {
-    const authStateHookMock: Partial<AuthStateHook> = [null];
-
     test("Then it shouldn't show two links with the text 'Add' and 'Records'", () => {
       const expectedAddText = /add/i;
       const expectedRecordsText = /records/i;
 
+      const authStateHookMock: Partial<AuthStateHook> = [null];
       authHook.useAuthState = vi.fn().mockReturnValue(authStateHookMock);
 
       render(
@@ -195,12 +205,12 @@ describe("Given an App component", () => {
   });
 
   describe("When it's rendered, the user isn't logged and tries to enter to '/records' page", () => {
-    const store = setupStore({ recordsState: { records: [] } });
-    const authStateHookMock: Partial<AuthStateHook> = [null];
-
     test("Then it should redirect to /home and show a heading 'Welcome'", async () => {
-      const initialPath = paths.records;
       const headingText = "Welcome";
+
+      const store = setupStore({ recordsState: { records: [] } });
+      const authStateHookMock: Partial<AuthStateHook> = [null];
+      const initialPath = paths.records;
 
       authHook.useAuthState = vi.fn().mockReturnValue(authStateHookMock);
 
