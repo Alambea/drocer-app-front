@@ -1,4 +1,6 @@
 import { useIdToken } from "react-firebase-hooks/auth";
+import { useCallback } from "react";
+
 import { auth } from "../firebase";
 import axios from "axios";
 import { Record, RecordApi } from "../types";
@@ -7,7 +9,7 @@ const useRecordsApi = () => {
   const apiUrl = import.meta.env.VITE_API_URL;
   const [user] = useIdToken(auth);
 
-  const getRecords = async () => {
+  const getRecords = useCallback(async () => {
     const token = await user?.getIdToken();
 
     try {
@@ -46,7 +48,7 @@ const useRecordsApi = () => {
     } catch {
       throw new Error("Couldn't load records");
     }
-  };
+  }, [apiUrl, user]);
 
   return { getRecords };
 };
