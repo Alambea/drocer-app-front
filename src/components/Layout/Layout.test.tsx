@@ -3,6 +3,8 @@ import { BrowserRouter } from "react-router-dom";
 import Layout from "./Layout";
 import { User } from "firebase/auth";
 import auth, { AuthStateHook } from "react-firebase-hooks/auth";
+import { Provider } from "react-redux";
+import { store } from "../../store";
 
 describe("Given an Layout component", () => {
   describe("When it is rendered and the user is logged", () => {
@@ -20,9 +22,11 @@ describe("Given an Layout component", () => {
       const expectedHeading = "Drocer";
 
       render(
-        <BrowserRouter>
-          <Layout />
-        </BrowserRouter>,
+        <Provider store={store}>
+          <BrowserRouter>
+            <Layout />
+          </BrowserRouter>
+        </Provider>,
       );
 
       const heading = screen.getByRole("heading", {
@@ -38,9 +42,11 @@ describe("Given an Layout component", () => {
       const expectedRecordsText = /records/i;
 
       render(
-        <BrowserRouter>
-          <Layout />
-        </BrowserRouter>,
+        <Provider store={store}>
+          <BrowserRouter>
+            <Layout />
+          </BrowserRouter>
+        </Provider>,
       );
       const addLink = await screen.findByRole("link", {
         name: expectedAddText,

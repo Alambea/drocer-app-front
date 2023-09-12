@@ -179,9 +179,11 @@ describe("Given an App component", () => {
       authHook.useAuthState = vi.fn().mockReturnValue(authStateHookMock);
 
       render(
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>,
+        <Provider store={store}>
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+        </Provider>,
       );
 
       const button = await screen.findByRole("button", { name: buttonText });
@@ -196,7 +198,7 @@ describe("Given an App component", () => {
     const store = setupStore({ recordsState: { records: [] } });
     const authStateHookMock: Partial<AuthStateHook> = [null];
 
-    test("Then it should redirect to /home and show a heading 'Welcome'", () => {
+    test("Then it should redirect to /home and show a heading 'Welcome'", async () => {
       const initialPath = paths.records;
       const headingText = "Welcome";
 
@@ -210,7 +212,7 @@ describe("Given an App component", () => {
         </Provider>,
       );
 
-      const heading = screen.getByRole("heading", { name: headingText });
+      const heading = await screen.findByRole("heading", { name: headingText });
 
       expect(heading).toBeInTheDocument();
     });

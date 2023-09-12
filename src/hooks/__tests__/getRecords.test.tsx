@@ -1,3 +1,5 @@
+import { PropsWithChildren } from "react";
+
 import { renderHook } from "@testing-library/react";
 import { errorHandlers } from "../../mocks/handlers";
 import { server } from "../../mocks/server";
@@ -8,6 +10,8 @@ import authHook, {
   IdTokenHook,
 } from "react-firebase-hooks/auth";
 import { User } from "firebase/auth";
+import { setupStore } from "../../store";
+import { Provider } from "react-redux";
 
 const user: Partial<User> = { getIdToken: vi.fn().mockResolvedValue("token") };
 const idTokenHook: Partial<IdTokenHook> = [user as User];
@@ -17,11 +21,17 @@ authHook.useIdToken = vi.fn().mockReturnValue(idTokenHook);
 authHook.useAuthState = vi.fn().mockReturnValue(authStateHookMock);
 
 describe("Given a getRecords function", () => {
+  const wrapper = ({ children }: PropsWithChildren): React.ReactElement => {
+    const store = setupStore({ recordsState: { records: recordsMock } });
+
+    return <Provider store={store}>{children}</Provider>;
+  };
+
   const {
     result: {
       current: { getRecords },
     },
-  } = renderHook(() => useRecordsApi());
+  } = renderHook(() => useRecordsApi(), { wrapper });
 
   describe("When it is called", () => {
     test("Then it should return a list of records when resolving successfully", async () => {
