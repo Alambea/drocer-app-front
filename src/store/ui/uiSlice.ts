@@ -9,11 +9,11 @@ export const uiSlice = createSlice({
   name: "ui",
   initialState: initialUiState,
   reducers: {
-    showLoading: (currentUiState): UiState => ({
+    showLoading: (currentUiState: UiState): UiState => ({
       ...currentUiState,
       isLoading: true,
     }),
-    hideLoading: (currentUiState): UiState => ({
+    hideLoading: (currentUiState: UiState): UiState => ({
       ...currentUiState,
       isLoading: false,
     }),
