@@ -8,6 +8,7 @@ import {
   hideLoadingActionCreator,
   showLoadingActionCreator,
 } from "../store/ui/uiSlice";
+import showFeedback from "../utils/showFeedback";
 
 const useRecordsApi = () => {
   const apiUrl = import.meta.env.VITE_API_URL;
@@ -16,7 +17,15 @@ const useRecordsApi = () => {
 
   const getRecords = useCallback(async () => {
     dispatch(showLoadingActionCreator());
-    const token = await user?.getIdToken();
+
+    if (!user) {
+      dispatch(hideLoadingActionCreator());
+
+      showFeedback("There's no user", "error");
+      throw new Error("There's no user");
+    }
+
+    const token = await user.getIdToken();
 
     try {
       const { data: apiRecords } = await axios.get<{ records: RecordApi[] }>(
@@ -30,11 +39,15 @@ const useRecordsApi = () => {
       }));
 
       dispatch(hideLoadingActionCreator());
+
       return records;
-    } catch {
+    } catch (error: unknown) {
+      const message = (error as Error).message;
+
       dispatch(hideLoadingActionCreator());
 
-      throw new Error("Couldn't load records");
+      showFeedback("Couldn't load records", "error");
+      throw new Error(message);
     }
   }, [apiUrl, dispatch, user]);
 

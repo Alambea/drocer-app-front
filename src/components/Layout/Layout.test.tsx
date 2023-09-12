@@ -10,11 +10,7 @@ describe("Given an Layout component", () => {
   describe("When it is rendered and the user is logged", () => {
     const user: Partial<User> = {};
 
-    const authStateHookMock: Partial<AuthStateHook> = [
-      user as User,
-      false,
-      new Error(""),
-    ];
+    const authStateHookMock: Partial<AuthStateHook> = [user as User];
 
     auth.useAuthState = vi.fn().mockReturnValue(authStateHookMock);
 
