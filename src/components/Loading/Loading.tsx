@@ -1,3 +1,5 @@
+import "./Loading.scss";
+
 const Loading = (): React.ReactElement => {
   return (
     <div className="loading" aria-label="loading">
