@@ -1,10 +1,10 @@
 import { render, screen } from "@testing-library/react";
 import { BrowserRouter } from "react-router-dom";
-import Layout from "./Layout";
 import { User } from "firebase/auth";
 import auth, { AuthStateHook } from "react-firebase-hooks/auth";
 import { Provider } from "react-redux";
 import { store } from "../../store";
+import Layout from "./Layout";
 
 describe("Given an Layout component", () => {
   describe("When it is rendered and the user is logged", () => {

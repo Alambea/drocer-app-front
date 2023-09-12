@@ -1,8 +1,8 @@
 import { render, screen } from "@testing-library/react";
 import { Provider } from "react-redux";
+import { BrowserRouter } from "react-router-dom";
 import { setupStore } from "../../store";
 import { recordsMock } from "../../mocks/recordsMock";
-import { BrowserRouter } from "react-router-dom";
 import RecordsList from "./RecordsList";
 
 describe("Given a RecordList component", () => {

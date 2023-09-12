@@ -1,14 +1,12 @@
 import { Suspense, useEffect } from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
 import { useAppDispatch, useAppSelector } from "../../store";
 import { loadRecordsActionCreator } from "../../store/records/recordsSlice";
-import {
-  LazyNoRecordsInformation,
-  LazyRecordsList,
-} from "../../routers/lazyComponents";
-import "./RecordsListPage.scss";
 import useRecordsApi from "../../hooks/useRecordsApi";
-import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../firebase";
+import RecordsList from "../../components/RecordList/RecordsList";
+import NoRecordsInformation from "../../components/NoRecordsInformation/NoRecordsInformation";
+import "./RecordsListPage.scss";
 
 const RecordsListPage = (): React.ReactElement => {
   const [user] = useAuthState(auth);
@@ -34,12 +32,12 @@ const RecordsListPage = (): React.ReactElement => {
         <>
           <h1 className="records-page__title">Records</h1>
           <Suspense>
-            <LazyRecordsList />
+            <RecordsList />
           </Suspense>
         </>
       ) : (
         <Suspense>
-          <LazyNoRecordsInformation />
+          <NoRecordsInformation />
         </Suspense>
       )}
     </>

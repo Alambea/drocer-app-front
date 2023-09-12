@@ -1,8 +1,8 @@
 import { Navigate, Route, Routes } from "react-router-dom";
+import { Suspense } from "react";
 import Layout from "../Layout/Layout";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import { paths } from "../../routers/paths";
-import { Suspense } from "react";
 import {
   LazyHomePage,
   LazyRecordsListPage,
