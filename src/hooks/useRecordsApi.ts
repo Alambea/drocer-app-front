@@ -1,10 +1,9 @@
 import { useIdToken } from "react-firebase-hooks/auth";
 import { useCallback } from "react";
-
-import { auth } from "../firebase";
 import axios from "axios";
-import { Record, RecordApi } from "../types";
 import { useDispatch } from "react-redux";
+import { auth } from "../firebase";
+import { Record, RecordApi } from "../types";
 import {
   hideLoadingActionCreator,
   showLoadingActionCreator,

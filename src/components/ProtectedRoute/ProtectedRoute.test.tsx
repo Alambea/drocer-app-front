@@ -1,9 +1,9 @@
 import { render, screen } from "@testing-library/react";
-import { paths } from "../../routers/paths";
 import { MemoryRouter } from "react-router-dom";
-import App from "../App/App";
 import authHook, { AuthStateHook } from "react-firebase-hooks/auth";
 import { Provider } from "react-redux";
+import App from "../App/App";
+import { paths } from "../../routers/paths";
 import { store } from "../../store";
 
 describe("Given a ProtectedRoute component", () => {

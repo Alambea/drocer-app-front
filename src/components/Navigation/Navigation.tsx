@@ -1,8 +1,8 @@
 import React from "react";
-import Button from "../Button/Button";
-import { paths } from "../../routers/paths";
 import { NavLink } from "react-router-dom";
 import { signOut } from "firebase/auth";
+import Button from "../Button/Button";
+import { paths } from "../../routers/paths";
 import { auth } from "../../firebase";
 import "./Navigation.scss";
 

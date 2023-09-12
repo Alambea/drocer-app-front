@@ -1,7 +1,7 @@
 import React, { PropsWithChildren } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { auth } from "../../firebase";
 import { Navigate } from "react-router-dom";
+import { auth } from "../../firebase";
 import { paths } from "../../routers/paths";
 
 interface ProtectedRouteProps extends PropsWithChildren {

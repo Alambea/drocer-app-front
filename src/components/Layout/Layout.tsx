@@ -2,10 +2,10 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../firebase";
 import { PropsWithChildren, Suspense } from "react";
 import Header from "../Header/Header";
-import { LazyNavigation } from "../../routers/lazyComponents";
-import "./Layout.scss";
 import Loading from "../Loading/Loading";
 import { useAppSelector } from "../../store";
+import Navigation from "../Navigation/Navigation";
+import "./Layout.scss";
 
 const Layout = ({ children }: PropsWithChildren): React.ReactElement => {
   const isLoading = useAppSelector((state) => state.uiState.isLoading);
@@ -18,7 +18,7 @@ const Layout = ({ children }: PropsWithChildren): React.ReactElement => {
         {children}
         {user && (
           <Suspense>
-            <LazyNavigation />
+            <Navigation />
           </Suspense>
         )}
         {isLoading && <Loading />}
