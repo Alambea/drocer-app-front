@@ -1,23 +1,32 @@
 import { Suspense, useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../store";
-import { recordsData } from "../../data/recordData";
 import { loadRecordsActionCreator } from "../../store/records/recordsSlice";
 import {
   LazyNoRecordsInformation,
   LazyRecordsList,
 } from "../../routers/lazyComponents";
 import "./RecordsListPage.scss";
+import useRecordsApi from "../../hooks/useRecordsApi";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "../../firebase";
 
 const RecordsListPage = (): React.ReactElement => {
-  const dispatch = useAppDispatch();
+  const [user] = useAuthState(auth);
   const records = useAppSelector((state) => state.recordsState.records);
+  const { getRecords } = useRecordsApi();
+  const dispatch = useAppDispatch();
 
   const hasRecords = records.length > 0;
 
   useEffect(() => {
-    const records = recordsData;
-    dispatch(loadRecordsActionCreator(records));
-  }, [dispatch]);
+    if (user) {
+      (async () => {
+        const records = await getRecords();
+
+        dispatch(loadRecordsActionCreator(records));
+      })();
+    }
+  }, [dispatch, getRecords, user]);
 
   return (
     <>
