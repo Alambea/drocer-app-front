@@ -1,9 +1,10 @@
 import React from "react";
 import { Record } from "../../types";
-import "./RecordCard.scss";
 import Button from "../Button/Button";
 import { useAppDispatch } from "../../store";
 import { deleteRecordActionCreator } from "../../store/records/recordsSlice";
+import "./RecordCard.scss";
+import useRecordsApi from "../../hooks/useRecordsApi";
 
 interface RecordCardProps {
   record: Record;
@@ -15,8 +16,10 @@ const RecordCard = ({
   recordPosition,
 }: RecordCardProps): React.ReactElement => {
   const dispatch = useAppDispatch();
+  const { deleteRecord } = useRecordsApi();
 
-  const delteRecordById = (id: string) => {
+  const delteRecordById = async (id: string) => {
+    await deleteRecord(id);
     dispatch(deleteRecordActionCreator(id));
   };
 

@@ -48,6 +48,8 @@ const useRecordsApi = () => {
   }, [apiUrl, dispatch, user]);
 
   const deleteRecord = async (id: string) => {
+    dispatch(showLoadingActionCreator());
+
     try {
       if (!user) {
         throw new Error();
@@ -59,10 +61,15 @@ const useRecordsApi = () => {
         headers: { Authorization: `Bearer ${token}` },
       });
 
+      dispatch(hideLoadingActionCreator());
+      showFeedback("Record deleted successfully", "success");
+
       return message;
     } catch {
-      const message = "Couldn't delete record";
+      const message = "Failed to delete record";
+      dispatch(hideLoadingActionCreator());
 
+      showFeedback(message, "error");
       throw new Error(message);
     }
   };

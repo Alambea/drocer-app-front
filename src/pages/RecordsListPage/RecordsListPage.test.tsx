@@ -2,10 +2,11 @@ import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Provider } from "react-redux";
 import React from "react";
-import { Auth } from "firebase/auth";
+import { Auth, User } from "firebase/auth";
 import RecordsListPage from "./RecordsListPage";
 import { setupStore } from "../../store";
 import { recordIdMock, recordsMock } from "../../mocks/recordsMock";
+import authHook from "react-firebase-hooks/auth";
 
 vi.mock("react", async () => {
   const actual: Auth = await vi.importActual("react");
@@ -64,6 +65,11 @@ describe("Given a RecordsListPage page", () => {
       const recordToDelete = recordsMock.find(
         (record) => record.id === recordIdMock,
       )!;
+
+      const user: Partial<User> = {
+        getIdToken: vi.fn().mockResolvedValue("token"),
+      };
+      authHook.useIdToken = vi.fn().mockReturnValue([user]);
 
       const store = setupStore({ recordsState: { records: recordsMock } });
 

@@ -13,8 +13,8 @@ describe("Given a deleteRecord function", () => {
       return <Provider store={store}>{children}</Provider>;
     };
 
-    test("Then it should throw an error 'Couldn't load records' when rejecting", async () => {
-      const expectedError = new Error("Couldn't delete record");
+    test("Then it should throw an error 'Failed to delete record' when rejecting", async () => {
+      const expectedError = new Error("Failed to delete record");
       const idRecordToDelete = recordIdMock;
 
       const {
