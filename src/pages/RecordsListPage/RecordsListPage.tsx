@@ -1,4 +1,4 @@
-import { Suspense, useEffect } from "react";
+import { useEffect } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useAppDispatch, useAppSelector } from "../../store";
 import { loadRecordsActionCreator } from "../../store/records/recordsSlice";
@@ -9,7 +9,9 @@ import NoRecordsInformation from "../../components/NoRecordsInformation/NoRecord
 import "./RecordsListPage.scss";
 
 const RecordsListPage = (): React.ReactElement => {
-  const [user] = useAuthState(auth);
+  const [user, isLoadingAuth] = useAuthState(auth);
+  const isLoadingUi = useAppSelector((state) => state.uiState.isLoading);
+
   const records = useAppSelector((state) => state.recordsState.records);
   const { getRecords } = useRecordsApi();
   const dispatch = useAppDispatch();
@@ -28,18 +30,14 @@ const RecordsListPage = (): React.ReactElement => {
 
   return (
     <>
-      {hasRecords ? (
-        <>
-          <h1 className="records-page__title">Records</h1>
-          <Suspense>
-            <RecordsList />
-          </Suspense>
-        </>
-      ) : (
-        <Suspense>
-          <NoRecordsInformation />
-        </Suspense>
-      )}
+      {hasRecords
+        ? !isLoadingAuth && (
+            <>
+              <h1 className="records-page__title">Records</h1>
+              <RecordsList />
+            </>
+          )
+        : !isLoadingUi && !isLoadingAuth && <NoRecordsInformation />}
     </>
   );
 };
