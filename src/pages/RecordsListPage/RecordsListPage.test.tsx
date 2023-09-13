@@ -1,10 +1,11 @@
-import { render, screen } from "@testing-library/react";
-import RecordsListPage from "./RecordsListPage";
-import { setupStore } from "../../store";
-import { recordsMock } from "../../mocks/recordsMock";
+import { render, screen, within } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { Provider } from "react-redux";
 import React from "react";
 import { Auth } from "firebase/auth";
+import RecordsListPage from "./RecordsListPage";
+import { setupStore } from "../../store";
+import { recordIdMock, recordsMock } from "../../mocks/recordsMock";
 
 vi.mock("react", async () => {
   const actual: Auth = await vi.importActual("react");
@@ -54,6 +55,38 @@ describe("Given a RecordsListPage page", () => {
       });
 
       expect(heading).toBeInTheDocument();
+    });
+  });
+
+  describe("When it's rendered, has records, and the user clicks on the 'In Rainbows' record delete button", () => {
+    test("Then it shouldn't show the heading 'Radiohead'", async () => {
+      const deleteButtonName = "Delete record";
+      const recordToDelete = recordsMock.find(
+        (record) => record.id === recordIdMock,
+      )!;
+
+      const store = setupStore({ recordsState: { records: recordsMock } });
+
+      render(
+        <Provider store={store}>
+          <React.Suspense>
+            <RecordsListPage />
+          </React.Suspense>
+        </Provider>,
+      );
+
+      const recordHeading = await screen.findByRole("heading", {
+        name: recordToDelete.artist,
+      });
+
+      const deleteButton = within(recordHeading.closest(".record")!).getByRole(
+        "button",
+        { name: deleteButtonName },
+      );
+
+      await userEvent.click(deleteButton);
+
+      expect(recordHeading).not.toBeInTheDocument();
     });
   });
 });
