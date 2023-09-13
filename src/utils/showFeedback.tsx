@@ -1,18 +1,9 @@
 import { toast } from "react-toastify";
 
-const showFeedback = (message: string, type: string): void => {
-  if (type === "error") {
-    toast(message, {
-      position: "top-center",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-    });
-  }
+const showFeedback = (message: string, type: "error" | "success"): void => {
+  toast[type](message, {
+    position: "top-center",
+  });
 };
 
 export default showFeedback;
