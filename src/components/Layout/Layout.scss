@@ -1,3 +1,5 @@
+@use "../../styles/variables/colors";
+
 .main-container {
   display: flex;
   flex-direction: column;
@@ -7,4 +9,36 @@
   max-width: 400px;
   min-height: 100vh;
   padding: 65px 20px 85px 20px;
+}
+
+.Toastify {
+  &__toast-container {
+    top: 90px;
+  }
+
+  &__toast {
+    &--success {
+      background-color: colors.$toast-color-background-success;
+    }
+
+    &--error {
+      background-color: colors.$toast-color-background-error;
+    }
+  }
+
+  &__progress-bar {
+    &--success {
+      background-color: colors.$toast-color-progress-success;
+    }
+
+    &--error {
+      background-color: colors.$toast-color-progress-error;
+    }
+  }
+
+  &__close-button {
+    align-self: center;
+    width: 48px;
+    height: 48px;
+  }
 }
