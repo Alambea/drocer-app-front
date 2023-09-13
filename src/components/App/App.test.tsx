@@ -79,6 +79,7 @@ describe("Given an App component", () => {
       const authStateHookMock: Partial<AuthStateHook> = [user as User];
 
       authHook.useAuthState = vi.fn().mockReturnValue(authStateHookMock);
+      authHook.useIdToken = vi.fn().mockReturnValue([user]);
 
       render(
         <Provider store={store}>
@@ -98,133 +99,135 @@ describe("Given an App component", () => {
       expect(addLink).toBeInTheDocument();
       expect(recordsLink).toBeInTheDocument();
     });
-  });
 
-  describe("When it's rendered, the user is logged and clicks on the button 'Logout'", () => {
-    test("Then the received button's function should be called on click", async () => {
-      const initialPath = paths.records;
-      const buttonText = /logout/i;
+    describe("When it's rendered, the user is logged and clicks on the button 'Logout'", () => {
+      test("Then the received button's function should be called on click", async () => {
+        const initialPath = paths.records;
+        const buttonText = /logout/i;
 
-      const user: Partial<User> = {};
-      const authStateHookMock: Partial<AuthStateHook> = [user as User];
-      authHook.useAuthState = vi.fn().mockReturnValue(authStateHookMock);
+        const user: Partial<User> = {};
+        const authStateHookMock: Partial<AuthStateHook> = [user as User];
+        authHook.useAuthState = vi.fn().mockReturnValue(authStateHookMock);
 
-      render(
-        <Provider store={store}>
-          <MemoryRouter initialEntries={[initialPath]}>
-            <App />
-          </MemoryRouter>
-        </Provider>,
-      );
+        render(
+          <Provider store={store}>
+            <MemoryRouter initialEntries={[initialPath]}>
+              <App />
+            </MemoryRouter>
+          </Provider>,
+        );
 
-      const button = await screen.findByRole("button", { name: buttonText });
+        const button = await screen.findByRole("button", { name: buttonText });
 
-      await userEvent.click(button);
+        await userEvent.click(button);
 
-      expect(signOut).toHaveBeenCalled();
-    });
-  });
-
-  describe("When it's rendered, the user is logged and the path is '/home'", () => {
-    test("Then it should show a heading 'Records'", async () => {
-      const initialPath = paths.home;
-      const expectedHeading = "Records";
-
-      const user: Partial<User> = {
-        getIdToken: vi.fn().mockResolvedValue("token"),
-      };
-
-      const idTokenHookMock: Partial<IdTokenHook> = [user as User];
-      authHook.useIdToken = vi.fn().mockReturnValue(idTokenHookMock);
-
-      render(
-        <Provider store={store}>
-          <MemoryRouter initialEntries={[initialPath]}>
-            <App />
-          </MemoryRouter>
-        </Provider>,
-      );
-
-      const heading = await screen.findByRole("heading", {
-        name: expectedHeading,
+        expect(signOut).toHaveBeenCalled();
       });
-
-      expect(heading).toBeInTheDocument();
     });
-  });
 
-  describe("When it's rendered and the user isn't logged", () => {
-    test("Then it shouldn't show two links with the text 'Add' and 'Records'", () => {
-      const expectedAddText = /add/i;
-      const expectedRecordsText = /records/i;
+    describe("When it's rendered, the user is logged and the path is '/home'", () => {
+      test("Then it should show a heading 'Records'", async () => {
+        const initialPath = paths.home;
+        const expectedHeading = "Records";
 
-      const authStateHookMock: Partial<AuthStateHook> = [null];
-      authHook.useAuthState = vi.fn().mockReturnValue(authStateHookMock);
+        const user: Partial<User> = {
+          getIdToken: vi.fn().mockResolvedValue("token"),
+        };
 
-      render(
-        <Provider store={store}>
-          <BrowserRouter>
-            <App />
-          </BrowserRouter>
-        </Provider>,
-      );
+        const idTokenHookMock: Partial<IdTokenHook> = [user as User];
+        authHook.useIdToken = vi.fn().mockReturnValue(idTokenHookMock);
 
-      const addLink = screen.queryByRole("link", {
-        name: expectedAddText,
+        render(
+          <Provider store={store}>
+            <MemoryRouter initialEntries={[initialPath]}>
+              <App />
+            </MemoryRouter>
+          </Provider>,
+        );
+
+        const heading = await screen.findByRole("heading", {
+          name: expectedHeading,
+        });
+
+        expect(heading).toBeInTheDocument();
       });
-      const recordsLink = screen.queryByRole("link", {
-        name: expectedRecordsText,
+    });
+
+    describe("When it's rendered and the user isn't logged", () => {
+      test("Then it shouldn't show two links with the text 'Add' and 'Records'", () => {
+        const expectedAddText = /add/i;
+        const expectedRecordsText = /records/i;
+
+        const authStateHookMock: Partial<AuthStateHook> = [null];
+        authHook.useAuthState = vi.fn().mockReturnValue(authStateHookMock);
+
+        render(
+          <Provider store={store}>
+            <BrowserRouter>
+              <App />
+            </BrowserRouter>
+          </Provider>,
+        );
+
+        const addLink = screen.queryByRole("link", {
+          name: expectedAddText,
+        });
+        const recordsLink = screen.queryByRole("link", {
+          name: expectedRecordsText,
+        });
+
+        expect(addLink).not.toBeInTheDocument();
+        expect(recordsLink).not.toBeInTheDocument();
       });
-
-      expect(addLink).not.toBeInTheDocument();
-      expect(recordsLink).not.toBeInTheDocument();
     });
-  });
 
-  describe("When it's rendered, the user isn't logged and clicks on the button 'Sign in'", () => {
-    test("Then the received button's function should be called on click", async () => {
-      const buttonText = "Sign in";
-      const authStateHookMock: Partial<AuthStateHook> = [null];
+    describe("When it's rendered, the user isn't logged and clicks on the button 'Sign in'", () => {
+      test("Then the received button's function should be called on click", async () => {
+        const buttonText = "Sign in";
+        const authStateHookMock: Partial<AuthStateHook> = [null];
 
-      authHook.useAuthState = vi.fn().mockReturnValue(authStateHookMock);
+        authHook.useAuthState = vi.fn().mockReturnValue(authStateHookMock);
 
-      render(
-        <Provider store={store}>
-          <BrowserRouter>
-            <App />
-          </BrowserRouter>
-        </Provider>,
-      );
+        render(
+          <Provider store={store}>
+            <BrowserRouter>
+              <App />
+            </BrowserRouter>
+          </Provider>,
+        );
 
-      const button = await screen.findByRole("button", { name: buttonText });
+        const button = await screen.findByRole("button", { name: buttonText });
 
-      await userEvent.click(button);
+        await userEvent.click(button);
 
-      expect(signInWithPopup).toHaveBeenCalled();
+        expect(signInWithPopup).toHaveBeenCalled();
+      });
     });
-  });
 
-  describe("When it's rendered, the user isn't logged and tries to enter to '/records' page", () => {
-    test("Then it should redirect to /home and show a heading 'Welcome'", async () => {
-      const headingText = "Welcome";
+    describe("When it's rendered, the user isn't logged and tries to enter to '/records' page", () => {
+      test("Then it should redirect to /home and show a heading 'Welcome'", async () => {
+        const headingText = "Welcome";
 
-      const store = setupStore({ recordsState: { records: [] } });
-      const authStateHookMock: Partial<AuthStateHook> = [null];
-      const initialPath = paths.records;
+        const store = setupStore({ recordsState: { records: [] } });
+        const authStateHookMock: Partial<AuthStateHook> = [null];
+        const initialPath = paths.records;
 
-      authHook.useAuthState = vi.fn().mockReturnValue(authStateHookMock);
+        authHook.useAuthState = vi.fn().mockReturnValue(authStateHookMock);
 
-      render(
-        <Provider store={store}>
-          <MemoryRouter initialEntries={[initialPath]}>
-            <App />
-          </MemoryRouter>
-        </Provider>,
-      );
+        render(
+          <Provider store={store}>
+            <MemoryRouter initialEntries={[initialPath]}>
+              <App />
+            </MemoryRouter>
+          </Provider>,
+        );
 
-      const heading = await screen.findByRole("heading", { name: headingText });
+        const heading = await screen.findByRole("heading", {
+          name: headingText,
+        });
 
-      expect(heading).toBeInTheDocument();
+        expect(heading).toBeInTheDocument();
+      });
     });
   });
 });

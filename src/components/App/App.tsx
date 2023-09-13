@@ -5,6 +5,7 @@ import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import { paths } from "../../routers/paths";
 import {
   LazyHomePage,
+  LazyNotFoundPage,
   LazyRecordsListPage,
 } from "../../routers/lazyComponents";
 
@@ -40,7 +41,14 @@ const App = (): React.ReactElement => {
             </ProtectedRoute>
           }
         />
-        <Route path="*" element={<Navigate to={paths.home} />} />
+        <Route
+          path="*"
+          element={
+            <Suspense>
+              <LazyNotFoundPage />
+            </Suspense>
+          }
+        />
       </Routes>
     </Layout>
   );
