@@ -20,8 +20,6 @@ const useRecordsApi = () => {
 
     try {
       if (!user) {
-        dispatch(hideLoadingActionCreator());
-
         throw new Error();
       }
 
@@ -40,7 +38,7 @@ const useRecordsApi = () => {
       dispatch(hideLoadingActionCreator());
 
       return records;
-    } catch (error) {
+    } catch {
       const message = "Couldn't load records";
       dispatch(hideLoadingActionCreator());
 
@@ -49,7 +47,27 @@ const useRecordsApi = () => {
     }
   }, [apiUrl, dispatch, user]);
 
-  return { getRecords };
+  const deleteRecord = async (id: string) => {
+    try {
+      if (!user) {
+        throw new Error();
+      }
+
+      const token = await user.getIdToken();
+
+      const { data: message } = await axios.delete(`${apiUrl}/records/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      return message;
+    } catch {
+      const message = "Couldn't delete record";
+
+      throw new Error(message);
+    }
+  };
+
+  return { getRecords, deleteRecord };
 };
 
 export default useRecordsApi;
