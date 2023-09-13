@@ -2,7 +2,7 @@ import { toast } from "react-toastify";
 
 const showFeedback = (message: string, type: string): void => {
   if (type === "error") {
-    toast.error(message, {
+    toast(message, {
       position: "top-center",
       autoClose: 5000,
       hideProgressBar: false,

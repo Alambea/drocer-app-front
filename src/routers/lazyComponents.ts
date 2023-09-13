@@ -5,3 +5,7 @@ export const LazyRecordsListPage = lazy(
 );
 
 export const LazyHomePage = lazy(() => import("../pages/HomePage/HomePage"));
+
+export const LazyNotFoundPage = lazy(
+  () => import("../pages/NotFoundPage/NotFoundPage"),
+);
