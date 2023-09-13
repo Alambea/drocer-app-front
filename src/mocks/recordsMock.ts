@@ -1,6 +1,7 @@
 import { Record, RecordsApi } from "../types";
 
 export const recordIdMock: string = "64fc9c9a5c621a08508d556c";
+export const wrongIdMock: string = "75698c6a5c987a08508d58jy";
 
 export const recordMock: Record = {
   id: "4o099c6a5c987a08508d58jy",
