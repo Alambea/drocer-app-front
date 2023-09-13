@@ -5,23 +5,25 @@ import Header from "../Header/Header";
 import Loading from "../Loading/Loading";
 import { useAppSelector } from "../../store";
 import Navigation from "../Navigation/Navigation";
+import Feedback from "../Feedback/Feedback";
 import "./Layout.scss";
 
 const Layout = ({ children }: PropsWithChildren): React.ReactElement => {
-  const isLoading = useAppSelector((state) => state.uiState.isLoading);
-  const [user] = useAuthState(auth);
+  const isLoadingUi = useAppSelector((state) => state.uiState.isLoading);
+  const [user, isLoadingAuth] = useAuthState(auth);
 
   return (
     <>
       <Header />
       <main className="main-container">
+        <Feedback />
         {children}
         {user && (
           <Suspense>
             <Navigation />
           </Suspense>
         )}
-        {isLoading && <Loading />}
+        {(isLoadingUi || isLoadingAuth) && <Loading />}
       </main>
     </>
   );
