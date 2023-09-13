@@ -1,6 +1,6 @@
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../firebase";
-import { PropsWithChildren, Suspense } from "react";
+import { PropsWithChildren } from "react";
 import Header from "../Header/Header";
 import Loading from "../Loading/Loading";
 import { useAppSelector } from "../../store";
@@ -18,11 +18,7 @@ const Layout = ({ children }: PropsWithChildren): React.ReactElement => {
       <main className="main-container">
         <Feedback />
         {children}
-        {user && (
-          <Suspense>
-            <Navigation />
-          </Suspense>
-        )}
+        {user && <Navigation />}
         {(isLoadingUi || isLoadingAuth) && <Loading />}
       </main>
     </>
