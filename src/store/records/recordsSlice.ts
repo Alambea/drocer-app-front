@@ -17,8 +17,21 @@ export const recordsSlice = createSlice({
       ...currentRecordState,
       records: action.payload,
     }),
+
+    deleteRecord: (
+      currentRecordState,
+      action: PayloadAction<string>,
+    ): RecordsState => ({
+      ...currentRecordState,
+      records: currentRecordState.records.filter(
+        (record) => record.id !== action.payload,
+      ),
+    }),
   },
 });
 
 export const recordsReducer = recordsSlice.reducer;
-export const { loadRecords: loadRecordsActionCreator } = recordsSlice.actions;
+export const {
+  loadRecords: loadRecordsActionCreator,
+  deleteRecord: deleteRecordActionCreator,
+} = recordsSlice.actions;
