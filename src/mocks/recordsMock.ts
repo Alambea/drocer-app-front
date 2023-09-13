@@ -1,7 +1,9 @@
 import { Record, RecordsApi } from "../types";
 
+export const recordIdMock: string = "64fc9c9a5c621a08508d556c";
+
 export const recordMock: Record = {
-  id: "1",
+  id: "4o099c6a5c987a08508d58jy",
   record: "LP1",
   artist: "FKA Twigs",
   cover: "http://example.com/image.png",
@@ -16,7 +18,7 @@ export const recordMock: Record = {
 export const recordsApiMock: RecordsApi = {
   records: [
     {
-      _id: "1",
+      _id: recordIdMock,
       record: "In Rainbows",
       artist: "Radiohead",
       cover: "http://example.com/image.png",
@@ -30,7 +32,7 @@ export const recordsApiMock: RecordsApi = {
       releaseDate: 2007,
     },
     {
-      _id: "2",
+      _id: "1o8c9c6a5c621a08508d598y",
       record: "Third",
       artist: "Portishead",
       cover: "http://example.com/image.png",
@@ -43,7 +45,7 @@ export const recordsApiMock: RecordsApi = {
       releaseDate: 2008,
     },
     {
-      _id: "3",
+      _id: "12hj7c6a5c621a08508d678e",
       record: "Mezzanine",
       artist: "Massive Attack",
       cover: "http://example.com/image.png",
@@ -56,7 +58,7 @@ export const recordsApiMock: RecordsApi = {
       releaseDate: 1998,
     },
     {
-      _id: "4",
+      _id: "73fc9c6a5c621a08508d534j",
       record: "Heliocentric",
       artist: "The Ocean",
       cover: "http://example.com/image.png",
@@ -73,7 +75,7 @@ export const recordsApiMock: RecordsApi = {
 
 export const recordsMock: Record[] = [
   {
-    id: "1",
+    id: recordIdMock,
     record: "In Rainbows",
     artist: "Radiohead",
     cover: "http://example.com/image.png",
@@ -87,7 +89,7 @@ export const recordsMock: Record[] = [
     releaseDate: 2007,
   },
   {
-    id: "2",
+    id: "1o8c9c6a5c621a08508d598y",
     record: "Third",
     artist: "Portishead",
     cover: "http://example.com/image.png",
@@ -100,7 +102,7 @@ export const recordsMock: Record[] = [
     releaseDate: 2008,
   },
   {
-    id: "3",
+    id: "12hj7c6a5c621a08508d678e",
     record: "Mezzanine",
     artist: "Massive Attack",
     cover: "http://example.com/image.png",
@@ -113,7 +115,7 @@ export const recordsMock: Record[] = [
     releaseDate: 1998,
   },
   {
-    id: "4",
+    id: "73fc9c6a5c621a08508d534j",
     record: "Heliocentric",
     artist: "The Ocean",
     cover: "http://example.com/image.png",
