@@ -1,6 +1,9 @@
 import React from "react";
 import { Record } from "../../types";
 import "./RecordCard.scss";
+import Button from "../Button/Button";
+import { useAppDispatch } from "../../store";
+import { deleteRecordActionCreator } from "../../store/records/recordsSlice";
 
 interface RecordCardProps {
   record: Record;
@@ -8,9 +11,15 @@ interface RecordCardProps {
 }
 
 const RecordCard = ({
-  record: { artist, record, releaseDate, cover },
+  record: { id, artist, record, releaseDate, cover },
   recordPosition,
 }: RecordCardProps): React.ReactElement => {
+  const dispatch = useAppDispatch();
+
+  const delteRecordById = (id: string) => {
+    dispatch(deleteRecordActionCreator(id));
+  };
+
   return (
     <article className="record">
       <img
@@ -21,6 +30,21 @@ const RecordCard = ({
         height="250"
         loading={recordPosition > 2 ? "lazy" : "eager"}
       />
+      <Button
+        className="record__button-icon"
+        actionOnClick={() => {
+          delteRecordById(id);
+        }}
+      >
+        <img
+          src="./images/delete_icon.svg"
+          alt="Delete record"
+          className="record__delete-icon"
+          width="35"
+          height="31"
+          loading="eager"
+        />
+      </Button>
       <div className="record__information">
         <h2 className="record__title">{artist}</h2>
         <span className="record__record-release-date">{`${record}, ${releaseDate}`}</span>

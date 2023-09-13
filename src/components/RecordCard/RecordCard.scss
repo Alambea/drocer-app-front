@@ -2,6 +2,7 @@
 @use "../../styles/utils";
 
 .record {
+  position: relative;
   padding: 15px;
   background-color: rgba(colors.$color-primary-light, 0.1);
   border-radius: 4px;
