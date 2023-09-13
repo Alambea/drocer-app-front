@@ -134,8 +134,8 @@ describe("Given an App component", () => {
         getIdToken: vi.fn().mockResolvedValue("token"),
       };
 
-      const ifTokenHookMock: Partial<IdTokenHook> = [user as User];
-      authHook.useIdToken = vi.fn().mockReturnValue(ifTokenHookMock);
+      const idTokenHookMock: Partial<IdTokenHook> = [user as User];
+      authHook.useIdToken = vi.fn().mockReturnValue(idTokenHookMock);
 
       render(
         <Provider store={store}>
