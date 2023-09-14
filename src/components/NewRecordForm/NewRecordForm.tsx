@@ -1,21 +1,22 @@
 import Button from "../Button/Button";
+import "./NewRecordForm.scss";
 
 const NewRecordForm = (): React.ReactElement => {
   return (
     <form className="new-record">
-      <div>
+      <div className="new-record__group">
         <label htmlFor="artist" className="new-record__label">
           Artist
         </label>
         <input type="text" id="artist" className="new-record__input" />
       </div>
-      <div>
+      <div className="new-record__group">
         <label htmlFor="record" className="new-record__label">
           Record
         </label>
         <input type="text" id="record" className="new-record__input" />
       </div>
-      <div>
+      <div className="new-record__group">
         <label htmlFor="releaseDate" className="new-record__label">
           Release Date
         </label>
@@ -27,7 +28,7 @@ const NewRecordForm = (): React.ReactElement => {
           max="2023"
         />
       </div>
-      <div>
+      <div className="new-record__group">
         <label htmlFor="rating" className="new-record__label">
           Rating 1/5
         </label>
@@ -40,37 +41,44 @@ const NewRecordForm = (): React.ReactElement => {
           className="new-record__input"
         />
       </div>
-      <div>
+      <div className="new-record__group">
         <label htmlFor="description" className="new-record__label">
-          Record
+          Description
         </label>
-        <textarea id="description"></textarea>
+        <textarea
+          id="description"
+          className="new-record__input new-record__input--textarea"
+        ></textarea>
       </div>
-      <div>
+      <div className="new-record__group">
         <label htmlFor="length" className="new-record__label">
           Length
         </label>
         <input type="text" id="length" className="new-record__input" />
       </div>
-      <div>
+      <div className="new-record__group">
         <label htmlFor="label" className="new-record__label">
           Label
         </label>
         <input type="text" id="label" className="new-record__input" />
       </div>
-      <div>
+      <div className="new-record__group">
         <label htmlFor="genres" className="new-record__label">
           Genres
         </label>
         <input type="text" id="genres" className="new-record__input" />
       </div>
-      <div>
+      <div className="new-record__group">
         <label htmlFor="cover" className="new-record__label">
           Image URL
         </label>
         <input type="url" id="cover" className="new-record__input" />
       </div>
-      <Button className="new-record__button" actionOnClick={() => {}}>
+      <Button
+        className="new-record__button"
+        disabled={true}
+        actionOnClick={() => {}}
+      >
         Add
       </Button>
     </form>
