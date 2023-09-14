@@ -1,10 +1,12 @@
+import NewRecordForm from "../../components/NewRecordForm/NewRecordForm";
 import "./AddRecordPage.scss";
 
 const AddRecordPage = (): React.ReactElement => {
   return (
-    <article className="add-record">
+    <div className="add-record">
       <h1 className="add-record__title">Add a new record</h1>
-    </article>
+      <NewRecordForm />
+    </div>
   );
 };
 
