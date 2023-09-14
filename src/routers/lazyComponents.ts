@@ -9,3 +9,7 @@ export const LazyHomePage = lazy(() => import("../pages/HomePage/HomePage"));
 export const LazyNotFoundPage = lazy(
   () => import("../pages/NotFoundPage/NotFoundPage"),
 );
+
+export const LazyAddRecordPage = lazy(
+  () => import("../pages/AddRecordPage/AddRecordPage"),
+);
