@@ -7,14 +7,16 @@
   justify-content: center;
   align-items: center;
   background-color: rgba(colors.$color-primary-light, 0.1);
-  padding: 15px 28px;
-  height: 280px;
-  gap: 83px;
+  padding: 28px 15px;
+  margin-top: 58px;
+  margin-bottom: 60px;
   border-radius: 4px;
+  gap: 83px;
 
   &__title {
     text-align: center;
     margin: 0;
+    padding: 0 20px;
     font-weight: 700;
     font-size: utils.pxToRem(36);
     line-height: 46.8px;
