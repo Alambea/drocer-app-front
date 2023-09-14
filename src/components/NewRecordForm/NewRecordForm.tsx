@@ -74,11 +74,7 @@ const NewRecordForm = (): React.ReactElement => {
         </label>
         <input type="url" id="cover" className="new-record__input" />
       </div>
-      <Button
-        className="new-record__button"
-        disabled={true}
-        actionOnClick={() => {}}
-      >
+      <Button className="new-record__button" disabled={true}>
         Add
       </Button>
     </form>
