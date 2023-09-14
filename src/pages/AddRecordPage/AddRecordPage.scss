@@ -1,0 +1,22 @@
+@use "../../styles/variables/colors";
+@use "../../styles/utils";
+
+.add-record {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(colors.$color-primary-light, 0.1);
+  padding: 15px 28px;
+  height: 280px;
+  gap: 83px;
+  border-radius: 4px;
+
+  &__title {
+    text-align: center;
+    margin: 0;
+    font-weight: 700;
+    font-size: utils.pxToRem(36);
+    line-height: 46.8px;
+  }
+}

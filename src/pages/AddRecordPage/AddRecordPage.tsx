@@ -1,3 +1,5 @@
+import "./AddRecordPage.scss";
+
 const AddRecordPage = (): React.ReactElement => {
   return (
     <article className="add-record">
