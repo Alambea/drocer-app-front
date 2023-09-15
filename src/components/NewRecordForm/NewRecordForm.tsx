@@ -1,10 +1,18 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Record } from "../../types";
 import Button from "../Button/Button";
 import "./NewRecordForm.scss";
 
-const NewRecordForm = (): React.ReactElement => {
-  const initialRecordData: Partial<Record> = {
+interface NewRecordFormProps {
+  actionOnSubmit: (newRecord: Omit<Record, "id">) => void;
+}
+
+const NewRecordForm = ({
+  actionOnSubmit,
+}: NewRecordFormProps): React.ReactElement => {
+  const [canSubmit, setCanSubmit] = useState(false);
+
+  const initialRecordData: Omit<Record, "id"> = {
     artist: "",
     record: "",
     releaseDate: 0,
@@ -17,7 +25,7 @@ const NewRecordForm = (): React.ReactElement => {
   };
 
   const [newRecord, setNewRecord] =
-    useState<Partial<Record>>(initialRecordData);
+    useState<Omit<Record, "id">>(initialRecordData);
 
   const addNewRecord = (
     event:
@@ -30,8 +38,22 @@ const NewRecordForm = (): React.ReactElement => {
     }));
   };
 
+  const submit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    actionOnSubmit(newRecord);
+  };
+
+  useEffect(() => {
+    setCanSubmit(
+      Object.values(newRecord).every((value) => {
+        return Boolean(value);
+      }),
+    );
+  }, [newRecord]);
+
   return (
-    <form className="new-record">
+    <form className="new-record" onSubmit={submit}>
       <div className="new-record__group">
         <label htmlFor="artist" className="new-record__label">
           Artist
@@ -72,7 +94,7 @@ const NewRecordForm = (): React.ReactElement => {
       </div>
       <div className="new-record__group">
         <label htmlFor="rating" className="new-record__label">
-          Rating 1/5
+          Rating 0/5
         </label>
         <input
           type="range"
@@ -145,7 +167,7 @@ const NewRecordForm = (): React.ReactElement => {
           onChange={addNewRecord}
         />
       </div>
-      <Button className="new-record__button" disabled={true}>
+      <Button className="new-record__button" disabled={!canSubmit}>
         Add
       </Button>
     </form>
