@@ -9,9 +9,9 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "prepare": "husky install",
-    "test:dev": "vitest --testTimeout=9000",
-    "test": "vitest run --testTimeout=9000",
-    "test:coverage": "vitest run --coverage --testTimeout=9000",
+    "test:dev": "vitest",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage",
     "build-styles": "npx sass src/styles/styles.scss dist/styles/styles.css --no-source-map",
     "build-styles:dev": "npx sass src/styles/styles.scss public/styles/styles.css --watch"
   },
