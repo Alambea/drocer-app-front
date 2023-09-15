@@ -82,10 +82,15 @@ const useRecordsApi = () => {
 
       const token = await user.getIdToken();
 
-      const { data: record } = await axios.post(`${apiUrl}/records`, {
+      const { data: apiRecord } = await axios.post(`${apiUrl}/records`, {
         headers: { Authorization: `Bearer ${token}` },
         body: JSON.stringify(newRecord),
       });
+
+      const record: Record = {
+        ...apiRecord,
+        id: apiRecord._id,
+      };
 
       return record;
     } catch {
