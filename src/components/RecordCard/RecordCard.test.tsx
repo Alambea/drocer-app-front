@@ -4,16 +4,15 @@ import { recordMock } from "../../mocks/recordsMock";
 import { Provider } from "react-redux";
 import { store } from "../../store";
 
-const recordPosition = 1;
-
 describe("Given a RecordCard component", () => {
   describe("When it is rendered", () => {
     test("Then it should show a heading 'FKA Twigs'", () => {
       const headingText = "FKA Twigs";
+      const isLazy = false;
 
       render(
         <Provider store={store}>
-          <RecordCard record={recordMock} recordPosition={recordPosition} />,
+          <RecordCard record={recordMock} isLazy={isLazy} />,
         </Provider>,
       );
 
@@ -24,10 +23,11 @@ describe("Given a RecordCard component", () => {
 
     test("Then it should show an image with an alternative text 'FKA Twigs's cover for LP1'", () => {
       const imgAltText = `${recordMock.artist}'s cover for ${recordMock.record}`;
+      const isLazy = true;
 
       render(
         <Provider store={store}>
-          <RecordCard record={recordMock} recordPosition={recordPosition} />,
+          <RecordCard record={recordMock} isLazy={isLazy} />,
         </Provider>,
       );
 
@@ -38,10 +38,11 @@ describe("Given a RecordCard component", () => {
 
     test("Then it should show a text 'LP1, 2014'", () => {
       const albumReleaseDateText = `${recordMock.record}, ${recordMock.releaseDate}`;
+      const isLazy = false;
 
       render(
         <Provider store={store}>
-          <RecordCard record={recordMock} recordPosition={recordPosition} />,
+          <RecordCard record={recordMock} isLazy={isLazy} />,
         </Provider>,
       );
 
@@ -52,10 +53,11 @@ describe("Given a RecordCard component", () => {
 
     test("Then it should show a button with an alternative text 'Delete record'", () => {
       const buttonIconAltText = "Delete record";
+      const isLazy = false;
 
       render(
         <Provider store={store}>
-          <RecordCard record={recordMock} recordPosition={recordPosition} />,
+          <RecordCard record={recordMock} isLazy={isLazy} />,
         </Provider>,
       );
 
