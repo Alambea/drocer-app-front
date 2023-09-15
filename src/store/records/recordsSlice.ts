@@ -11,7 +11,7 @@ export const recordsSlice = createSlice({
   initialState: initialRecordsState,
   reducers: {
     loadRecords: (
-      currentRecordState,
+      currentRecordState: RecordsState,
       action: PayloadAction<Record[]>,
     ): RecordsState => ({
       ...currentRecordState,
@@ -19,7 +19,7 @@ export const recordsSlice = createSlice({
     }),
 
     deleteRecord: (
-      currentRecordState,
+      currentRecordState: RecordsState,
       action: PayloadAction<string>,
     ): RecordsState => ({
       ...currentRecordState,
@@ -29,11 +29,19 @@ export const recordsSlice = createSlice({
     }),
 
     addRecord: (
-      currentRecordState,
+      currentRecordState: RecordsState,
       action: PayloadAction<Record>,
     ): RecordsState => ({
       ...currentRecordState,
       records: [...currentRecordState.records, action.payload],
+    }),
+
+    loadSelectedRecord: (
+      currentRecordState: RecordsState,
+      action: PayloadAction<Record>,
+    ): RecordsState => ({
+      ...currentRecordState,
+      selectedRecord: action.payload,
     }),
   },
 });
@@ -43,4 +51,5 @@ export const {
   loadRecords: loadRecordsActionCreator,
   deleteRecord: deleteRecordActionCreator,
   addRecord: addRecordActionCreator,
+  loadSelectedRecord: loadSelectedRecordActionCreator,
 } = recordsSlice.actions;
