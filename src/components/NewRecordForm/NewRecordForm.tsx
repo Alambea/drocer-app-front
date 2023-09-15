@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Record } from "../../types";
 import Button from "../Button/Button";
 import "./NewRecordForm.scss";
 
 const NewRecordForm = (): React.ReactElement => {
+  const [canSubmit, setCanSubmit] = useState(false);
+
   const initialRecordData: Partial<Record> = {
     artist: "",
     record: "",
@@ -29,6 +31,14 @@ const NewRecordForm = (): React.ReactElement => {
       [event.target.id]: event.target.value,
     }));
   };
+
+  useEffect(() => {
+    setCanSubmit(
+      Object.values(newRecord).every((value) => {
+        return Boolean(value);
+      }),
+    );
+  }, [newRecord]);
 
   return (
     <form className="new-record">
@@ -72,7 +82,7 @@ const NewRecordForm = (): React.ReactElement => {
       </div>
       <div className="new-record__group">
         <label htmlFor="rating" className="new-record__label">
-          Rating 1/5
+          Rating 0/5
         </label>
         <input
           type="range"
@@ -145,7 +155,7 @@ const NewRecordForm = (): React.ReactElement => {
           onChange={addNewRecord}
         />
       </div>
-      <Button className="new-record__button" disabled={true}>
+      <Button className="new-record__button" disabled={!canSubmit}>
         Add
       </Button>
     </form>

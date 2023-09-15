@@ -8,7 +8,7 @@ describe("Given a NewRecordForm component", () => {
   const artistInputLabel = "Artist";
   const recordInputLabel = "Record";
   const releaseDateInputLabel = "Release Date";
-  const ratingInputLabel = "Rating 1/5";
+  const ratingInputLabel = "Rating 0/5";
   const descriptionInputLabel = "Description";
   const lengthInputLabel = "Length";
   const labelInputLabel = "Label";
@@ -26,7 +26,7 @@ describe("Given a NewRecordForm component", () => {
   const typedCover = recordMock.cover;
 
   describe("When it's rendered", () => {
-    test("Then it should show an 'Artist', 'Record', 'Release Date', 'Rating 1/5', 'Description', 'Length', 'Label', 'Genres', and a 'Image URL' fields", () => {
+    test("Then it should show an 'Artist', 'Record', 'Release Date', 'Rating 0/5', 'Description', 'Length', 'Label', 'Genres', and a 'Image URL' fields", () => {
       render(<NewRecordForm />);
 
       const artistInput = screen.getByLabelText(artistInputLabel);
