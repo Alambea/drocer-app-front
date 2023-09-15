@@ -11,7 +11,6 @@ const Header = (): React.ReactElement => {
         className="header__logo"
         width="37"
         height="26"
-        loading="eager"
       />
     </header>
   );

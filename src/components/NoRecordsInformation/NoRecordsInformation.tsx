@@ -9,7 +9,6 @@ const NoRecordsInformation = (): React.ReactElement => {
         className="no-records-information__logo"
         width="165"
         height="114"
-        loading="eager"
       />
       <h2 className="no-records-information__title">Add your first record</h2>
     </div>

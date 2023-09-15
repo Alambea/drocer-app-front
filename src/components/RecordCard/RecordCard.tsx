@@ -8,12 +8,12 @@ import useRecordsApi from "../../hooks/useRecordsApi";
 
 interface RecordCardProps {
   record: Record;
-  recordPosition: number;
+  isLazy: boolean;
 }
 
 const RecordCard = ({
   record: { id, artist, record, releaseDate, cover },
-  recordPosition,
+  isLazy,
 }: RecordCardProps): React.ReactElement => {
   const dispatch = useAppDispatch();
   const { deleteRecord } = useRecordsApi();
@@ -31,7 +31,7 @@ const RecordCard = ({
         className="record__cover-image"
         width="250"
         height="250"
-        loading={recordPosition > 2 ? "lazy" : "eager"}
+        {...(isLazy && { loading: "lazy" })}
       />
       <Button
         className="record__button-icon"
@@ -45,7 +45,6 @@ const RecordCard = ({
           className="record__delete-icon"
           width="35"
           height="31"
-          loading="eager"
         />
       </Button>
       <div className="record__information">
