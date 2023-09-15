@@ -26,6 +26,8 @@ vi.mock("firebase/auth", async () => {
   };
 });
 
+const userEventConfig = { delay: null };
+
 describe("Given an App component", () => {
   const store = setupStore({ recordsState: { records: recordsMock } });
 
@@ -209,17 +211,23 @@ describe("Given an App component", () => {
         const genresInput = await screen.findByLabelText(genresInputLabel);
         const coverInput = await screen.findByLabelText(coverInputLabel);
 
-        await userEvent.type(artistInput, typedArtist);
-        await userEvent.type(recordInput, typedRecord);
-        await userEvent.type(releaseDateInput, typedReleaseDate.toString());
+        await userEvent.type(artistInput, typedArtist, userEventConfig);
+        await userEvent.type(recordInput, typedRecord, userEventConfig);
+        await userEvent.type(releaseDateInput, typedReleaseDate.toString(), {
+          delay: null,
+        });
         await fireEvent.change(ratingInput, {
           target: { value: selectedRating },
         });
-        await userEvent.type(descriptionInput, typedDescription);
-        await userEvent.type(lengthInput, typedLength);
-        await userEvent.type(labelInput, typedLabel);
-        await userEvent.type(genresInput, typedGenres);
-        await userEvent.type(coverInput, typedCover);
+        await userEvent.type(
+          descriptionInput,
+          typedDescription,
+          userEventConfig,
+        );
+        await userEvent.type(lengthInput, typedLength, userEventConfig);
+        await userEvent.type(labelInput, typedLabel, userEventConfig);
+        await userEvent.type(genresInput, typedGenres, userEventConfig);
+        await userEvent.type(coverInput, typedCover, userEventConfig);
 
         const button = screen.getByRole("button", { name: textButton });
 
