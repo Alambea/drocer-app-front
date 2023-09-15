@@ -74,7 +74,39 @@ const useRecordsApi = () => {
     }
   };
 
-  return { getRecords, deleteRecord };
+  const addRecord = async (newRecord: Omit<Record, "id">) => {
+    try {
+      if (!user) {
+        throw new Error();
+      }
+
+      const token = await user.getIdToken();
+
+      const { data: apiRecord } = await axios.post(
+        `${apiUrl}/records`,
+        newRecord,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        },
+      );
+
+      const record = {
+        ...apiRecord.record,
+        id: apiRecord.record._id,
+      };
+      delete record._id;
+
+      return record;
+    } catch {
+      const message = "Failed to add record";
+      dispatch(hideLoadingActionCreator());
+
+      showFeedback(message, "error");
+      throw new Error(message);
+    }
+  };
+
+  return { getRecords, deleteRecord, addRecord };
 };
 
 export default useRecordsApi;

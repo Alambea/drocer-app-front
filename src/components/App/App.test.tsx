@@ -1,4 +1,5 @@
-import { render, screen } from "@testing-library/react";
+import React from "react";
+import { render, screen, fireEvent } from "@testing-library/react";
 import { BrowserRouter, MemoryRouter } from "react-router-dom";
 import userEvent from "@testing-library/user-event";
 import { Auth, User, signInWithPopup, signOut } from "firebase/auth";
@@ -10,7 +11,7 @@ import { Provider } from "react-redux";
 import App from "./App";
 import { paths } from "../../routers/paths";
 import { setupStore } from "../../store";
-import { recordsMock } from "../../mocks/recordsMock";
+import { recordMock, recordsMock } from "../../mocks/recordsMock";
 
 beforeEach(() => {
   vi.clearAllMocks();
@@ -153,35 +154,114 @@ describe("Given an App component", () => {
       });
     });
 
-    describe("When it's rendered and the user isn't logged", () => {
-      test("Then it shouldn't show two links with the text 'Add' and 'Records'", () => {
-        const expectedAddText = /add/i;
-        const expectedRecordsText = /records/i;
+    describe("When it's rendered, the user is logged and the path is '/add-new-record' and the user types 'FKA Twigs', 'LP1', 2014, 4, 'LP1 is the debut studio...', '40:46', 'Young Turks', 'Avant-pop, electronic, art pop R&B, trip hop' and 'http://example.com/image.png' on each input and clicks on the 'Add' button it shpuld be enabled", () => {
+      test("Then it should show a heading 'Records'", async () => {
+        const initialPath = paths.addRecord;
+        const textButton = "Add";
+        const expectedHeading = "Records";
 
-        const authStateHookMock: Partial<AuthStateHook> = [null];
+        const artistInputLabel = "Artist";
+        const recordInputLabel = "Record";
+        const releaseDateInputLabel = "Release Year";
+        const ratingInputLabel = "Rating 0/5";
+        const descriptionInputLabel = "Description";
+        const lengthInputLabel = "Length";
+        const labelInputLabel = "Label";
+        const genresInputLabel = "Genres";
+        const coverInputLabel = "Image URL";
+
+        const typedArtist = recordMock.artist;
+        const typedRecord = recordMock.record;
+        const typedReleaseDate = recordMock.releaseDate;
+        const selectedRating = recordMock.rating;
+        const typedDescription = recordMock.description;
+        const typedLength = recordMock.length;
+        const typedLabel = recordMock.label;
+        const typedGenres = recordMock.genres;
+        const typedCover = recordMock.cover;
+
+        const user: Partial<User> = {};
+        const authStateHookMock: Partial<AuthStateHook> = [user as User];
+
         authHook.useAuthState = vi.fn().mockReturnValue(authStateHookMock);
 
         render(
           <Provider store={store}>
-            <BrowserRouter>
-              <App />
-            </BrowserRouter>
+            <MemoryRouter initialEntries={[initialPath]}>
+              <React.Suspense>
+                <App />
+              </React.Suspense>
+            </MemoryRouter>
           </Provider>,
         );
 
-        const addLink = screen.queryByRole("link", {
-          name: expectedAddText,
+        const artistInput = await screen.findByLabelText(artistInputLabel);
+        const recordInput = await screen.findByLabelText(recordInputLabel);
+        const releaseDateInput = await screen.findByLabelText(
+          releaseDateInputLabel,
+        );
+        const ratingInput = await screen.findByLabelText(ratingInputLabel);
+        const descriptionInput = await screen.findByLabelText(
+          descriptionInputLabel,
+        );
+        const lengthInput = await screen.findByLabelText(lengthInputLabel);
+        const labelInput = await screen.findByLabelText(labelInputLabel);
+        const genresInput = await screen.findByLabelText(genresInputLabel);
+        const coverInput = await screen.findByLabelText(coverInputLabel);
+
+        await userEvent.type(artistInput, typedArtist);
+        await userEvent.type(recordInput, typedRecord);
+        await userEvent.type(releaseDateInput, typedReleaseDate.toString());
+        await fireEvent.change(ratingInput, {
+          target: { value: selectedRating },
         });
-        const recordsLink = screen.queryByRole("link", {
-          name: expectedRecordsText,
+        await userEvent.type(descriptionInput, typedDescription);
+        await userEvent.type(lengthInput, typedLength);
+        await userEvent.type(labelInput, typedLabel);
+        await userEvent.type(genresInput, typedGenres);
+        await userEvent.type(coverInput, typedCover);
+
+        const button = screen.getByRole("button", { name: textButton });
+
+        await userEvent.click(button);
+
+        const heading = await screen.findByRole("heading", {
+          name: expectedHeading,
         });
 
-        expect(addLink).not.toBeInTheDocument();
-        expect(recordsLink).not.toBeInTheDocument();
+        expect(heading).toBeInTheDocument();
       });
     });
+  });
 
-    describe("When it's rendered, the user isn't logged and clicks on the button 'Sign in'", () => {
+  describe("When it is rendered and the user isn't logged", () => {
+    test("Then it shouldn't show two links with the text 'Add' and 'Records'", () => {
+      const expectedAddText = /add/i;
+      const expectedRecordsText = /records/i;
+
+      const authStateHookMock: Partial<AuthStateHook> = [null];
+      authHook.useAuthState = vi.fn().mockReturnValue(authStateHookMock);
+
+      render(
+        <Provider store={store}>
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+        </Provider>,
+      );
+
+      const addLink = screen.queryByRole("link", {
+        name: expectedAddText,
+      });
+      const recordsLink = screen.queryByRole("link", {
+        name: expectedRecordsText,
+      });
+
+      expect(addLink).not.toBeInTheDocument();
+      expect(recordsLink).not.toBeInTheDocument();
+    });
+
+    describe("And the user clicks on the button 'Sign in'", () => {
       test("Then the received button's function should be called on click", async () => {
         const buttonText = "Sign in";
         const authStateHookMock: Partial<AuthStateHook> = [null];
@@ -204,7 +284,7 @@ describe("Given an App component", () => {
       });
     });
 
-    describe("When it's rendered, the user isn't logged and tries to enter to '/records' page", () => {
+    describe("And the user tries to enter to '/records' page", () => {
       test("Then it should redirect to /home and show a heading 'Welcome'", async () => {
         const headingText = "Welcome";
 

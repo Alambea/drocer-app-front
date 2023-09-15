@@ -80,7 +80,7 @@ const NewRecordForm = ({
       </div>
       <div className="new-record__group">
         <label htmlFor="releaseDate" className="new-record__label">
-          Release Date
+          Release Year
         </label>
         <input
           type="number"
@@ -94,7 +94,7 @@ const NewRecordForm = ({
       </div>
       <div className="new-record__group">
         <label htmlFor="rating" className="new-record__label">
-          Rating 0/5
+          Rating {newRecord.rating}/5
         </label>
         <input
           type="range"
