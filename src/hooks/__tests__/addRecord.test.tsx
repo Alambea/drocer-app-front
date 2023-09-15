@@ -42,7 +42,7 @@ describe("Given an addRecord  function", () => {
 
       const newRecordCreated = await addRecord(recordToAddMock);
 
-      expect(newRecordCreated).toContain(recordMock);
+      expect(recordMock).toStrictEqual(newRecordCreated);
     });
   });
 

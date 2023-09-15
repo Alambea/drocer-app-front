@@ -22,7 +22,7 @@ export const handlers = [
   ),
 
   rest.post(`${import.meta.env.VITE_API_URL}/records`, (_req, res, ctx) => {
-    return res(ctx.status(201), ctx.json(recordApiMock));
+    return res(ctx.status(201), ctx.json({ record: recordApiMock }));
   }),
 ];
 

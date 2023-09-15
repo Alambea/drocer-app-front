@@ -80,7 +80,7 @@ const NewRecordForm = ({
       </div>
       <div className="new-record__group">
         <label htmlFor="releaseDate" className="new-record__label">
-          Release Date
+          Release Year
         </label>
         <input
           type="number"

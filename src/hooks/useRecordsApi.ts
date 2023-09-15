@@ -90,10 +90,11 @@ const useRecordsApi = () => {
         },
       );
 
-      const record: Omit<Record, "_id"> = {
+      const record = {
         ...apiRecord.record,
         id: apiRecord.record._id,
       };
+      delete record._id;
 
       return record;
     } catch {

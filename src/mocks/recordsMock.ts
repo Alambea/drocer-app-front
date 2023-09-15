@@ -44,6 +44,20 @@ export const recordApiMock: RecordApi = {
   releaseDate: 2014,
 };
 
+export const expectedRecordApiMock: Record = {
+  id: "4o099c6a5c987a08508d58jy",
+  record: "LP1",
+  artist: "FKA Twigs",
+  cover: "http://example.com/image.png",
+  description:
+    "LP1 is the debut studio album by English singer-songwriter FKA Twigs, released on 6 August 2014 by Young Turks. Production for the album is handled by FKA Twigs herself, alongside Emile Haynie, Arca, Cy An, Devonté Hynes, Clams Casino, Paul Epworth, Sampha and Tic.",
+  genres: "Avant-pop, electronic, art pop R&B, trip hop",
+  label: "Young Turks",
+  length: "40:46",
+  rating: 4,
+  releaseDate: 2014,
+};
+
 export const recordsApiMock: RecordsApi = {
   records: [
     {
