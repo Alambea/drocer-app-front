@@ -3,10 +3,16 @@ import { Record } from "../../types";
 import Button from "../Button/Button";
 import "./NewRecordForm.scss";
 
-const NewRecordForm = (): React.ReactElement => {
+interface NewRecordFormProps {
+  actionOnSubmit: (newRecord: Omit<Record, "id">) => void;
+}
+
+const NewRecordForm = ({
+  actionOnSubmit,
+}: NewRecordFormProps): React.ReactElement => {
   const [canSubmit, setCanSubmit] = useState(false);
 
-  const initialRecordData: Partial<Record> = {
+  const initialRecordData: Omit<Record, "id"> = {
     artist: "",
     record: "",
     releaseDate: 0,
@@ -19,7 +25,7 @@ const NewRecordForm = (): React.ReactElement => {
   };
 
   const [newRecord, setNewRecord] =
-    useState<Partial<Record>>(initialRecordData);
+    useState<Omit<Record, "id">>(initialRecordData);
 
   const addNewRecord = (
     event:
@@ -32,6 +38,12 @@ const NewRecordForm = (): React.ReactElement => {
     }));
   };
 
+  const submit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    actionOnSubmit(newRecord);
+  };
+
   useEffect(() => {
     setCanSubmit(
       Object.values(newRecord).every((value) => {
@@ -41,7 +53,7 @@ const NewRecordForm = (): React.ReactElement => {
   }, [newRecord]);
 
   return (
-    <form className="new-record">
+    <form className="new-record" onSubmit={submit}>
       <div className="new-record__group">
         <label htmlFor="artist" className="new-record__label">
           Artist

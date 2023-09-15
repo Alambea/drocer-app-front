@@ -1,10 +1,11 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import NewRecordForm from "./NewRecordForm";
-import AddRecordPage from "../../pages/AddRecordPage/AddRecordPage";
 import { recordMock } from "../../mocks/recordsMock";
+import NewRecordForm from "./NewRecordForm";
 
 describe("Given a NewRecordForm component", () => {
+  const mockSubmit = vi.fn();
+
   const artistInputLabel = "Artist";
   const recordInputLabel = "Record";
   const releaseDateInputLabel = "Release Date";
@@ -27,7 +28,7 @@ describe("Given a NewRecordForm component", () => {
 
   describe("When it's rendered", () => {
     test("Then it should show an 'Artist', 'Record', 'Release Date', 'Rating 0/5', 'Description', 'Length', 'Label', 'Genres', and a 'Image URL' fields", () => {
-      render(<NewRecordForm />);
+      render(<NewRecordForm actionOnSubmit={mockSubmit} />);
 
       const artistInput = screen.getByLabelText(artistInputLabel);
       const recordInput = screen.getByLabelText(recordInputLabel);
@@ -53,7 +54,7 @@ describe("Given a NewRecordForm component", () => {
     test("Then it should a button with the text 'Add'", () => {
       const expectedButtonText = "Add";
 
-      render(<AddRecordPage />);
+      render(<NewRecordForm actionOnSubmit={mockSubmit} />);
 
       const button = screen.getByRole("button", {
         name: expectedButtonText,
@@ -61,11 +62,21 @@ describe("Given a NewRecordForm component", () => {
 
       expect(button).toBeInTheDocument();
     });
+
+    test("Then the Add button should be disabled", async () => {
+      const textButton = "Add";
+
+      render(<NewRecordForm actionOnSubmit={mockSubmit} />);
+
+      const button = screen.getByRole("button", { name: textButton });
+
+      expect(button).toBeDisabled();
+    });
   });
 
-  describe("When the user types 'FKA Twigs', 'LP1', 2014, 4, 'LP1 is the debut studio album by English singer-songwriter FKA Twigs, released on 6 August 2014 by Young Turks. Production for the album is handled by FKA Twigs herself, alongside Emile Haynie, Arca, Cy An, Devonté Hynes, Clams Casino, Paul Epworth, Sampha and Tic.', '40:46', 'Young Turks', 'Avant-pop, electronic, art pop R&B, trip hop' and 'http://example.com/image.png' on each input", () => {
+  describe("When the user types 'FKA Twigs', 'LP1', 2014, 4, 'LP1 is the debut studio...', '40:46', 'Young Turks', 'Avant-pop, electronic, art pop R&B, trip hop' and 'http://example.com/image.png' on each input", () => {
     test("Then the inputs should have the typed value", async () => {
-      render(<NewRecordForm />);
+      render(<NewRecordForm actionOnSubmit={mockSubmit} />);
 
       const artistInput = screen.getByLabelText(artistInputLabel);
       const recordInput = screen.getByLabelText(recordInputLabel);
@@ -98,6 +109,40 @@ describe("Given a NewRecordForm component", () => {
       expect(labelInput).toHaveValue(typedLabel);
       expect(genresInput).toHaveValue(typedGenres);
       expect(coverInput).toHaveValue(typedCover);
+    });
+  });
+
+  describe("When the user types 'FKA Twigs', 'LP1', 2014, 4, 'LP1 is the debut studio...', '40:46', 'Young Turks', 'Avant-pop, electronic, art pop R&B, trip hop' and 'http://example.com/image.png' on each input", () => {
+    test("Then the Add button should be enabled", async () => {
+      const textButton = "Add";
+
+      render(<NewRecordForm actionOnSubmit={mockSubmit} />);
+
+      const artistInput = screen.getByLabelText(artistInputLabel);
+      const recordInput = screen.getByLabelText(recordInputLabel);
+      const releaseDateInput = screen.getByLabelText(releaseDateInputLabel);
+      const ratingInput = screen.getByLabelText(ratingInputLabel);
+      const descriptionInput = screen.getByLabelText(descriptionInputLabel);
+      const lengthInput = screen.getByLabelText(lengthInputLabel);
+      const labelInput = screen.getByLabelText(labelInputLabel);
+      const genresInput = screen.getByLabelText(genresInputLabel);
+      const coverInput = screen.getByLabelText(coverInputLabel);
+
+      await userEvent.type(artistInput, typedArtist);
+      await userEvent.type(recordInput, typedRecord);
+      await userEvent.type(releaseDateInput, typedReleaseDate.toString());
+      await fireEvent.change(ratingInput, {
+        target: { value: selectedRating },
+      });
+      await userEvent.type(descriptionInput, typedDescription);
+      await userEvent.type(lengthInput, typedLength);
+      await userEvent.type(labelInput, typedLabel);
+      await userEvent.type(genresInput, typedGenres);
+      await userEvent.type(coverInput, typedCover);
+
+      const button = screen.getByRole("button", { name: textButton });
+
+      expect(button).not.toBeDisabled();
     });
   });
 });
