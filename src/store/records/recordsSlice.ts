@@ -27,6 +27,14 @@ export const recordsSlice = createSlice({
         (record) => record.id !== action.payload,
       ),
     }),
+
+    addRecord: (
+      currentRecordState,
+      action: PayloadAction<Record>,
+    ): RecordsState => ({
+      ...currentRecordState,
+      records: [...currentRecordState.records, action.payload],
+    }),
   },
 });
 
@@ -34,4 +42,5 @@ export const recordsReducer = recordsSlice.reducer;
 export const {
   loadRecords: loadRecordsActionCreator,
   deleteRecord: deleteRecordActionCreator,
+  addRecord: addRecordActionCreator,
 } = recordsSlice.actions;
