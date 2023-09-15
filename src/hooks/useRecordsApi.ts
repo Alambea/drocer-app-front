@@ -75,6 +75,8 @@ const useRecordsApi = () => {
   };
 
   const addRecord = async (newRecord: Omit<Record, "id">) => {
+    dispatch(showLoadingActionCreator());
+
     try {
       if (!user) {
         throw new Error();
@@ -95,6 +97,9 @@ const useRecordsApi = () => {
         id: apiRecord.record._id,
       };
       delete record._id;
+
+      dispatch(hideLoadingActionCreator());
+      showFeedback("Record added successfully", "success");
 
       return record;
     } catch {
