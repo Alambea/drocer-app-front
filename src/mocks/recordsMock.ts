@@ -44,6 +44,20 @@ export const recordApiMock: RecordApi = {
   releaseDate: 2014,
 };
 
+export const recordGetByIdMock = {
+  _id: recordIdMock,
+  record: "In Rainbows",
+  artist: "Radiohead",
+  cover: "http://example.com/image.png",
+  description:
+    "In Rainbows is the seventh studio album by the English rock band Radiohead.",
+  genres: "Art rock, alternative rock, experimental rock, art pop, electronica",
+  label: "Self-released",
+  length: "42:39",
+  rating: 5,
+  releaseDate: 2007,
+};
+
 export const expectedRecordApiMock: Record = {
   id: "4o099c6a5c987a08508d58jy",
   record: "LP1",

@@ -1,6 +1,7 @@
 import { rest } from "msw";
 import {
   recordApiMock,
+  recordGetByIdMock,
   recordIdMock,
   recordsApiMock,
   wrongIdMock,
@@ -24,6 +25,13 @@ export const handlers = [
   rest.post(`${import.meta.env.VITE_API_URL}/records`, (_req, res, ctx) => {
     return res(ctx.status(201), ctx.json({ record: recordApiMock }));
   }),
+
+  rest.get(
+    `${import.meta.env.VITE_API_URL}/records/${recordIdMock}`,
+    (_req, res, ctx) => {
+      return res(ctx.status(200), ctx.json({ record: recordGetByIdMock }));
+    },
+  ),
 ];
 
 export const errorHandlers = [
@@ -44,4 +52,14 @@ export const errorHandlers = [
   rest.post(`${import.meta.env.VITE_API_URL}/records`, (_req, res, ctx) => {
     return res(ctx.status(500), ctx.json({ error: "Couldn't add record" }));
   }),
+
+  rest.get(
+    `${import.meta.env.VITE_API_URL}/records/${wrongIdMock}`,
+    (_req, res, ctx) => {
+      return res(
+        ctx.status(500),
+        ctx.json({ error: "Couldn't retrieve record" }),
+      );
+    },
+  ),
 ];
