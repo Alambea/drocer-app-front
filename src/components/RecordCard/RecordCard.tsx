@@ -5,6 +5,8 @@ import { useAppDispatch } from "../../store";
 import { deleteRecordActionCreator } from "../../store/records/recordsSlice";
 import "./RecordCard.scss";
 import useRecordsApi from "../../hooks/useRecordsApi";
+import { NavLink } from "react-router-dom";
+import { paths } from "../../routers/paths";
 
 interface RecordCardProps {
   record: Record;
@@ -25,14 +27,6 @@ const RecordCard = ({
 
   return (
     <article className="record">
-      <img
-        src={cover}
-        alt={`${artist}'s cover for ${record}`}
-        className="record__cover-image"
-        width="250"
-        height="250"
-        {...(isLazy && { loading: "lazy" })}
-      />
       <Button
         className="record__button-icon"
         actionOnClick={() => {
@@ -47,10 +41,20 @@ const RecordCard = ({
           height="31"
         />
       </Button>
-      <div className="record__information">
-        <h2 className="record__title">{artist}</h2>
-        <span className="record__record-release-date">{`${record}, ${releaseDate}`}</span>
-      </div>
+      <NavLink to={`${paths.records}/${id}`} state={id}>
+        <img
+          src={cover}
+          alt={`${artist}'s cover for ${record}`}
+          className="record__cover-image"
+          width="250"
+          height="250"
+          {...(isLazy && { loading: "lazy" })}
+        />
+        <div className="record__information">
+          <h2 className="record__title">{artist}</h2>
+          <span className="record__record-release-date">{`${record}, ${releaseDate}`}</span>
+        </div>
+      </NavLink>
     </article>
   );
 };
