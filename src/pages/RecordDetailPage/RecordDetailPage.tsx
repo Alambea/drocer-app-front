@@ -6,6 +6,7 @@ import { useAppSelector } from "../../store";
 import useRecordsApi from "../../hooks/useRecordsApi";
 import { auth } from "../../firebase";
 import { loadSelectedRecordActionCreator } from "../../store/records/recordsSlice";
+import "./RecordDetailPage.scss";
 
 const RecordDetailPage = (): React.ReactElement => {
   const record = useAppSelector((state) => state.recordsState.selectedRecord);
