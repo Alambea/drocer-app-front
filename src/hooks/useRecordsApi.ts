@@ -111,32 +111,39 @@ const useRecordsApi = () => {
     }
   };
 
-  const getRecordById = async (id: string) => {
-    try {
-      if (!user) {
-        throw new Error();
+  const getRecordById = useCallback(
+    async (id: string) => {
+      dispatch(showLoadingActionCreator());
+
+      try {
+        if (!user) {
+          throw new Error();
+        }
+
+        const token = await user.getIdToken();
+
+        const { data: apiRecord } = await axios.get(`${apiUrl}/records/${id}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+
+        const record = {
+          ...apiRecord.record,
+          id: apiRecord.record._id,
+        };
+
+        delete record._id;
+        dispatch(hideLoadingActionCreator());
+
+        return record;
+      } catch {
+        const message = "Failed to retrieve record";
+
+        dispatch(hideLoadingActionCreator());
+        throw new Error(message);
       }
-
-      const token = await user.getIdToken();
-
-      const { data: apiRecord } = await axios.get(`${apiUrl}/records/${id}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-
-      const record = {
-        ...apiRecord.record,
-        id: apiRecord.record._id,
-      };
-
-      delete record._id;
-
-      return record;
-    } catch {
-      const message = "Failed to retrieve record";
-
-      throw new Error(message);
-    }
-  };
+    },
+    [apiUrl, dispatch, user],
+  );
 
   return { getRecords, deleteRecord, addRecord, getRecordById };
 };

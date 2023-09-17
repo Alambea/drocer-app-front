@@ -117,7 +117,7 @@ const NewRecordForm = ({
           maxLength={400}
           value={newRecord.description}
           onChange={addNewRecord}
-        ></textarea>
+        />
       </div>
       <div className="new-record__group">
         <label htmlFor="length" className="new-record__label">

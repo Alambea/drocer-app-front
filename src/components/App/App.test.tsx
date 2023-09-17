@@ -1,5 +1,5 @@
 import React from "react";
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { BrowserRouter, MemoryRouter } from "react-router-dom";
 import userEvent from "@testing-library/user-event";
 import { Auth, User, signInWithPopup, signOut } from "firebase/auth";
@@ -11,7 +11,7 @@ import { Provider } from "react-redux";
 import App from "./App";
 import { paths } from "../../routers/paths";
 import { setupStore } from "../../store";
-import { recordMock, recordsMock } from "../../mocks/recordsMock";
+import { recordIdMock, recordMock, recordsMock } from "../../mocks/recordsMock";
 
 beforeEach(() => {
   vi.clearAllMocks();
@@ -103,7 +103,48 @@ describe("Given an App component", () => {
       expect(recordsLink).toBeInTheDocument();
     });
 
-    describe("When it's rendered, the user is logged and clicks on the button 'Logout'", () => {
+    describe(`And the path is '/records/${recordIdMock} and the user click on the Radiohead's cover image'`, () => {
+      test("Then it should show a text 'Self-released'", async () => {
+        const record = recordsMock[0];
+        const initialPath = paths.records;
+        const finalPath = paths.detail;
+        const artistHeading = record.artist;
+        const expectedText = "Self-released";
+
+        const user: Partial<User> = {
+          getIdToken: vi.fn().mockResolvedValue("token"),
+        };
+
+        const idTokenHookMock: Partial<IdTokenHook> = [user as User];
+        authHook.useIdToken = vi.fn().mockReturnValue(idTokenHookMock);
+
+        const authStateHookMock: Partial<AuthStateHook> = [user as User];
+        authHook.useAuthState = vi.fn().mockReturnValue(authStateHookMock);
+
+        render(
+          <MemoryRouter
+            initialEntries={[initialPath, finalPath]}
+            initialIndex={0}
+          >
+            <Provider store={store}>
+              <App />
+            </Provider>
+          </MemoryRouter>,
+        );
+        const link = (
+          await screen.findByRole("heading", { name: artistHeading })
+        ).closest("a")!;
+
+        await userEvent.click(link);
+
+        await waitFor(async () => {
+          const recordLabel = await screen.findByText(expectedText);
+          expect(recordLabel).toBeInTheDocument();
+        });
+      });
+    });
+
+    describe("And the user clicks on the button 'Logout'", () => {
       test("Then the received button's function should be called on click", async () => {
         const initialPath = paths.records;
         const buttonText = /logout/i;
@@ -128,10 +169,10 @@ describe("Given an App component", () => {
       });
     });
 
-    describe("When it's rendered, the user is logged and the path is '/home'", () => {
+    describe("And the path is '/records and the user click on the Radiohead's cover image'", () => {
       test("Then it should show a heading 'Records'", async () => {
-        const initialPath = paths.home;
-        const expectedHeading = "Records";
+        const initialPath = paths.records;
+        const expectedHeading = "Radiohead";
 
         const user: Partial<User> = {
           getIdToken: vi.fn().mockResolvedValue("token"),
@@ -156,7 +197,7 @@ describe("Given an App component", () => {
       });
     });
 
-    describe("When it's rendered, the user is logged and the path is '/add-new-record' and the user types 'FKA Twigs', 'LP1', 2014, 4, 'LP1 is the debut studio...', '40:46', 'Young Turks', 'Avant-pop, electronic, art pop R&B, trip hop' and 'http://example.com/image.png' on each input and clicks on the 'Add' button it shpuld be enabled", () => {
+    describe("And the path is '/add-new-record' and the user types 'FKA Twigs', 'LP1', 2014, 4, 'LP1 is the debut studio...', '40:46', 'Young Turks', 'Avant-pop, electronic, art pop R&B, trip hop' and 'http://example.com/image.png' on each input and clicks on the 'Add' button it should be enabled", () => {
       test("Then it should show a heading 'Records'", async () => {
         const initialPath = paths.addRecord;
         const textButton = "Add";
@@ -182,9 +223,13 @@ describe("Given an App component", () => {
         const typedGenres = recordMock.genres;
         const typedCover = recordMock.cover;
 
-        const user: Partial<User> = {};
+        const user: Partial<User> = {
+          getIdToken: vi.fn().mockResolvedValue("token"),
+        };
         const authStateHookMock: Partial<AuthStateHook> = [user as User];
+        const idTokenHookMock: Partial<IdTokenHook> = [user as User];
 
+        authHook.useIdToken = vi.fn().mockReturnValue(idTokenHookMock);
         authHook.useAuthState = vi.fn().mockReturnValue(authStateHookMock);
 
         render(

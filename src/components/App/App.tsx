@@ -7,6 +7,7 @@ import {
   LazyAddRecordPage,
   LazyHomePage,
   LazyNotFoundPage,
+  LazyRecordDetailPage,
   LazyRecordsListPage,
 } from "../../routers/lazyComponents";
 
@@ -48,6 +49,16 @@ const App = (): React.ReactElement => {
             <ProtectedRoute destinationPath={paths.addRecord}>
               <Suspense>
                 <LazyAddRecordPage />
+              </Suspense>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path={paths.detail}
+          element={
+            <ProtectedRoute destinationPath={paths.detail}>
+              <Suspense>
+                <LazyRecordDetailPage />
               </Suspense>
             </ProtectedRoute>
           }

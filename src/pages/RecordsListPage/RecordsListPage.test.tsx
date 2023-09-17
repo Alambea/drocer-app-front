@@ -7,6 +7,7 @@ import RecordsListPage from "./RecordsListPage";
 import { setupStore } from "../../store";
 import { recordIdMock, recordsMock } from "../../mocks/recordsMock";
 import authHook from "react-firebase-hooks/auth";
+import { BrowserRouter } from "react-router-dom";
 
 vi.mock("react", async () => {
   const actual: Auth = await vi.importActual("react");
@@ -24,9 +25,11 @@ describe("Given a RecordsListPage page", () => {
 
       render(
         <Provider store={store}>
-          <React.Suspense>
-            <RecordsListPage />
-          </React.Suspense>
+          <BrowserRouter>
+            <React.Suspense>
+              <RecordsListPage />
+            </React.Suspense>
+          </BrowserRouter>
         </Provider>,
       );
 
@@ -75,9 +78,11 @@ describe("Given a RecordsListPage page", () => {
 
       render(
         <Provider store={store}>
-          <React.Suspense>
-            <RecordsListPage />
-          </React.Suspense>
+          <BrowserRouter>
+            <React.Suspense>
+              <RecordsListPage />
+            </React.Suspense>
+          </BrowserRouter>
         </Provider>,
       );
 

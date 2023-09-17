@@ -3,6 +3,7 @@ import RecordCard from "./RecordCard";
 import { recordMock } from "../../mocks/recordsMock";
 import { Provider } from "react-redux";
 import { store } from "../../store";
+import { BrowserRouter } from "react-router-dom";
 
 describe("Given a RecordCard component", () => {
   describe("When it is rendered", () => {
@@ -12,7 +13,9 @@ describe("Given a RecordCard component", () => {
 
       render(
         <Provider store={store}>
-          <RecordCard record={recordMock} isLazy={isLazy} />,
+          <BrowserRouter>
+            <RecordCard record={recordMock} isLazy={isLazy} />,
+          </BrowserRouter>
         </Provider>,
       );
 
@@ -27,7 +30,9 @@ describe("Given a RecordCard component", () => {
 
       render(
         <Provider store={store}>
-          <RecordCard record={recordMock} isLazy={isLazy} />,
+          <BrowserRouter>
+            <RecordCard record={recordMock} isLazy={isLazy} />,
+          </BrowserRouter>
         </Provider>,
       );
 
@@ -42,7 +47,9 @@ describe("Given a RecordCard component", () => {
 
       render(
         <Provider store={store}>
-          <RecordCard record={recordMock} isLazy={isLazy} />,
+          <BrowserRouter>
+            <RecordCard record={recordMock} isLazy={isLazy} />,
+          </BrowserRouter>
         </Provider>,
       );
 
@@ -57,7 +64,9 @@ describe("Given a RecordCard component", () => {
 
       render(
         <Provider store={store}>
-          <RecordCard record={recordMock} isLazy={isLazy} />,
+          <BrowserRouter>
+            <RecordCard record={recordMock} isLazy={isLazy} />,
+          </BrowserRouter>
         </Provider>,
       );
 
