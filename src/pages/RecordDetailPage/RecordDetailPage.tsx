@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useEffect } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { useAppSelector } from "../../store";
-import useRecordsApi from "../../hooks/useRecordsApi";
+import { useDispatch } from "react-redux";
+import { useParams } from "react-router-dom";
 import { auth } from "../../firebase";
+import useRecordsApi from "../../hooks/useRecordsApi";
+import { useAppSelector } from "../../store";
 import { loadSelectedRecordActionCreator } from "../../store/records/recordsSlice";
 import "./RecordDetailPage.scss";
 
@@ -15,12 +15,11 @@ const RecordDetailPage = (): React.ReactElement => {
   const { getRecordById } = useRecordsApi();
   const dispatch = useDispatch();
   const { id } = useParams();
-  const [rating, setRating] = useState(record?.rating);
 
   useEffect(() => {
     if (user && id) {
       (async () => {
-        const selectedRecord = await getRecordById(id as string);
+        const selectedRecord = await getRecordById(id);
 
         if (selectedRecord) {
           dispatch(loadSelectedRecordActionCreator(selectedRecord));
@@ -28,10 +27,6 @@ const RecordDetailPage = (): React.ReactElement => {
       })();
     }
   }, [dispatch, getRecordById, id, user]);
-
-  const rateRecord = () => {
-    setRating(rating);
-  };
 
   return !isLoadingAuth && !isLoadingUi && record ? (
     <article className="record-detail">
@@ -43,7 +38,7 @@ const RecordDetailPage = (): React.ReactElement => {
         height="210"
       />
       <img
-        src="..//images/vinyl.webp"
+        src="../images/vinyl.webp"
         alt={"Black vinyl"}
         className="record-detail__cover-vinyl"
         width="210"
@@ -52,17 +47,7 @@ const RecordDetailPage = (): React.ReactElement => {
       <div className="record-detail__information">
         <h2 className="record-detail__artist">{record.artist}</h2>
         <h3 className="record-detail__record_year">{`${record.record},${record.releaseDate}`}</h3>
-        <input
-          type="range"
-          id="rating"
-          min="0"
-          max="5"
-          step="1"
-          className="record-detail__rating"
-          value={rating}
-          onChange={rateRecord}
-          disabled={true}
-        />
+
         <p className="record-detail__description">{record.description}</p>
         <ul>
           <li>

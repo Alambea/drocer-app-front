@@ -34,14 +34,17 @@ const RecordCard = ({
         }}
       >
         <img
-          src="./images/delete_icon.svg"
+          src="/images/delete_icon.svg"
           alt="Delete record"
           className="record__delete-icon"
           width="35"
           height="31"
         />
       </Button>
-      <NavLink to={`${paths.records}/${id}`} state={id}>
+      <NavLink
+        to={`${paths.records}/${id}`}
+        aria-label={`Link to details about ${artist}'s record ${record}`}
+      >
         <img
           src={cover}
           alt={`${artist}'s cover for ${record}`}
