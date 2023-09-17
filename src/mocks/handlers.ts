@@ -32,6 +32,16 @@ export const handlers = [
       return res(ctx.status(200), ctx.json({ record: recordGetByIdMock }));
     },
   ),
+
+  rest.patch(
+    `${import.meta.env.VITE_API_URL}/records/${recordIdMock}`,
+    (_req, res, ctx) => {
+      return res(
+        ctx.status(200),
+        ctx.json({ record: { ...recordApiMock, rating: 5 } }),
+      );
+    },
+  ),
 ];
 
 export const errorHandlers = [
@@ -59,6 +69,16 @@ export const errorHandlers = [
       return res(
         ctx.status(500),
         ctx.json({ error: "Couldn't retrieve record" }),
+      );
+    },
+  ),
+
+  rest.patch(
+    `${import.meta.env.VITE_API_URL}/records/${wrongIdMock}`,
+    (_req, res, ctx) => {
+      return res(
+        ctx.status(304),
+        ctx.json({ error: "Failed to modify record" }),
       );
     },
   ),
