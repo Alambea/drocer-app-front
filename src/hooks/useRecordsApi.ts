@@ -145,7 +145,37 @@ const useRecordsApi = () => {
     [apiUrl, dispatch, user],
   );
 
-  return { getRecords, deleteRecord, addRecord, getRecordById };
+  const modifyRecord = async (id: string, update: Partial<Record>) => {
+    try {
+      if (!user) {
+        throw new Error();
+      }
+
+      const token = await user.getIdToken();
+
+      const { data: apiRecord } = await axios.patch(
+        `${apiUrl}/records/${id}`,
+        update,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        },
+      );
+
+      const record = {
+        ...apiRecord.record,
+        id: apiRecord.record._id,
+      };
+      delete record._id;
+
+      return record;
+    } catch {
+      const message = "Failed to modify record";
+
+      throw new Error(message);
+    }
+  };
+
+  return { getRecords, deleteRecord, addRecord, getRecordById, modifyRecord };
 };
 
 export default useRecordsApi;
