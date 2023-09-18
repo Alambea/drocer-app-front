@@ -52,6 +52,7 @@ export const recordsSlice = createSlice({
       records: currentRecordState.records.map<Record>((record) =>
         record.id === action.payload.id ? { ...action.payload } : { ...record },
       ),
+      selectedRecord: action.payload,
     }),
   },
 });

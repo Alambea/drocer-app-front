@@ -1,7 +1,8 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Record } from "../../types";
 import Button from "../Button/Button";
 import "./NewRecordForm.scss";
+import Rating from "../Rating/Rating";
 
 interface NewRecordFormProps {
   actionOnSubmit: (newRecord: Omit<Record, "id">) => void;
@@ -38,6 +39,10 @@ const NewRecordForm = ({
     }));
   };
 
+  const handleRating = (num: number) => {
+    setNewRecord({ ...newRecord, rating: num });
+  };
+
   const submit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -64,6 +69,7 @@ const NewRecordForm = ({
           className="new-record__input"
           value={newRecord.artist}
           onChange={addNewRecord}
+          aria-required="true"
         />
       </div>
       <div className="new-record__group">
@@ -76,6 +82,7 @@ const NewRecordForm = ({
           className="new-record__input"
           value={newRecord.record}
           onChange={addNewRecord}
+          aria-required="true"
         />
       </div>
       <div className="new-record__group">
@@ -90,22 +97,14 @@ const NewRecordForm = ({
           max="2023"
           value={newRecord.releaseDate === 0 ? "" : newRecord.releaseDate}
           onChange={addNewRecord}
+          aria-required="true"
         />
       </div>
       <div className="new-record__group">
         <label htmlFor="rating" className="new-record__label">
           Rating {newRecord.rating}/5
         </label>
-        <input
-          type="range"
-          id="rating"
-          min="0"
-          max="5"
-          step="1"
-          className="new-record__input"
-          value={newRecord.rating}
-          onChange={addNewRecord}
-        />
+        <Rating value={newRecord.rating} actionOnClick={handleRating} />
       </div>
       <div className="new-record__group">
         <label htmlFor="description" className="new-record__label">
@@ -117,6 +116,7 @@ const NewRecordForm = ({
           maxLength={400}
           value={newRecord.description}
           onChange={addNewRecord}
+          aria-required="true"
         />
       </div>
       <div className="new-record__group">
@@ -129,6 +129,7 @@ const NewRecordForm = ({
           className="new-record__input"
           value={newRecord.length}
           onChange={addNewRecord}
+          aria-required="true"
         />
       </div>
       <div className="new-record__group">
@@ -141,6 +142,7 @@ const NewRecordForm = ({
           className="new-record__input"
           value={newRecord.label}
           onChange={addNewRecord}
+          aria-required="true"
         />
       </div>
       <div className="new-record__group">
@@ -153,6 +155,7 @@ const NewRecordForm = ({
           className="new-record__input"
           value={newRecord.genres}
           onChange={addNewRecord}
+          aria-required="true"
         />
       </div>
       <div className="new-record__group">
@@ -165,9 +168,14 @@ const NewRecordForm = ({
           className="new-record__input"
           value={newRecord.cover}
           onChange={addNewRecord}
+          aria-required="true"
         />
       </div>
-      <Button className="new-record__button" disabled={!canSubmit}>
+      <Button
+        className="new-record__button"
+        type="submit"
+        disabled={!canSubmit}
+      >
         Add
       </Button>
     </form>
