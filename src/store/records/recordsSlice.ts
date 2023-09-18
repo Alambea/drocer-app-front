@@ -43,6 +43,16 @@ export const recordsSlice = createSlice({
       ...currentRecordState,
       selectedRecord: action.payload,
     }),
+
+    modifyRecord: (
+      currentRecordState: RecordsState,
+      action: PayloadAction<Record>,
+    ): RecordsState => ({
+      ...currentRecordState,
+      records: currentRecordState.records.map<Record>((record) =>
+        record.id === action.payload.id ? { ...action.payload } : { ...record },
+      ),
+    }),
   },
 });
 
@@ -52,4 +62,5 @@ export const {
   deleteRecord: deleteRecordActionCreator,
   addRecord: addRecordActionCreator,
   loadSelectedRecord: loadSelectedRecordActionCreator,
+  modifyRecord: modifyRecordActionCreator,
 } = recordsSlice.actions;
