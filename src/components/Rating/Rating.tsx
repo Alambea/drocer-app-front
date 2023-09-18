@@ -1,3 +1,5 @@
+import "./Rating.scss";
+
 interface RatingProps {
   value: number;
   className?: string;
