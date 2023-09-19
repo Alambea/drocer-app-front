@@ -9,13 +9,12 @@ describe("Given a NewRecordForm component", () => {
   const artistInputLabel = "Artist";
   const recordInputLabel = "Record";
   const releaseDateInputLabel = "Release Year";
-  const ratingInputLabel = "Rating 0/5";
   const descriptionInputLabel = "Description";
   const lengthInputLabel = "Length";
   const labelInputLabel = "Label";
   const genresInputLabel = "Genres";
   const coverInputLabel = "Image URL";
-  const rattingButtonName = /star/i;
+  const rattingButtonName = /star number 3/i;
 
   const typedArtist = recordMock.artist;
   const typedRecord = recordMock.record;
@@ -34,7 +33,9 @@ describe("Given a NewRecordForm component", () => {
       const artistInput = screen.getByLabelText(artistInputLabel);
       const recordInput = screen.getByLabelText(recordInputLabel);
       const releaseDateInput = screen.getByLabelText(releaseDateInputLabel);
-      const ratingInput = screen.getByLabelText(ratingInputLabel);
+      const ratingInput = screen.getByRole("button", {
+        name: rattingButtonName,
+      });
       const descriptionInput = screen.getByLabelText(descriptionInputLabel);
       const lengthInput = screen.getByLabelText(lengthInputLabel);
       const labelInput = screen.getByLabelText(labelInputLabel);
@@ -84,7 +85,9 @@ describe("Given a NewRecordForm component", () => {
       const artistInput = screen.getByLabelText(artistInputLabel);
       const recordInput = screen.getByLabelText(recordInputLabel);
       const releaseDateInput = screen.getByLabelText(releaseDateInputLabel);
-      const ratingInput = screen.getByLabelText(ratingInputLabel);
+      const ratingButton = screen.getByRole("button", {
+        name: rattingButtonName,
+      });
       const descriptionInput = screen.getByLabelText(descriptionInputLabel);
       const lengthInput = screen.getByLabelText(lengthInputLabel);
       const labelInput = screen.getByLabelText(labelInputLabel);
@@ -96,7 +99,7 @@ describe("Given a NewRecordForm component", () => {
       await userEvent.type(releaseDateInput, typedReleaseDate.toString(), {
         delay: null,
       });
-      await fireEvent.change(ratingInput, {
+      await fireEvent.change(ratingButton, {
         target: { value: selectedRating },
       });
       await userEvent.type(descriptionInput, typedDescription, userEventConfig);
@@ -108,7 +111,7 @@ describe("Given a NewRecordForm component", () => {
       expect(artistInput).toHaveValue(typedArtist);
       expect(recordInput).toHaveValue(typedRecord);
       expect(releaseDateInput).toHaveValue(typedReleaseDate);
-      expect(ratingInput).toHaveValue(selectedRating.toString());
+      expect(ratingButton).toHaveValue(selectedRating.toString());
       expect(descriptionInput).toHaveValue(typedDescription);
       expect(lengthInput).toHaveValue(typedLength);
       expect(labelInput).toHaveValue(typedLabel);
@@ -127,31 +130,30 @@ describe("Given a NewRecordForm component", () => {
       const artistInput = screen.getByLabelText(artistInputLabel);
       const recordInput = screen.getByLabelText(recordInputLabel);
       const releaseDateInput = screen.getByLabelText(releaseDateInputLabel);
+      const ratingButton = screen.getByRole("button", {
+        name: rattingButtonName,
+      });
       const descriptionInput = screen.getByLabelText(descriptionInputLabel);
       const lengthInput = screen.getByLabelText(lengthInputLabel);
       const labelInput = screen.getByLabelText(labelInputLabel);
       const genresInput = screen.getByLabelText(genresInputLabel);
       const coverInput = screen.getByLabelText(coverInputLabel);
 
-      const ratingButtons = await screen.findAllByRole("button", {
-        name: rattingButtonName,
-      });
-      const ratingButton = ratingButtons[selectedRating];
-
       await userEvent.type(artistInput, typedArtist, userEventConfig);
       await userEvent.type(recordInput, typedRecord, userEventConfig);
+      await userEvent.click(ratingButton, userEventConfig);
       await userEvent.type(releaseDateInput, typedReleaseDate.toString(), {
         delay: null,
       });
-      await userEvent.click(ratingButton, userEventConfig);
+      // await userEvent.click(ratingButton, userEventConfig);
       await userEvent.type(descriptionInput, typedDescription, userEventConfig);
       await userEvent.type(lengthInput, typedLength, userEventConfig);
       await userEvent.type(labelInput, typedLabel, userEventConfig);
       await userEvent.type(genresInput, typedGenres, userEventConfig);
       await userEvent.type(coverInput, typedCover, userEventConfig);
 
-      const button = screen.getByRole("button", { name: textButton });
-
+      const button = await screen.findByRole("button", { name: textButton });
+      screen.debug();
       expect(button).not.toBeDisabled();
     });
   });

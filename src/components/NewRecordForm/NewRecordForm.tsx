@@ -103,8 +103,8 @@ const NewRecordForm = ({
       <div className="new-record__group">
         <label htmlFor="rating" className="new-record__label">
           Rating {newRecord.rating}/5
+          <Rating value={newRecord.rating} actionOnClick={handleRating} />
         </label>
-        <Rating value={newRecord.rating} actionOnClick={handleRating} />
       </div>
       <div className="new-record__group">
         <label htmlFor="description" className="new-record__label">
