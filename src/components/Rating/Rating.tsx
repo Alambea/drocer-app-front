@@ -14,7 +14,6 @@ const Rating = ({ value, actionOnClick }: RatingProps) => {
         const starId = index;
         return (
           <button
-            id="rating"
             key={`star${starId}`}
             type="button"
             onClick={() => actionOnClick(index)}
@@ -29,6 +28,8 @@ const Rating = ({ value, actionOnClick }: RatingProps) => {
                   ? `Solid star number ${index}`
                   : `Outlined star number ${index}`
               }`}
+              width="25"
+              height="23"
             />
           </button>
         );
