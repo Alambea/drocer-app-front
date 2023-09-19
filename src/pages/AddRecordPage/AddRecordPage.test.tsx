@@ -7,11 +7,11 @@ import { recordsMock } from "../../mocks/recordsMock";
 import { BrowserRouter } from "react-router-dom";
 
 describe("Given a AddRecordPage page", () => {
-  const store = setupStore({ recordsState: { records: recordsMock } });
-
   describe("When it's rendered", () => {
     test("Then it should show a heading 'Add a new record'", async () => {
       const expectedTitle = "Add a new record";
+
+      const store = setupStore({ recordsState: { records: recordsMock } });
 
       render(
         <Provider store={store}>

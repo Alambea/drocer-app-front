@@ -12,7 +12,7 @@ export const recordToAddMock: Omit<Record, "id"> = {
   genres: "Avant-pop, electronic, art pop R&B, trip hop",
   label: "Young Turks",
   length: "40:46",
-  rating: 4,
+  rating: 3,
   releaseDate: 2014,
 };
 
@@ -26,7 +26,7 @@ export const recordMock: Record = {
   genres: "Avant-pop, electronic, art pop R&B, trip hop",
   label: "Young Turks",
   length: "40:46",
-  rating: 4,
+  rating: 3,
   releaseDate: 2014,
 };
 
@@ -40,7 +40,7 @@ export const recordApiMock: RecordApi = {
   genres: "Avant-pop, electronic, art pop R&B, trip hop",
   label: "Young Turks",
   length: "40:46",
-  rating: 4,
+  rating: 3,
   releaseDate: 2014,
 };
 
@@ -68,7 +68,7 @@ export const expectedRecordApiMock: Record = {
   genres: "Avant-pop, electronic, art pop R&B, trip hop",
   label: "Young Turks",
   length: "40:46",
-  rating: 4,
+  rating: 3,
   releaseDate: 2014,
 };
 
@@ -124,7 +124,7 @@ export const recordsApiMock: RecordsApi = {
       genres: "Post-metal, post-rock, sludge metal, progressive metal",
       label: "Pelagic, Metal Blade",
       length: "	50:58",
-      rating: 4,
+      rating: 2,
       releaseDate: 2010,
     },
   ],
@@ -181,7 +181,7 @@ export const recordsMock: Record[] = [
     genres: "Post-metal, post-rock, sludge metal, progressive metal",
     label: "Pelagic, Metal Blade",
     length: "	50:58",
-    rating: 4,
+    rating: 2,
     releaseDate: 2010,
   },
 ];

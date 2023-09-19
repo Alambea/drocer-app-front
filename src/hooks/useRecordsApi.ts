@@ -17,7 +17,6 @@ const useRecordsApi = () => {
 
   const getRecords = useCallback(async () => {
     dispatch(showLoadingActionCreator());
-
     try {
       if (!user) {
         throw new Error();
@@ -49,7 +48,6 @@ const useRecordsApi = () => {
 
   const deleteRecord = async (id: string) => {
     dispatch(showLoadingActionCreator());
-
     try {
       if (!user) {
         throw new Error();
@@ -76,7 +74,6 @@ const useRecordsApi = () => {
 
   const addRecord = async (newRecord: Omit<Record, "id">) => {
     dispatch(showLoadingActionCreator());
-
     try {
       if (!user) {
         throw new Error();
@@ -146,6 +143,8 @@ const useRecordsApi = () => {
   );
 
   const modifyRecord = async (id: string, update: Partial<Record>) => {
+    dispatch(showLoadingActionCreator());
+
     try {
       if (!user) {
         throw new Error();
@@ -170,7 +169,9 @@ const useRecordsApi = () => {
       return record;
     } catch {
       const message = "Failed to modify record";
+      dispatch(hideLoadingActionCreator());
 
+      showFeedback(message, "error");
       throw new Error(message);
     }
   };

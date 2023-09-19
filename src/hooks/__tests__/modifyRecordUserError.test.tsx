@@ -8,13 +8,13 @@ import { Record } from "../../types";
 
 describe("Given a modifyRecord function", () => {
   describe("When it's called and there's no user", () => {
-    const wrapper = ({ children }: PropsWithChildren): React.ReactElement => {
-      const store = setupStore({ recordsState: { records: recordsMock } });
-
-      return <Provider store={store}>{children}</Provider>;
-    };
-
     test("Then it should throw an error 'Failed to modify record' when rejecting", async () => {
+      const wrapper = ({ children }: PropsWithChildren): React.ReactElement => {
+        const store = setupStore({ recordsState: { records: recordsMock } });
+
+        return <Provider store={store}>{children}</Provider>;
+      };
+
       const expectedError = new Error("Failed to modify record");
       const recordIdToModify = recordIdMock;
       const updateData: Partial<Record> = {};

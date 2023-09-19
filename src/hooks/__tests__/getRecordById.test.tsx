@@ -27,25 +27,19 @@ describe("Given a getRecordById function", () => {
     test(`Then it should return a message 'Record retrieved successfully' when resolving successfully`, async () => {
       const idToGet = recordIdMock;
       const expectedRecord = recordsMock[0];
-
       const user: Partial<User> = {
-        getIdToken: vi.fn(),
+        getIdToken: vi.fn().mockResolvedValue("token"),
       };
-
       const idTokenHook: Partial<IdTokenHook> = [user as User];
       const authStateHookMock: Partial<AuthStateHook> = [user as User];
-
       authHook.useIdToken = vi.fn().mockReturnValue(idTokenHook);
       authHook.useAuthState = vi.fn().mockReturnValue(authStateHookMock);
-
       const {
         result: {
           current: { getRecordById },
         },
       } = renderHook(() => useRecordsApi(), { wrapper });
-
       const record = await getRecordById(idToGet);
-
       expect(record).toStrictEqual(expectedRecord);
     });
   });
