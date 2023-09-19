@@ -42,6 +42,15 @@ export const handlers = [
       );
     },
   ),
+  rest.patch(
+    `${import.meta.env.VITE_API_URL}/records/73fc9c6a5c621a08508d534j`,
+    (_req, res, ctx) => {
+      return res(
+        ctx.status(200),
+        ctx.json({ record: { ...recordApiMock, rating: 5 } }),
+      );
+    },
+  ),
 ];
 
 export const errorHandlers = [

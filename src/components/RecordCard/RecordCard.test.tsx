@@ -1,9 +1,9 @@
 import { render, screen } from "@testing-library/react";
-import RecordCard from "./RecordCard";
-import { recordMock } from "../../mocks/recordsMock";
 import { Provider } from "react-redux";
-import { store } from "../../store";
 import { BrowserRouter } from "react-router-dom";
+import { recordMock } from "../../mocks/recordsMock";
+import { store } from "../../store";
+import RecordCard from "./RecordCard";
 
 describe("Given a RecordCard component", () => {
   describe("When it is rendered", () => {

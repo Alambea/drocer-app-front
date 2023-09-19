@@ -19,23 +19,23 @@ import useRecordsApi from "../useRecordsApi";
 
 describe("Given an modifyRecord  function", () => {
   describe("When it's called with an id and a update value rating : 5", () => {
-    const wrapper = ({ children }: PropsWithChildren): React.ReactElement => {
-      const store = setupStore({ recordsState: { records: recordsMock } });
-
-      return <Provider store={store}>{children}</Provider>;
-    };
-    const recordToUpdate: Partial<Record> = { rating: 5 };
-    const user: Partial<User> = {
-      getIdToken: vi.fn().mockResolvedValue({}),
-    };
-
-    const idTokenHook: Partial<IdTokenHook> = [user as User];
-    const authStateHookMock: Partial<AuthStateHook> = [user as User];
-
-    authHook.useIdToken = vi.fn().mockReturnValue(idTokenHook);
-    authHook.useAuthState = vi.fn().mockReturnValue(authStateHookMock);
-
     test("Then it should return a record 'LP1' with the property rating 5", async () => {
+      const wrapper = ({ children }: PropsWithChildren): React.ReactElement => {
+        const store = setupStore({ recordsState: { records: recordsMock } });
+
+        return <Provider store={store}>{children}</Provider>;
+      };
+      const recordToUpdate: Partial<Record> = { rating: 5 };
+      const user: Partial<User> = {
+        getIdToken: vi.fn().mockResolvedValue("token"),
+      };
+
+      const idTokenHook: Partial<IdTokenHook> = [user as User];
+      const authStateHookMock: Partial<AuthStateHook> = [user as User];
+
+      authHook.useIdToken = vi.fn().mockReturnValue(idTokenHook);
+      authHook.useAuthState = vi.fn().mockReturnValue(authStateHookMock);
+
       const {
         result: {
           current: { modifyRecord },
@@ -48,6 +48,22 @@ describe("Given an modifyRecord  function", () => {
     });
 
     test("Then it should throw an error 'Failed to modify record' when rejecting", () => {
+      const wrapper = ({ children }: PropsWithChildren): React.ReactElement => {
+        const store = setupStore({ recordsState: { records: recordsMock } });
+
+        return <Provider store={store}>{children}</Provider>;
+      };
+      const recordToUpdate: Partial<Record> = { rating: 5 };
+      const user: Partial<User> = {
+        getIdToken: vi.fn().mockResolvedValue("token"),
+      };
+
+      const idTokenHook: Partial<IdTokenHook> = [user as User];
+      const authStateHookMock: Partial<AuthStateHook> = [user as User];
+
+      authHook.useIdToken = vi.fn().mockReturnValue(idTokenHook);
+      authHook.useAuthState = vi.fn().mockReturnValue(authStateHookMock);
+
       const expectedError = new Error("Failed to modify record");
       server.resetHandlers(...errorHandlers);
 

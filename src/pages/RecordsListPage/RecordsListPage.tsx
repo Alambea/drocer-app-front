@@ -22,7 +22,6 @@ const RecordsListPage = (): React.ReactElement => {
     if (user) {
       (async () => {
         const records = await getRecords();
-
         dispatch(loadRecordsActionCreator(records));
       })();
     }

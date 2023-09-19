@@ -2,17 +2,22 @@ import { useEffect } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
+import Rating from "../../components/Rating/Rating";
 import { auth } from "../../firebase";
 import useRecordsApi from "../../hooks/useRecordsApi";
 import { useAppSelector } from "../../store";
-import { loadSelectedRecordActionCreator } from "../../store/records/recordsSlice";
+import {
+  loadSelectedRecordActionCreator,
+  modifyRecordActionCreator,
+} from "../../store/records/recordsSlice";
 import "./RecordDetailPage.scss";
+import { Record } from "../../types";
 
 const RecordDetailPage = (): React.ReactElement => {
   const record = useAppSelector((state) => state.recordsState.selectedRecord);
   const [user, isLoadingAuth] = useAuthState(auth);
   const isLoadingUi = useAppSelector((state) => state.uiState.isLoading);
-  const { getRecordById } = useRecordsApi();
+  const { getRecordById, modifyRecord } = useRecordsApi();
   const dispatch = useDispatch();
   const { id } = useParams();
 
@@ -27,6 +32,17 @@ const RecordDetailPage = (): React.ReactElement => {
       })();
     }
   }, [dispatch, getRecordById, id, user]);
+
+  const handleRating = async (ratingNumber: number) => {
+    if (record) {
+      const rateUpdate: Partial<Record> = {
+        rating: ratingNumber,
+      };
+      const modifiedRecord = await modifyRecord(record.id, rateUpdate);
+
+      dispatch(modifyRecordActionCreator(modifiedRecord));
+    }
+  };
 
   return !isLoadingAuth && !isLoadingUi && record ? (
     <article className="record-detail">
@@ -47,7 +63,7 @@ const RecordDetailPage = (): React.ReactElement => {
       <div className="record-detail__information">
         <h2 className="record-detail__artist">{record.artist}</h2>
         <h3 className="record-detail__record_year">{`${record.record},${record.releaseDate}`}</h3>
-
+        <Rating value={record.rating} actionOnClick={handleRating} />
         <p className="record-detail__description">{record.description}</p>
         <ul>
           <li>

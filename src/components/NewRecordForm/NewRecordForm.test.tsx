@@ -3,8 +3,6 @@ import userEvent from "@testing-library/user-event";
 import { recordMock } from "../../mocks/recordsMock";
 import NewRecordForm from "./NewRecordForm";
 
-const userEventConfig = { delay: null };
-
 describe("Given a NewRecordForm component", () => {
   const mockSubmit = vi.fn();
 
@@ -17,6 +15,7 @@ describe("Given a NewRecordForm component", () => {
   const labelInputLabel = "Label";
   const genresInputLabel = "Genres";
   const coverInputLabel = "Image URL";
+  const rattingButtonName = /star/i;
 
   const typedArtist = recordMock.artist;
   const typedRecord = recordMock.record;
@@ -78,6 +77,8 @@ describe("Given a NewRecordForm component", () => {
 
   describe("When the user types 'FKA Twigs', 'LP1', 2014, 4, 'LP1 is the debut studio...', '40:46', 'Young Turks', 'Avant-pop, electronic, art pop R&B, trip hop' and 'http://example.com/image.png' on each input", () => {
     test("Then the inputs should have the typed value", async () => {
+      const userEventConfig = { delay: null };
+
       render(<NewRecordForm actionOnSubmit={mockSubmit} />);
 
       const artistInput = screen.getByLabelText(artistInputLabel);
@@ -119,27 +120,30 @@ describe("Given a NewRecordForm component", () => {
   describe("When the user types 'FKA Twigs', 'LP1', 2014, 4, 'LP1 is the debut studio...', '40:46', 'Young Turks', 'Avant-pop, electronic, art pop R&B, trip hop' and 'http://example.com/image.png' on each input", () => {
     test("Then the Add button should be enabled", async () => {
       const textButton = "Add";
+      const userEventConfig = { delay: null };
 
       render(<NewRecordForm actionOnSubmit={mockSubmit} />);
 
       const artistInput = screen.getByLabelText(artistInputLabel);
       const recordInput = screen.getByLabelText(recordInputLabel);
       const releaseDateInput = screen.getByLabelText(releaseDateInputLabel);
-      const ratingInput = screen.getByLabelText(ratingInputLabel);
       const descriptionInput = screen.getByLabelText(descriptionInputLabel);
       const lengthInput = screen.getByLabelText(lengthInputLabel);
       const labelInput = screen.getByLabelText(labelInputLabel);
       const genresInput = screen.getByLabelText(genresInputLabel);
       const coverInput = screen.getByLabelText(coverInputLabel);
 
+      const ratingButtons = await screen.findAllByRole("button", {
+        name: rattingButtonName,
+      });
+      const ratingButton = ratingButtons[selectedRating];
+
       await userEvent.type(artistInput, typedArtist, userEventConfig);
       await userEvent.type(recordInput, typedRecord, userEventConfig);
       await userEvent.type(releaseDateInput, typedReleaseDate.toString(), {
         delay: null,
       });
-      await fireEvent.change(ratingInput, {
-        target: { value: selectedRating },
-      });
+      await userEvent.click(ratingButton, userEventConfig);
       await userEvent.type(descriptionInput, typedDescription, userEventConfig);
       await userEvent.type(lengthInput, typedLength, userEventConfig);
       await userEvent.type(labelInput, typedLabel, userEventConfig);

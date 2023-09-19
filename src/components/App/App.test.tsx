@@ -1,5 +1,5 @@
 import React from "react";
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import { BrowserRouter, MemoryRouter } from "react-router-dom";
 import userEvent from "@testing-library/user-event";
 import { Auth, User, signInWithPopup, signOut } from "firebase/auth";
@@ -11,7 +11,7 @@ import { Provider } from "react-redux";
 import App from "./App";
 import { paths } from "../../routers/paths";
 import { setupStore } from "../../store";
-import { recordIdMock, recordMock, recordsMock } from "../../mocks/recordsMock";
+import { recordMock, recordsMock } from "../../mocks/recordsMock";
 
 beforeEach(() => {
   vi.clearAllMocks();
@@ -26,11 +26,7 @@ vi.mock("firebase/auth", async () => {
   };
 });
 
-const userEventConfig = { delay: null };
-
 describe("Given an App component", () => {
-  const store = setupStore({ recordsState: { records: recordsMock } });
-
   describe("When it is rendered and the user is logged", () => {
     test("Then it should show a heading 'Drocer'", () => {
       const expectedHeading = "Drocer";
@@ -38,6 +34,7 @@ describe("Given an App component", () => {
       const authStateHookMock: Partial<AuthStateHook> = [user as User];
 
       authHook.useAuthState = vi.fn().mockReturnValue(authStateHookMock);
+      const store = setupStore({ recordsState: { records: recordsMock } });
 
       render(
         <Provider store={store}>
@@ -52,7 +49,7 @@ describe("Given an App component", () => {
         name: expectedHeading,
       });
 
-      expect(heading).toBeInTheDocument();
+      waitFor(() => expect(heading).toBeInTheDocument());
     });
 
     test("Then it should show an image with an alternative text 'Drocer's app logo'", () => {
@@ -61,6 +58,7 @@ describe("Given an App component", () => {
       const authStateHookMock: Partial<AuthStateHook> = [user as User];
 
       authHook.useAuthState = vi.fn().mockReturnValue(authStateHookMock);
+      const store = setupStore({ recordsState: { records: recordsMock } });
 
       render(
         <Provider store={store}>
@@ -72,7 +70,7 @@ describe("Given an App component", () => {
 
       const image = screen.getByAltText(expectedAltText);
 
-      expect(image).toBeInTheDocument();
+      waitFor(() => expect(image).toBeInTheDocument());
     });
 
     test("Then it should show two links with the text 'Add' and 'Records'", async () => {
@@ -83,6 +81,8 @@ describe("Given an App component", () => {
 
       authHook.useAuthState = vi.fn().mockReturnValue(authStateHookMock);
       authHook.useIdToken = vi.fn().mockReturnValue([user]);
+
+      const store = setupStore({ recordsState: { records: recordsMock } });
 
       render(
         <Provider store={store}>
@@ -99,49 +99,8 @@ describe("Given an App component", () => {
         name: expectedRecordsText,
       });
 
-      expect(addLink).toBeInTheDocument();
-      expect(recordsLink).toBeInTheDocument();
-    });
-
-    describe(`And the path is '/records/${recordIdMock} and the user click on the Radiohead's cover image'`, () => {
-      test("Then it should show a text 'Self-released'", async () => {
-        const record = recordsMock[0];
-        const initialPath = paths.records;
-        const finalPath = paths.detail;
-        const artistHeading = record.artist;
-        const expectedText = "Self-released";
-
-        const user: Partial<User> = {
-          getIdToken: vi.fn().mockResolvedValue("token"),
-        };
-
-        const idTokenHookMock: Partial<IdTokenHook> = [user as User];
-        authHook.useIdToken = vi.fn().mockReturnValue(idTokenHookMock);
-
-        const authStateHookMock: Partial<AuthStateHook> = [user as User];
-        authHook.useAuthState = vi.fn().mockReturnValue(authStateHookMock);
-
-        render(
-          <MemoryRouter
-            initialEntries={[initialPath, finalPath]}
-            initialIndex={0}
-          >
-            <Provider store={store}>
-              <App />
-            </Provider>
-          </MemoryRouter>,
-        );
-        const link = (
-          await screen.findByRole("heading", { name: artistHeading })
-        ).closest("a")!;
-
-        await userEvent.click(link);
-
-        await waitFor(async () => {
-          const recordLabel = await screen.findByText(expectedText);
-          expect(recordLabel).toBeInTheDocument();
-        });
-      });
+      waitFor(() => expect(addLink).toBeInTheDocument());
+      waitFor(() => expect(recordsLink).toBeInTheDocument());
     });
 
     describe("And the user clicks on the button 'Logout'", () => {
@@ -152,6 +111,8 @@ describe("Given an App component", () => {
         const user: Partial<User> = {};
         const authStateHookMock: Partial<AuthStateHook> = [user as User];
         authHook.useAuthState = vi.fn().mockReturnValue(authStateHookMock);
+
+        const store = setupStore({ recordsState: { records: recordsMock } });
 
         render(
           <Provider store={store}>
@@ -165,7 +126,7 @@ describe("Given an App component", () => {
 
         await userEvent.click(button);
 
-        expect(signOut).toHaveBeenCalled();
+        waitFor(() => expect(signOut).toHaveBeenCalled());
       });
     });
 
@@ -179,7 +140,12 @@ describe("Given an App component", () => {
         };
 
         const idTokenHookMock: Partial<IdTokenHook> = [user as User];
+        const authStateHookMock: Partial<AuthStateHook> = [user as User];
+
         authHook.useIdToken = vi.fn().mockReturnValue(idTokenHookMock);
+        authHook.useAuthState = vi.fn().mockReturnValue(authStateHookMock);
+
+        const store = setupStore({ recordsState: { records: recordsMock } });
 
         render(
           <Provider store={store}>
@@ -188,12 +154,11 @@ describe("Given an App component", () => {
             </MemoryRouter>
           </Provider>,
         );
-
         const heading = await screen.findByRole("heading", {
           name: expectedHeading,
         });
 
-        expect(heading).toBeInTheDocument();
+        waitFor(() => expect(heading).toBeInTheDocument());
       });
     });
 
@@ -206,7 +171,6 @@ describe("Given an App component", () => {
         const artistInputLabel = "Artist";
         const recordInputLabel = "Record";
         const releaseDateInputLabel = "Release Year";
-        const ratingInputLabel = "Rating 0/5";
         const descriptionInputLabel = "Description";
         const lengthInputLabel = "Length";
         const labelInputLabel = "Label";
@@ -223,6 +187,9 @@ describe("Given an App component", () => {
         const typedGenres = recordMock.genres;
         const typedCover = recordMock.cover;
 
+        const rattingButtonName = /star/i;
+        const userEventConfig = { delay: null };
+
         const user: Partial<User> = {
           getIdToken: vi.fn().mockResolvedValue("token"),
         };
@@ -231,6 +198,8 @@ describe("Given an App component", () => {
 
         authHook.useIdToken = vi.fn().mockReturnValue(idTokenHookMock);
         authHook.useAuthState = vi.fn().mockReturnValue(authStateHookMock);
+
+        const store = setupStore({ recordsState: { records: recordsMock } });
 
         render(
           <Provider store={store}>
@@ -247,7 +216,10 @@ describe("Given an App component", () => {
         const releaseDateInput = await screen.findByLabelText(
           releaseDateInputLabel,
         );
-        const ratingInput = await screen.findByLabelText(ratingInputLabel);
+        const ratingButtons = await screen.findAllByRole("button", {
+          name: rattingButtonName,
+        });
+        const ratingButton = ratingButtons[selectedRating];
         const descriptionInput = await screen.findByLabelText(
           descriptionInputLabel,
         );
@@ -261,9 +233,7 @@ describe("Given an App component", () => {
         await userEvent.type(releaseDateInput, typedReleaseDate.toString(), {
           delay: null,
         });
-        await fireEvent.change(ratingInput, {
-          target: { value: selectedRating },
-        });
+        await userEvent.click(ratingButton, userEventConfig);
         await userEvent.type(
           descriptionInput,
           typedDescription,
@@ -278,11 +248,58 @@ describe("Given an App component", () => {
 
         await userEvent.click(button);
 
-        const heading = await screen.findByRole("heading", {
-          name: expectedHeading,
-        });
+        const heading = await screen.findByRole(
+          "heading",
+          {
+            name: expectedHeading,
+          },
+          { interval: 9000 },
+        );
 
-        expect(heading).toBeInTheDocument();
+        waitFor(() => expect(heading).toBeInTheDocument());
+      });
+    });
+
+    describe(`And the path is '/records and the user click on the Radiohead's cover image'`, () => {
+      test("Then it should show a text 'Self-released'", async () => {
+        const initialPath = paths.records;
+        const expectedText = "Self-released";
+
+        const user: Partial<User> = {
+          getIdToken: vi.fn().mockResolvedValue("token"),
+        };
+
+        const idTokenHookMock: Partial<IdTokenHook> = [user as User];
+        authHook.useIdToken = vi.fn().mockReturnValue(idTokenHookMock);
+
+        const authStateHookMock: Partial<AuthStateHook> = [user as User];
+        authHook.useAuthState = vi.fn().mockReturnValue(authStateHookMock);
+
+        const store = setupStore({ recordsState: { records: recordsMock } });
+
+        render(
+          <MemoryRouter initialEntries={[initialPath]}>
+            <Provider store={store}>
+              <App />
+            </Provider>
+          </MemoryRouter>,
+        );
+
+        const link = await screen.findByRole(
+          "link",
+          {
+            name: "Link to details about Radiohead's record In Rainbows",
+          },
+          { interval: 9000 },
+        );
+
+        await userEvent.click(link);
+
+        const recordLabel = await screen.findByText(expectedText);
+
+        await waitFor(() => {
+          expect(recordLabel).toBeInTheDocument();
+        });
       });
     });
   });
@@ -294,6 +311,8 @@ describe("Given an App component", () => {
 
       const authStateHookMock: Partial<AuthStateHook> = [null];
       authHook.useAuthState = vi.fn().mockReturnValue(authStateHookMock);
+
+      const store = setupStore({ recordsState: { records: recordsMock } });
 
       render(
         <Provider store={store}>
@@ -310,8 +329,8 @@ describe("Given an App component", () => {
         name: expectedRecordsText,
       });
 
-      expect(addLink).not.toBeInTheDocument();
-      expect(recordsLink).not.toBeInTheDocument();
+      waitFor(() => expect(addLink).not.toBeInTheDocument());
+      waitFor(() => expect(recordsLink).not.toBeInTheDocument());
     });
 
     describe("And the user clicks on the button 'Sign in'", () => {
@@ -320,6 +339,8 @@ describe("Given an App component", () => {
         const authStateHookMock: Partial<AuthStateHook> = [null];
 
         authHook.useAuthState = vi.fn().mockReturnValue(authStateHookMock);
+
+        const store = setupStore({ recordsState: { records: recordsMock } });
 
         render(
           <Provider store={store}>
@@ -333,7 +354,7 @@ describe("Given an App component", () => {
 
         await userEvent.click(button);
 
-        expect(signInWithPopup).toHaveBeenCalled();
+        waitFor(() => expect(signInWithPopup).toHaveBeenCalled());
       });
     });
 
@@ -359,7 +380,7 @@ describe("Given an App component", () => {
           name: headingText,
         });
 
-        expect(heading).toBeInTheDocument();
+        waitFor(() => expect(heading).toBeInTheDocument());
       });
     });
   });

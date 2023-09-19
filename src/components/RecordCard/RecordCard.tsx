@@ -1,12 +1,16 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
+import useRecordsApi from "../../hooks/useRecordsApi";
+import { paths } from "../../routers/paths";
+import { useAppDispatch } from "../../store";
+import {
+  deleteRecordActionCreator,
+  modifyRecordActionCreator,
+} from "../../store/records/recordsSlice";
 import { Record } from "../../types";
 import Button from "../Button/Button";
-import { useAppDispatch } from "../../store";
-import { deleteRecordActionCreator } from "../../store/records/recordsSlice";
+import Rating from "../Rating/Rating";
 import "./RecordCard.scss";
-import useRecordsApi from "../../hooks/useRecordsApi";
-import { NavLink } from "react-router-dom";
-import { paths } from "../../routers/paths";
 
 interface RecordCardProps {
   record: Record;
@@ -14,15 +18,24 @@ interface RecordCardProps {
 }
 
 const RecordCard = ({
-  record: { id, artist, record, releaseDate, cover },
+  record: { id, artist, record, releaseDate, cover, rating },
   isLazy,
 }: RecordCardProps): React.ReactElement => {
   const dispatch = useAppDispatch();
-  const { deleteRecord } = useRecordsApi();
+  const { deleteRecord, modifyRecord } = useRecordsApi();
 
   const delteRecordById = async (id: string) => {
     await deleteRecord(id);
     dispatch(deleteRecordActionCreator(id));
+  };
+
+  const handleRating = async (ratingNumber: number) => {
+    const rateUpdate: Partial<Record> = {
+      rating: ratingNumber,
+    };
+    const modifiedRecord = await modifyRecord(id, rateUpdate);
+
+    dispatch(modifyRecordActionCreator(modifiedRecord));
   };
 
   return (
@@ -53,11 +66,12 @@ const RecordCard = ({
           height="250"
           {...(isLazy && { loading: "lazy" })}
         />
-        <div className="record__information">
-          <h2 className="record__title">{artist}</h2>
-          <span className="record__record-release-date">{`${record}, ${releaseDate}`}</span>
-        </div>
       </NavLink>
+      <div className="record__information">
+        <h2 className="record__title">{artist}</h2>
+        <span className="record__record-release-date">{`${record}, ${releaseDate}`}</span>
+      </div>
+      <Rating value={rating} actionOnClick={handleRating} />
     </article>
   );
 };
