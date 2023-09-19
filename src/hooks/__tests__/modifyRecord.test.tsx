@@ -16,15 +16,21 @@ import { server } from "../../mocks/server";
 import { setupStore } from "../../store";
 import { Record } from "../../types";
 import useRecordsApi from "../useRecordsApi";
+import { BrowserRouter } from "react-router-dom";
 
 describe("Given an modifyRecord  function", () => {
   describe("When it's called with an id and a update value rating : 5", () => {
-    test("Then it should return a record 'LP1' with the property rating 5", async () => {
-      const wrapper = ({ children }: PropsWithChildren): React.ReactElement => {
-        const store = setupStore({ recordsState: { records: recordsMock } });
+    const wrapper = ({ children }: PropsWithChildren): React.ReactElement => {
+      const store = setupStore({ recordsState: { records: recordsMock } });
 
-        return <Provider store={store}>{children}</Provider>;
-      };
+      return (
+        <BrowserRouter>
+          <Provider store={store}>{children}</Provider>
+        </BrowserRouter>
+      );
+    };
+
+    test("Then it should return a record 'LP1' with the property rating 5", async () => {
       const recordToUpdate: Partial<Record> = { rating: 5 };
       const user: Partial<User> = {
         getIdToken: vi.fn().mockResolvedValue("token"),
@@ -48,11 +54,6 @@ describe("Given an modifyRecord  function", () => {
     });
 
     test("Then it should throw an error 'Failed to modify record' when rejecting", () => {
-      const wrapper = ({ children }: PropsWithChildren): React.ReactElement => {
-        const store = setupStore({ recordsState: { records: recordsMock } });
-
-        return <Provider store={store}>{children}</Provider>;
-      };
       const recordToUpdate: Partial<Record> = { rating: 5 };
       const user: Partial<User> = {
         getIdToken: vi.fn().mockResolvedValue("token"),

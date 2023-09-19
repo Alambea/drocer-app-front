@@ -15,12 +15,17 @@ import authHook, {
 } from "react-firebase-hooks/auth";
 import { setupStore } from "../../store";
 import { Provider } from "react-redux";
+import { BrowserRouter } from "react-router-dom";
 
 describe("Given an addRecord  function", () => {
   const wrapper = ({ children }: PropsWithChildren): React.ReactElement => {
     const store = setupStore({ recordsState: { records: recordsMock } });
 
-    return <Provider store={store}>{children}</Provider>;
+    return (
+      <BrowserRouter>
+        <Provider store={store}>{children}</Provider>
+      </BrowserRouter>
+    );
   };
   describe("When it's called", () => {
     test("Then it should post a record 'LP1' when resolving successfully", async () => {

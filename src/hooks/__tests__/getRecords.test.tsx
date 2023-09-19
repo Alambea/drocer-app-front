@@ -11,12 +11,17 @@ import { server } from "../../mocks/server";
 import useRecordsApi from "../useRecordsApi";
 import { recordsMock } from "../../mocks/recordsMock";
 import { setupStore } from "../../store";
+import { BrowserRouter } from "react-router-dom";
 
 describe("Given a getRecords function", () => {
   const wrapper = ({ children }: PropsWithChildren): React.ReactElement => {
     const store = setupStore({ recordsState: { records: recordsMock } });
 
-    return <Provider store={store}>{children}</Provider>;
+    return (
+      <BrowserRouter>
+        <Provider store={store}>{children}</Provider>
+      </BrowserRouter>
+    );
   };
 
   describe("When it is called", () => {

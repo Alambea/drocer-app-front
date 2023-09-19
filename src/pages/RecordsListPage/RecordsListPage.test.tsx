@@ -51,9 +51,11 @@ describe("Given a RecordsListPage page", () => {
 
       render(
         <Provider store={store}>
-          <React.Suspense>
-            <RecordsListPage />
-          </React.Suspense>
+          <BrowserRouter>
+            <React.Suspense>
+              <RecordsListPage />
+            </React.Suspense>
+          </BrowserRouter>
         </Provider>,
       );
 
