@@ -21,7 +21,7 @@ const Rating = ({ value, actionOnClick }: RatingProps) => {
             className="star-rating__button"
           >
             <img
-              src={`/public/images/${
+              src={`/images/${
                 value >= index ? "star-solid.svg" : "star-outline.svg"
               }`}
               alt={`${
