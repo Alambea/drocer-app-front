@@ -165,6 +165,7 @@ const useRecordsApi = () => {
         id: apiRecord.record._id,
       };
       delete record._id;
+      dispatch(hideLoadingActionCreator());
 
       return record;
     } catch {
