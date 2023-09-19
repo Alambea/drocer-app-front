@@ -1,5 +1,5 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import { signOut } from "firebase/auth";
 import Button from "../Button/Button";
 import { paths } from "../../routers/paths";
@@ -7,6 +7,8 @@ import { auth } from "../../firebase";
 import "./Navigation.scss";
 
 const Navigation = (): React.ReactElement => {
+  const { pathname } = useLocation();
+
   const logout = async () => {
     await signOut(auth);
   };
@@ -27,7 +29,12 @@ const Navigation = (): React.ReactElement => {
           </NavLink>
         </li>
         <li className="nav-bar__element">
-          <NavLink to={paths.records} className="nav-bar__link">
+          <NavLink
+            to={paths.records}
+            className={
+              pathname === paths.records ? "nav-bar__link" : "nav-bar__inactive"
+            }
+          >
             <img
               className="nav-bar__icon"
               src="../images/record_icon.svg"
