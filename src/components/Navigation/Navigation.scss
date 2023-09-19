@@ -24,7 +24,8 @@
   }
 
   &__link,
-  &__button {
+  &__button,
+  &__inactive {
     display: flex;
     flex-direction: column;
     align-items: center;
