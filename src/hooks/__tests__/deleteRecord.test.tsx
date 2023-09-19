@@ -15,12 +15,17 @@ import { renderHook } from "@testing-library/react";
 import useRecordsApi from "../useRecordsApi";
 import { server } from "../../mocks/server";
 import { errorHandlers } from "../../mocks/handlers";
+import { BrowserRouter } from "react-router-dom";
 
 describe("Given a deleteRecord function", () => {
   const wrapper = ({ children }: PropsWithChildren): React.ReactElement => {
     const store = setupStore({ recordsState: { records: recordsMock } });
 
-    return <Provider store={store}>{children}</Provider>;
+    return (
+      <BrowserRouter>
+        <Provider store={store}>{children}</Provider>
+      </BrowserRouter>
+    );
   };
 
   describe(`When it is called with an id ${recordIdMock}`, () => {

@@ -4,13 +4,18 @@ import { Provider } from "react-redux";
 import { PropsWithChildren } from "react";
 import { recordToAddMock, recordsMock } from "../../mocks/recordsMock";
 import { setupStore } from "../../store";
+import { BrowserRouter } from "react-router-dom";
 
 describe("Given a addRecord function", () => {
   describe("When it's called and there's no user", () => {
     const wrapper = ({ children }: PropsWithChildren): React.ReactElement => {
       const store = setupStore({ recordsState: { records: recordsMock } });
 
-      return <Provider store={store}>{children}</Provider>;
+      return (
+        <BrowserRouter>
+          <Provider store={store}>{children}</Provider>
+        </BrowserRouter>
+      );
     };
 
     test("Then it should throw an error 'Failed to add record' when rejecting", async () => {

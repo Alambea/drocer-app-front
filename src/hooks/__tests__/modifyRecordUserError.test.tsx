@@ -5,6 +5,7 @@ import { recordIdMock, recordsMock } from "../../mocks/recordsMock";
 import { setupStore } from "../../store";
 import useRecordsApi from "../useRecordsApi";
 import { Record } from "../../types";
+import { BrowserRouter } from "react-router-dom";
 
 describe("Given a modifyRecord function", () => {
   describe("When it's called and there's no user", () => {
@@ -12,7 +13,11 @@ describe("Given a modifyRecord function", () => {
       const wrapper = ({ children }: PropsWithChildren): React.ReactElement => {
         const store = setupStore({ recordsState: { records: recordsMock } });
 
-        return <Provider store={store}>{children}</Provider>;
+        return (
+          <BrowserRouter>
+            <Provider store={store}>{children}</Provider>
+          </BrowserRouter>
+        );
       };
 
       const expectedError = new Error("Failed to modify record");

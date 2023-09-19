@@ -9,10 +9,13 @@ import {
   showLoadingActionCreator,
 } from "../store/ui/uiSlice";
 import showFeedback from "../utils/showFeedback";
+import { paths } from "../routers/paths";
+import { useNavigate } from "react-router-dom";
 
 const useRecordsApi = () => {
   const apiUrl = import.meta.env.VITE_API_URL;
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [user] = useIdToken(auth);
 
   const getRecords = useCallback(async () => {
@@ -134,12 +137,14 @@ const useRecordsApi = () => {
         return record;
       } catch {
         const message = "Failed to retrieve record";
-
         dispatch(hideLoadingActionCreator());
+
+        showFeedback(message, "error");
+        navigate(paths.records);
         throw new Error(message);
       }
     },
-    [apiUrl, dispatch, user],
+    [apiUrl, dispatch, navigate, user],
   );
 
   const modifyRecord = async (id: string, update: Partial<Record>) => {
