@@ -1,13 +1,14 @@
 import { useEffect } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { Helmet } from "react-helmet";
+import NoRecordsInformation from "../../components/NoRecordsInformation/NoRecordsInformation";
+import RecordsList from "../../components/RecordList/RecordsList";
+import { auth } from "../../firebase";
+import useRecordsApi from "../../hooks/useRecordsApi";
 import { useAppDispatch, useAppSelector } from "../../store";
 import { loadRecordsActionCreator } from "../../store/records/recordsSlice";
-import useRecordsApi from "../../hooks/useRecordsApi";
-import { auth } from "../../firebase";
-import RecordsList from "../../components/RecordList/RecordsList";
-import NoRecordsInformation from "../../components/NoRecordsInformation/NoRecordsInformation";
-import "./RecordsListPage.scss";
 import { preloadImage } from "../../utils/preloadImage";
+import "./RecordsListPage.scss";
 
 const RecordsListPage = (): React.ReactElement => {
   const [user, isLoadingAuth] = useAuthState(auth);
@@ -33,6 +34,10 @@ const RecordsListPage = (): React.ReactElement => {
 
   return (
     <>
+      <Helmet>
+        <title>Drocer - Records</title>
+        <meta name="description" content="List of all your records" />
+      </Helmet>
       {hasRecords
         ? !isLoadingAuth && (
             <>

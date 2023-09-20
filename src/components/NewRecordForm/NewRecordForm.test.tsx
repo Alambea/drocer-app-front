@@ -16,6 +16,7 @@ describe("Given a NewRecordForm component", () => {
   const coverInputLabel = "Image URL";
   const ratingButtonName = "Outlined star number 3";
   const expectedRatingButtonName = "Solid star number 3";
+  const buttonClass = ".rating__button";
 
   const typedArtist = recordMock.artist;
   const typedRecord = recordMock.record;
@@ -34,7 +35,7 @@ describe("Given a NewRecordForm component", () => {
       const recordInput = screen.getByLabelText(recordInputLabel);
       const releaseDateInput = screen.getByLabelText(releaseDateInputLabel);
       const ratingAltImage = await screen.findByAltText(ratingButtonName);
-      const ratingButton = await ratingAltImage.closest(".rating__button");
+      const ratingButton = await ratingAltImage.closest(buttonClass);
       const descriptionInput = screen.getByLabelText(descriptionInputLabel);
       const lengthInput = screen.getByLabelText(lengthInputLabel);
       const labelInput = screen.getByLabelText(labelInputLabel);
@@ -94,9 +95,11 @@ describe("Given a NewRecordForm component", () => {
 
       await userEvent.type(artistInput, typedArtist, userEventConfig);
       await userEvent.type(recordInput, typedRecord, userEventConfig);
-      await userEvent.type(releaseDateInput, typedReleaseDate.toString(), {
-        delay: null,
-      });
+      await userEvent.type(
+        releaseDateInput,
+        typedReleaseDate.toString(),
+        userEventConfig,
+      );
       await userEvent.click(ratingButton, userEventConfig);
       await userEvent.type(descriptionInput, typedDescription, userEventConfig);
       await userEvent.type(lengthInput, typedLength, userEventConfig);
@@ -129,7 +132,7 @@ describe("Given a NewRecordForm component", () => {
       const recordInput = screen.getByLabelText(recordInputLabel);
       const releaseDateInput = screen.getByLabelText(releaseDateInputLabel);
       const ratingButtonImage = await screen.findByAltText(ratingButtonName);
-      const ratingButton = await ratingButtonImage.closest(".rating__button")!;
+      const ratingButton = await ratingButtonImage.closest(buttonClass)!;
       const descriptionInput = screen.getByLabelText(descriptionInputLabel);
       const lengthInput = screen.getByLabelText(lengthInputLabel);
       const labelInput = screen.getByLabelText(labelInputLabel);
@@ -139,9 +142,11 @@ describe("Given a NewRecordForm component", () => {
       await userEvent.type(artistInput, typedArtist, userEventConfig);
       await userEvent.type(recordInput, typedRecord, userEventConfig);
       await userEvent.click(ratingButton, userEventConfig);
-      await userEvent.type(releaseDateInput, typedReleaseDate.toString(), {
-        delay: null,
-      });
+      await userEvent.type(
+        releaseDateInput,
+        typedReleaseDate.toString(),
+        userEventConfig,
+      );
       await userEvent.click(ratingButton, userEventConfig);
       await userEvent.type(descriptionInput, typedDescription, userEventConfig);
       await userEvent.type(lengthInput, typedLength, userEventConfig);
