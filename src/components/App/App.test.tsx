@@ -164,6 +164,7 @@ describe("Given an App component", () => {
 
     describe("And the path is '/add-new-record' and the user types 'FKA Twigs', 'LP1', 2014, 4, 'LP1 is the debut studio...', '40:46', 'Young Turks', 'Avant-pop, electronic, art pop R&B, trip hop' and 'http://example.com/image.png' on each input and clicks on the 'Add' button it should be enabled", () => {
       test("Then it should show a heading 'Records'", async () => {
+        const intervalTime = 9000;
         const initialPath = paths.addRecord;
         const textButton = "Add";
         const expectedHeading = "Records";
@@ -226,9 +227,11 @@ describe("Given an App component", () => {
 
         await userEvent.type(artistInput, typedArtist, userEventConfig);
         await userEvent.type(recordInput, typedRecord, userEventConfig);
-        await userEvent.type(releaseDateInput, typedReleaseDate.toString(), {
-          delay: null,
-        });
+        await userEvent.type(
+          releaseDateInput,
+          typedReleaseDate.toString(),
+          userEventConfig,
+        );
         await userEvent.click(ratingButton, userEventConfig);
         await userEvent.type(
           descriptionInput,
@@ -249,7 +252,7 @@ describe("Given an App component", () => {
           {
             name: expectedHeading,
           },
-          { interval: 9000 },
+          { interval: intervalTime },
         );
 
         waitFor(() => expect(heading).toBeInTheDocument());
@@ -258,6 +261,7 @@ describe("Given an App component", () => {
 
     describe(`And the path is '/records and the user click on the Radiohead's cover image'`, () => {
       test("Then it should show a text 'Self-released'", async () => {
+        const intervalTime = 9000;
         const initialPath = paths.records;
         const expectedText = "Self-released";
 
@@ -286,7 +290,7 @@ describe("Given an App component", () => {
           {
             name: "Link to details about Radiohead's record In Rainbows",
           },
-          { interval: 9000 },
+          { interval: intervalTime },
         );
 
         await userEvent.click(link);
