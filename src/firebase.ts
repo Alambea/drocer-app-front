@@ -1,5 +1,10 @@
 import { initializeApp } from "firebase/app";
-import { GithubAuthProvider, getAuth } from "firebase/auth";
+import {
+  GithubAuthProvider,
+  browserLocalPersistence,
+  indexedDBLocalPersistence,
+  initializeAuth,
+} from "firebase/auth";
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
@@ -11,5 +16,7 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-export const auth = getAuth(app);
+export const auth = initializeAuth(app, {
+  persistence: [indexedDBLocalPersistence, browserLocalPersistence],
+});
 export const gitHubProvider = new GithubAuthProvider();
