@@ -7,6 +7,7 @@ import { auth } from "../../firebase";
 import RecordsList from "../../components/RecordList/RecordsList";
 import NoRecordsInformation from "../../components/NoRecordsInformation/NoRecordsInformation";
 import "./RecordsListPage.scss";
+import { preloadImage } from "../../utils/preloadImage";
 
 const RecordsListPage = (): React.ReactElement => {
   const [user, isLoadingAuth] = useAuthState(auth);
@@ -22,7 +23,10 @@ const RecordsListPage = (): React.ReactElement => {
     if (user) {
       (async () => {
         const records = await getRecords();
+
         dispatch(loadRecordsActionCreator(records));
+
+        preloadImage(records[0].cover);
       })();
     }
   }, [dispatch, getRecords, user]);
