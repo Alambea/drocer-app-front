@@ -8,33 +8,40 @@ interface RatingProps {
 
 const Rating = ({ value, actionOnClick }: RatingProps) => {
   return (
-    <div className="star-rating">
+    <>
       {[...Array(5)].map((_star, index) => {
         index += 1;
         const starId = index;
         return (
-          <button
+          <label
+            htmlFor={`rating${starId}`}
             key={`star${starId}`}
-            type="button"
-            onClick={() => actionOnClick(index)}
-            className="star-rating__button"
+            className="rating-label"
           >
-            <img
-              src={`/images/${
-                value >= index ? "star-solid.svg" : "star-outline.svg"
-              }`}
-              alt={`${
-                value >= index
-                  ? `Solid star number ${index}`
-                  : `Outlined star number ${index}`
-              }`}
-              width="25"
-              height="23"
-            />
-          </button>
+            <button
+              id={`rating${starId}`}
+              key={`star${starId}`}
+              type="button"
+              onClick={() => actionOnClick(index)}
+              className="star-rating__button"
+            >
+              <img
+                src={`/images/${
+                  value >= index ? "star-solid.svg" : "star-outline.svg"
+                }`}
+                alt={`${
+                  value >= index
+                    ? `Solid star number ${index}`
+                    : `Outlined star number ${index}`
+                }`}
+                width="25"
+                height="23"
+              />
+            </button>
+          </label>
         );
       })}
-    </div>
+    </>
   );
 };
 

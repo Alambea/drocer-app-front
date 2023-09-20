@@ -176,18 +176,17 @@ describe("Given an App component", () => {
         const labelInputLabel = "Label";
         const genresInputLabel = "Genres";
         const coverInputLabel = "Image URL";
+        const ratingButtonName = "Outlined star number 3";
 
         const typedArtist = recordMock.artist;
         const typedRecord = recordMock.record;
         const typedReleaseDate = recordMock.releaseDate;
-        const selectedRating = recordMock.rating;
         const typedDescription = recordMock.description;
         const typedLength = recordMock.length;
         const typedLabel = recordMock.label;
         const typedGenres = recordMock.genres;
         const typedCover = recordMock.cover;
 
-        const rattingButtonName = /star/i;
         const userEventConfig = { delay: null };
 
         const user: Partial<User> = {
@@ -216,10 +215,11 @@ describe("Given an App component", () => {
         const releaseDateInput = await screen.findByLabelText(
           releaseDateInputLabel,
         );
-        const ratingButtons = await screen.findAllByRole("button", {
-          name: rattingButtonName,
-        });
-        const ratingButton = ratingButtons[selectedRating];
+        const ratingButtonImage = await screen.findByAltText(ratingButtonName);
+
+        const ratingButton = await ratingButtonImage.closest(
+          ".star-rating__button",
+        )!;
         const descriptionInput = await screen.findByLabelText(
           descriptionInputLabel,
         );
