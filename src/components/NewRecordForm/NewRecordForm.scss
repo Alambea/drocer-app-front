@@ -6,7 +6,7 @@
   flex-direction: column;
   align-items: center;
   width: 100%;
-  padding: 0 15px;
+  padding: 0 5px;
   margin: 0;
   gap: 20px;
 
@@ -21,6 +21,11 @@
     font-size: utils.pxToRem(20);
     font-weight: 700;
     line-height: 46.8px;
+
+    &--rating {
+      display: flex;
+      flex-direction: column;
+    }
   }
 
   &__input {
