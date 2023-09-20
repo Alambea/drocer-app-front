@@ -4,26 +4,23 @@ interface RatingProps {
   value: number;
   className?: string;
   actionOnClick: (ratingNumber: number) => void;
+  isFormElement: boolean;
 }
 
-const Rating = ({ value, actionOnClick }: RatingProps) => {
+const Rating = ({ value, actionOnClick, isFormElement }: RatingProps) => {
   return (
-    <>
+    <ul className="rating">
       {[...Array(5)].map((_star, index) => {
         index += 1;
         const starId = index;
         return (
-          <label
-            htmlFor={`rating${starId}`}
-            key={`star${starId}`}
-            className="rating-label"
-          >
+          <li key={`li-${starId}`} className="rating__star-group">
             <button
-              id={`rating${starId}`}
-              key={`star${starId}`}
+              key={`button-star${starId}`}
               type="button"
               onClick={() => actionOnClick(index)}
-              className="star-rating__button"
+              className="rating__button"
+              {...(isFormElement && { id: `rating${starId}` })}
             >
               <img
                 src={`/images/${
@@ -38,10 +35,19 @@ const Rating = ({ value, actionOnClick }: RatingProps) => {
                 height="23"
               />
             </button>
-          </label>
+            {isFormElement && (
+              <label
+                htmlFor={`rating${starId}`}
+                key={`label-star${starId}`}
+                className="rating__label"
+              >
+                {index}
+              </label>
+            )}
+          </li>
         );
       })}
-    </>
+    </ul>
   );
 };
 

@@ -104,7 +104,11 @@ const NewRecordForm = ({
         <span className="new-record__label new-record__label--rating">
           {`Rating ${newRecord.rating}/5`}
         </span>
-        <Rating value={newRecord.rating} actionOnClick={handleRating} />
+        <Rating
+          value={newRecord.rating}
+          actionOnClick={handleRating}
+          isFormElement={true}
+        />
       </div>
       <div className="new-record__group">
         <label htmlFor="description" className="new-record__label">
