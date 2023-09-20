@@ -15,7 +15,7 @@ describe("Given a NewRecordForm component", () => {
   const genresInputLabel = "Genres";
   const coverInputLabel = "Image URL";
   const ratingButtonName = "Outlined star number 3";
-  const expectedRattingButtonName = "Solid star number 3";
+  const expectedRatingButtonName = "Solid star number 3";
 
   const typedArtist = recordMock.artist;
   const typedRecord = recordMock.record;
@@ -33,10 +33,8 @@ describe("Given a NewRecordForm component", () => {
       const artistInput = screen.getByLabelText(artistInputLabel);
       const recordInput = screen.getByLabelText(recordInputLabel);
       const releaseDateInput = screen.getByLabelText(releaseDateInputLabel);
-      const ratingButtonImage = await screen.findByAltText(ratingButtonName);
-      const ratingInput = await ratingButtonImage.closest(
-        ".star-rating__button",
-      )!;
+      const ratingAltImage = await screen.findByAltText(ratingButtonName);
+      const ratingButton = await ratingAltImage.closest(".rating__button");
       const descriptionInput = screen.getByLabelText(descriptionInputLabel);
       const lengthInput = screen.getByLabelText(lengthInputLabel);
       const labelInput = screen.getByLabelText(labelInputLabel);
@@ -46,7 +44,7 @@ describe("Given a NewRecordForm component", () => {
       expect(artistInput).toBeInTheDocument();
       expect(recordInput).toBeInTheDocument();
       expect(releaseDateInput).toBeInTheDocument();
-      expect(ratingInput).toBeInTheDocument();
+      expect(ratingButton).toBeInTheDocument();
       expect(descriptionInput).toBeInTheDocument();
       expect(lengthInput).toBeInTheDocument();
       expect(labelInput).toBeInTheDocument();
@@ -87,9 +85,7 @@ describe("Given a NewRecordForm component", () => {
       const recordInput = screen.getByLabelText(recordInputLabel);
       const releaseDateInput = screen.getByLabelText(releaseDateInputLabel);
       const ratingButtonImage = await screen.findByAltText(ratingButtonName);
-      const ratingButton = await ratingButtonImage.closest(
-        ".star-rating__button",
-      )!;
+      const ratingButton = await ratingButtonImage.closest(".rating__button")!;
       const descriptionInput = screen.getByLabelText(descriptionInputLabel);
       const lengthInput = screen.getByLabelText(lengthInputLabel);
       const labelInput = screen.getByLabelText(labelInputLabel);
@@ -108,7 +104,7 @@ describe("Given a NewRecordForm component", () => {
       await userEvent.type(genresInput, typedGenres, userEventConfig);
       await userEvent.type(coverInput, typedCover, userEventConfig);
 
-      const clickedStar = await screen.findByAltText(expectedRattingButtonName);
+      const clickedStar = await screen.findByAltText(expectedRatingButtonName);
 
       expect(artistInput).toHaveValue(typedArtist);
       expect(recordInput).toHaveValue(typedRecord);
@@ -133,9 +129,7 @@ describe("Given a NewRecordForm component", () => {
       const recordInput = screen.getByLabelText(recordInputLabel);
       const releaseDateInput = screen.getByLabelText(releaseDateInputLabel);
       const ratingButtonImage = await screen.findByAltText(ratingButtonName);
-      const ratingButton = await ratingButtonImage.closest(
-        ".star-rating__button",
-      )!;
+      const ratingButton = await ratingButtonImage.closest(".rating__button")!;
       const descriptionInput = screen.getByLabelText(descriptionInputLabel);
       const lengthInput = screen.getByLabelText(lengthInputLabel);
       const labelInput = screen.getByLabelText(labelInputLabel);
@@ -156,7 +150,7 @@ describe("Given a NewRecordForm component", () => {
       await userEvent.type(coverInput, typedCover, userEventConfig);
 
       const button = await screen.findByRole("button", { name: textButton });
-      screen.debug();
+
       expect(button).not.toBeDisabled();
     });
   });

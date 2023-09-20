@@ -167,7 +167,6 @@ describe("Given an App component", () => {
         const initialPath = paths.addRecord;
         const textButton = "Add";
         const expectedHeading = "Records";
-
         const artistInputLabel = "Artist";
         const recordInputLabel = "Record";
         const releaseDateInputLabel = "Release Year";
@@ -215,11 +214,8 @@ describe("Given an App component", () => {
         const releaseDateInput = await screen.findByLabelText(
           releaseDateInputLabel,
         );
-        const ratingButtonImage = await screen.findByAltText(ratingButtonName);
-
-        const ratingButton = await ratingButtonImage.closest(
-          ".star-rating__button",
-        )!;
+        const ratingAltImage = await screen.findByAltText(ratingButtonName);
+        const ratingButton = await ratingAltImage.closest(".rating__button")!;
         const descriptionInput = await screen.findByLabelText(
           descriptionInputLabel,
         );

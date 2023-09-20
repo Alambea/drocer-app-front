@@ -71,7 +71,11 @@ const RecordCard = ({
         <h2 className="record__title">{artist}</h2>
         <span className="record__record-release-date">{`${record}, ${releaseDate}`}</span>
       </div>
-      <Rating value={rating} actionOnClick={handleRating} />
+      <Rating
+        value={rating}
+        actionOnClick={handleRating}
+        isFormElement={false}
+      />
     </article>
   );
 };
