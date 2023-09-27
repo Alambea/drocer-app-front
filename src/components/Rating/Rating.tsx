@@ -13,6 +13,7 @@ const Rating = ({ value, actionOnClick, isFormElement }: RatingProps) => {
       {[...Array(5)].map((_star, index) => {
         index += 1;
         const starId = index;
+
         return (
           <li key={`li-${starId}`} className="rating__star-group">
             <button

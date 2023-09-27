@@ -13,6 +13,7 @@ https://ana-lambea-final-project-20230.netlify.app/records
 
 - Features
 - Technologies Used
+- Testing
 
 ### Features
 
@@ -39,5 +40,13 @@ https://ana-lambea-final-project-20230.netlify.app/records
 - **Vitest:** A testing framework for unit, component, and integration testing.
 - **Mocking Service:**
   MSW (Mock Service Worker): A library for simulating server requests in testing and development.
+
+## Testing
+
+In this project I used Vitest for unit and component testing.
+Here some Sonar metrics:
+
+![Drocer Front coverage](https://cdn.discordapp.com/attachments/1145135177534812231/1156617901139316746/Captura_de_pantalla_2023-09-27_162333.png)
+![Drocer Front coverage metrics](https://cdn.discordapp.com/attachments/1145135177534812231/1156617900854087691/Captura_de_pantalla_2023-09-27_162259.png)
 
 Happy organizing your musical records with Drocer! 🎵📀🎶
