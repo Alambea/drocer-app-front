@@ -49,8 +49,8 @@ describe("Given a getRecords function", () => {
   });
 
   describe("When it's called and there's an error on receiving the records", () => {
-    test("Then it should throw an error 'Couldn't load records' when rejecting", () => {
-      const expectedError = new Error("Couldn't load records");
+    test("Then it should throw an error 'Couldn't get records' when rejecting", () => {
+      const expectedError = new Error("Couldn't get records");
       const user: Partial<User> = {
         getIdToken: vi.fn().mockResolvedValue("token"),
       };

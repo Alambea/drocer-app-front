@@ -18,3 +18,10 @@ export interface RecordApi extends Omit<Record, "id"> {
 export interface RecordsApi {
   records: RecordApi[];
 }
+
+export interface AxiosErrorResponseData {
+  error: string;
+}
+export interface AxiosError extends Error {
+  response: { data: AxiosErrorResponseData };
+}
