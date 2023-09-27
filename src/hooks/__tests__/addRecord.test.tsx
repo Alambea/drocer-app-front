@@ -52,9 +52,9 @@ describe("Given an addRecord  function", () => {
   });
 
   describe("When it's called and there's an error on posting the record", () => {
-    test("Then it should throw an error 'Failed to add record' when rejecting", () => {
+    test("Then it should throw an error 'Couldn't add record' when rejecting", () => {
       server.resetHandlers(...errorHandlers);
-      const expectedError = new Error("Failed to add record");
+      const expectedError = new Error("Couldn't add record");
       const user: Partial<User> = {
         getIdToken: vi.fn().mockResolvedValue("token"),
       };

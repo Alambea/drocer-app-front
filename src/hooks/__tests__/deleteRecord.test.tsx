@@ -57,7 +57,7 @@ describe("Given a deleteRecord function", () => {
 
   describe("When it's called and there's an error on deleting the record", () => {
     test("Then it should throw an error 'Couldn't delete record' when rejecting", () => {
-      const expectedError = new Error("Failed to delete record");
+      const expectedError = new Error("Couldn't delete record");
       const idToDelete = wrongIdMock;
 
       const user: Partial<User> = {

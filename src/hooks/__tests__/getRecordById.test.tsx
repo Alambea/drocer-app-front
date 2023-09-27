@@ -53,7 +53,7 @@ describe("Given a getRecordById function", () => {
     test("Then it should throw an error 'Couldn't retrieve record' when rejecting", () => {
       server.resetHandlers(...errorHandlers);
 
-      const expectedError = new Error("Failed to retrieve record");
+      const expectedError = new Error("Couldn't retrieve record");
       const idToGet = wrongIdMock;
 
       const user: Partial<User> = {
