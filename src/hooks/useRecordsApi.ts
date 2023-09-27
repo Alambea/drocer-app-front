@@ -1,9 +1,9 @@
 import { useIdToken } from "react-firebase-hooks/auth";
 import { useCallback } from "react";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { useDispatch } from "react-redux";
 import { auth } from "../firebase";
-import { Record, RecordApi } from "../types";
+import { AxiosErrorResponseData, Record, RecordApi } from "../types";
 import {
   hideLoadingActionCreator,
   showLoadingActionCreator,
@@ -40,8 +40,16 @@ const useRecordsApi = () => {
       dispatch(hideLoadingActionCreator());
 
       return records;
-    } catch {
-      const message = "Couldn't load records";
+    } catch (error: unknown) {
+      const axiosError = error as AxiosError;
+      let message = "Couldn't load records";
+
+      if (axiosError.response) {
+        const axiosErrorData = axiosError.response
+          .data as AxiosErrorResponseData;
+        message = axiosErrorData.error;
+      }
+
       dispatch(hideLoadingActionCreator());
 
       showFeedback(message, "error");
@@ -66,8 +74,15 @@ const useRecordsApi = () => {
       showFeedback("Record deleted successfully", "success");
 
       return message;
-    } catch {
-      const message = "Failed to delete record";
+    } catch (error: unknown) {
+      const axiosError = error as AxiosError;
+      let message = "Failed to delete record";
+
+      if (axiosError.response) {
+        const axiosErrorData = axiosError.response
+          .data as AxiosErrorResponseData;
+        message = axiosErrorData.error;
+      }
       dispatch(hideLoadingActionCreator());
 
       showFeedback(message, "error");
@@ -102,8 +117,15 @@ const useRecordsApi = () => {
       showFeedback("Record added successfully", "success");
 
       return record;
-    } catch {
-      const message = "Failed to add record";
+    } catch (error: unknown) {
+      const axiosError = error as AxiosError;
+      let message = "Failed to add record";
+
+      if (axiosError.response) {
+        const axiosErrorData = axiosError.response
+          .data as AxiosErrorResponseData;
+        message = axiosErrorData.error;
+      }
       dispatch(hideLoadingActionCreator());
 
       showFeedback(message, "error");
@@ -135,8 +157,15 @@ const useRecordsApi = () => {
         dispatch(hideLoadingActionCreator());
 
         return record;
-      } catch {
-        const message = "Failed to retrieve record";
+      } catch (error: unknown) {
+        const axiosError = error as AxiosError;
+        let message = "Failed to retrieve record";
+
+        if (axiosError.response) {
+          const axiosErrorData = axiosError.response
+            .data as AxiosErrorResponseData;
+          message = axiosErrorData.error;
+        }
         dispatch(hideLoadingActionCreator());
 
         showFeedback(message, "error");
@@ -173,8 +202,15 @@ const useRecordsApi = () => {
       dispatch(hideLoadingActionCreator());
 
       return record;
-    } catch {
-      const message = "Failed to modify record";
+    } catch (error: unknown) {
+      const axiosError = error as AxiosError;
+      let message = "Failed to modify record";
+
+      if (axiosError.response) {
+        const axiosErrorData = axiosError.response
+          .data as AxiosErrorResponseData;
+        message = axiosErrorData.error;
+      }
       dispatch(hideLoadingActionCreator());
 
       showFeedback(message, "error");
