@@ -71,7 +71,7 @@ const RecordDetailPage = (): React.ReactElement => {
         />
         <div className="record-detail__information">
           <h2 className="record-detail__artist">{record.artist}</h2>
-          <h3 className="record-detail__record_year">{`${record.record},${record.releaseDate}`}</h3>
+          <h3 className="record-detail__record_year">{`${record.record}, ${record.releaseDate}`}</h3>
           <Rating
             value={record.rating}
             actionOnClick={handleRating}
