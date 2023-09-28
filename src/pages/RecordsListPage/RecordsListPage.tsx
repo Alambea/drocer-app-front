@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { Helmet } from "react-helmet";
 import NoRecordsInformation from "../../components/NoRecordsInformation/NoRecordsInformation";
 import RecordsList from "../../components/RecordList/RecordsList";
 import { auth } from "../../firebase";
@@ -34,10 +33,6 @@ const RecordsListPage = (): React.ReactElement => {
 
   return (
     <>
-      <Helmet>
-        <title>Drocer - Records</title>
-        <meta name="description" content="List of all your records" />
-      </Helmet>
       {hasRecords
         ? !isLoadingAuth && (
             <>

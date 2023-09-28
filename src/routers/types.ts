@@ -4,3 +4,9 @@ export interface PathStructure {
   addRecord: string;
   detail: string;
 }
+
+export interface TitleStructure {
+  home: string;
+  records: string;
+  addRecord: string;
+}
