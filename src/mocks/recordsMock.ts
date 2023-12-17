@@ -8,7 +8,7 @@ export const recordToAddMock: Omit<Record, "id"> = {
   artist: "FKA Twigs",
   cover: "http://example.com/image.png",
   description:
-    "LP1 is the debut studio album by English singer-songwriter FKA Twigs, released on 6 August 2014 by Young Turks. Production for the album is handled by FKA Twigs herself, alongside Emile Haynie, Arca, Cy An, Devonté Hynes, Clams Casino, Paul Epworth, Sampha and Tic.",
+    "LP1 is the debut studio album by English singer-songwriter FKA Twigs",
   genres: "Avant-pop, electronic, art pop R&B, trip hop",
   label: "Young Turks",
   length: "40:46",
@@ -22,7 +22,7 @@ export const recordMock: Record = {
   artist: "FKA Twigs",
   cover: "http://example.com/image.png",
   description:
-    "LP1 is the debut studio album by English singer-songwriter FKA Twigs, released on 6 August 2014 by Young Turks. Production for the album is handled by FKA Twigs herself, alongside Emile Haynie, Arca, Cy An, Devonté Hynes, Clams Casino, Paul Epworth, Sampha and Tic.",
+    "LP1 is the debut studio album by English singer-songwriter FKA Twigs",
   genres: "Avant-pop, electronic, art pop R&B, trip hop",
   label: "Young Turks",
   length: "40:46",
@@ -36,7 +36,7 @@ export const recordApiMock: RecordApi = {
   artist: "FKA Twigs",
   cover: "http://example.com/image.png",
   description:
-    "LP1 is the debut studio album by English singer-songwriter FKA Twigs, released on 6 August 2014 by Young Turks. Production for the album is handled by FKA Twigs herself, alongside Emile Haynie, Arca, Cy An, Devonté Hynes, Clams Casino, Paul Epworth, Sampha and Tic.",
+    "LP1 is the debut studio album by English singer-songwriter FKA Twigs",
   genres: "Avant-pop, electronic, art pop R&B, trip hop",
   label: "Young Turks",
   length: "40:46",
@@ -64,7 +64,7 @@ export const expectedRecordApiMock: Record = {
   artist: "FKA Twigs",
   cover: "http://example.com/image.png",
   description:
-    "LP1 is the debut studio album by English singer-songwriter FKA Twigs, released on 6 August 2014 by Young Turks. Production for the album is handled by FKA Twigs herself, alongside Emile Haynie, Arca, Cy An, Devonté Hynes, Clams Casino, Paul Epworth, Sampha and Tic.",
+    "LP1 is the debut studio album by English singer-songwriter FKA Twigs",
   genres: "Avant-pop, electronic, art pop R&B, trip hop",
   label: "Young Turks",
   length: "40:46",
@@ -107,7 +107,7 @@ export const recordsApiMock: RecordsApi = {
       artist: "Massive Attack",
       cover: "http://example.com/image.png",
       description:
-        "Mezzanine is the third studio album by English electronic music group Massive Attack, released on 20 April 1998 by Circa and Virgin Records.",
+        "Mezzanine is the third studio album by English electronic music group Massive Attack",
       genres: "Trip-hop, electronica",
       label: "Virgin - Circa",
       length: "63:29",
@@ -120,7 +120,7 @@ export const recordsApiMock: RecordsApi = {
       artist: "The Ocean",
       cover: "http://example.com/image.png",
       description:
-        "Heliocentric is the fourth studio album by German progressive metal band The Ocean, released on 9 April 2010.",
+        "Heliocentric is the fourth studio album by German progressive metal band The Ocean",
       genres: "Post-metal, post-rock, sludge metal, progressive metal",
       label: "Pelagic, Metal Blade",
       length: "	50:58",
@@ -164,7 +164,7 @@ export const recordsMock: Record[] = [
     artist: "Massive Attack",
     cover: "http://example.com/image.png",
     description:
-      "Mezzanine is the third studio album by English electronic music group Massive Attack, released on 20 April 1998 by Circa and Virgin Records.",
+      "Mezzanine is the third studio album by English electronic music group Massive Attack",
     genres: "Trip-hop, electronica",
     label: "Virgin - Circa",
     length: "63:29",
@@ -177,7 +177,7 @@ export const recordsMock: Record[] = [
     artist: "The Ocean",
     cover: "http://example.com/image.png",
     description:
-      "Heliocentric is the fourth studio album by German progressive metal band The Ocean, released on 9 April 2010.",
+      "Heliocentric is the fourth studio album by German progressive metal band The Ocean",
     genres: "Post-metal, post-rock, sludge metal, progressive metal",
     label: "Pelagic, Metal Blade",
     length: "	50:58",

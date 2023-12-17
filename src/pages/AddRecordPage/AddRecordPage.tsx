@@ -13,11 +13,15 @@ const AddRecordPage = (): React.ReactElement => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  scroll(0, 0);
+
   const actionOnSubmit = async (newRecordToAdd: Omit<Record, "id">) => {
     const newRecord = await addRecord(newRecordToAdd);
 
     dispatch(addRecordActionCreator(newRecord));
+
     navigate(paths.records);
+    scroll(0, 0);
   };
 
   return (
