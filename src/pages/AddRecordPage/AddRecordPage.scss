@@ -6,12 +6,14 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: rgba(colors.$color-primary-light, 0.1);
+  width: 100%;
+  max-width: 400px;
   padding: 28px 15px;
   margin-top: 58px;
   margin-bottom: 60px;
   border-radius: 4px;
   gap: 83px;
+  background-color: rgba(colors.$color-primary-light, 0.1);
 
   &__title {
     text-align: center;

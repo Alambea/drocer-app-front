@@ -1,5 +1,5 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import useRecordsApi from "../../hooks/useRecordsApi";
 import { paths } from "../../routers/paths";
 import { useAppDispatch } from "../../store";
@@ -54,7 +54,7 @@ const RecordCard = ({
           height="31"
         />
       </Button>
-      <NavLink
+      <Link
         to={`${paths.records}/${id}`}
         aria-label={`Link to details about ${artist}'s record ${record}`}
       >
@@ -66,7 +66,7 @@ const RecordCard = ({
           height="250"
           {...(isLazy && { loading: "lazy" })}
         />
-      </NavLink>
+      </Link>
       <div className="record__information">
         <h2 className="record__title">{artist}</h2>
         <span className="record__record-release-date">{`${record}, ${releaseDate}`}</span>
