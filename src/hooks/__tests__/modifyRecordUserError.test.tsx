@@ -6,10 +6,11 @@ import { setupStore } from "../../store";
 import useRecordsApi from "../useRecordsApi";
 import { Record } from "../../types";
 import { BrowserRouter } from "react-router-dom";
+import * as utils from "../../utils/showFeedback";
 
 describe("Given a modifyRecord function", () => {
   describe("When it's called and there's no user", () => {
-    test("Then it should throw an error 'Failed to modify record' when rejecting", async () => {
+    test("Then it should call the function showFeedback with 'Failed to modify record' and 'error'", async () => {
       const wrapper = ({ children }: PropsWithChildren): React.ReactElement => {
         const store = setupStore({ recordsState: { records: recordsMock } });
 
@@ -20,9 +21,12 @@ describe("Given a modifyRecord function", () => {
         );
       };
 
-      const expectedError = new Error("Failed to modify record");
+      const expectedErrorMessage = "Failed to modify record";
+      const expectedErrorType = "error";
       const recordIdToModify = recordIdMock;
       const updateData: Partial<Record> = {};
+
+      const spyShowFeedback = vitest.spyOn(utils, "showFeedback");
 
       const {
         result: {
@@ -30,9 +34,12 @@ describe("Given a modifyRecord function", () => {
         },
       } = renderHook(() => useRecordsApi(), { wrapper });
 
-      const promise = modifyRecord(recordIdToModify, updateData);
+      await modifyRecord(recordIdToModify, updateData);
 
-      expect(promise).rejects.toThrowError(expectedError);
+      expect(spyShowFeedback).toHaveBeenCalledWith(
+        expectedErrorMessage,
+        expectedErrorType,
+      );
     });
   });
 });

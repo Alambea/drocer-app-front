@@ -8,12 +8,13 @@ import {
   hideLoadingActionCreator,
   showLoadingActionCreator,
 } from "../store/ui/uiSlice";
-import showFeedback from "../utils/showFeedback";
 import { paths } from "../routers/paths";
 import { useNavigate } from "react-router-dom";
+import { showFeedback } from "../utils/showFeedback";
 
 const useRecordsApi = () => {
-  const apiUrl = import.meta.env.VITE_API_URL;
+  axios.defaults.baseURL = import.meta.env.VITE_API_URL;
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [user] = useIdToken(auth);
@@ -28,7 +29,7 @@ const useRecordsApi = () => {
       const token = await user.getIdToken();
 
       const { data: apiRecords } = await axios.get<{ records: RecordApi[] }>(
-        `${apiUrl}/records`,
+        "/records",
         { headers: { Authorization: `Bearer ${token}` } },
       );
 
@@ -53,9 +54,8 @@ const useRecordsApi = () => {
       dispatch(hideLoadingActionCreator());
 
       showFeedback(message, "error");
-      throw new Error(message);
     }
-  }, [apiUrl, dispatch, user]);
+  }, [dispatch, user]);
 
   const deleteRecord = async (id: string) => {
     dispatch(showLoadingActionCreator());
@@ -66,7 +66,7 @@ const useRecordsApi = () => {
 
       const token = await user.getIdToken();
 
-      const { data: message } = await axios.delete(`${apiUrl}/records/${id}`, {
+      const { data: message } = await axios.delete(`/records/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -86,7 +86,6 @@ const useRecordsApi = () => {
       dispatch(hideLoadingActionCreator());
 
       showFeedback(message, "error");
-      throw new Error(message);
     }
   };
 
@@ -99,13 +98,9 @@ const useRecordsApi = () => {
 
       const token = await user.getIdToken();
 
-      const { data: apiRecord } = await axios.post(
-        `${apiUrl}/records`,
-        newRecord,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        },
-      );
+      const { data: apiRecord } = await axios.post("/records", newRecord, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
 
       const record = {
         ...apiRecord.record,
@@ -129,7 +124,6 @@ const useRecordsApi = () => {
       dispatch(hideLoadingActionCreator());
 
       showFeedback(message, "error");
-      throw new Error(message);
     }
   };
 
@@ -144,7 +138,7 @@ const useRecordsApi = () => {
 
         const token = await user.getIdToken();
 
-        const { data: apiRecord } = await axios.get(`${apiUrl}/records/${id}`, {
+        const { data: apiRecord } = await axios.get(`/records/${id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
@@ -170,10 +164,9 @@ const useRecordsApi = () => {
 
         showFeedback(message, "error");
         navigate(paths.records);
-        throw new Error(message);
       }
     },
-    [apiUrl, dispatch, navigate, user],
+    [dispatch, navigate, user],
   );
 
   const modifyRecord = async (id: string, update: Partial<Record>) => {
@@ -186,13 +179,9 @@ const useRecordsApi = () => {
 
       const token = await user.getIdToken();
 
-      const { data: apiRecord } = await axios.patch(
-        `${apiUrl}/records/${id}`,
-        update,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        },
-      );
+      const { data: apiRecord } = await axios.patch(`/records/${id}`, update, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
 
       const record = {
         ...apiRecord.record,
@@ -214,7 +203,6 @@ const useRecordsApi = () => {
       dispatch(hideLoadingActionCreator());
 
       showFeedback(message, "error");
-      throw new Error(message);
     }
   };
 

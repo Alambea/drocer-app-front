@@ -25,9 +25,11 @@ const RecordsListPage = (): React.ReactElement => {
       (async () => {
         const records = await getRecords();
 
-        dispatch(loadRecordsActionCreator(records));
+        if (records) {
+          dispatch(loadRecordsActionCreator(records));
 
-        preloadImage(records[0].cover);
+          preloadImage(records[0].cover);
+        }
       })();
     }
   }, [dispatch, getRecords, user]);
