@@ -5,6 +5,7 @@ import { PropsWithChildren } from "react";
 import { recordsMock } from "../../mocks/recordsMock";
 import { setupStore } from "../../store";
 import { BrowserRouter } from "react-router-dom";
+import * as utils from "../../utils/showFeedback";
 
 describe("Given a getRecords function", () => {
   describe("When it's called and there's no user", () => {
@@ -18,8 +19,11 @@ describe("Given a getRecords function", () => {
       );
     };
 
-    test("Then it should throw an error 'Couldn't load records' when rejecting", async () => {
-      const expectedError = new Error("Couldn't load records");
+    test("Then it should call the function showFeedback with 'Couldn't load records' and 'error'", async () => {
+      const expectedErrorMessage = "Couldn't load records";
+      const expectedErrorType = "error";
+
+      const spyShowFeedback = vitest.spyOn(utils, "showFeedback");
 
       const {
         result: {
@@ -27,9 +31,12 @@ describe("Given a getRecords function", () => {
         },
       } = renderHook(() => useRecordsApi(), { wrapper });
 
-      const promise = getRecords();
+      await getRecords();
 
-      expect(promise).rejects.toThrowError(expectedError);
+      expect(spyShowFeedback).toHaveBeenCalledWith(
+        expectedErrorMessage,
+        expectedErrorType,
+      );
     });
   });
 });

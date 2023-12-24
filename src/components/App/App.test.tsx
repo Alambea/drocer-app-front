@@ -1,5 +1,5 @@
 import React from "react";
-import { render, screen, waitFor } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { BrowserRouter, MemoryRouter } from "react-router-dom";
 import userEvent from "@testing-library/user-event";
 import { Auth, User, signInWithPopup, signOut } from "firebase/auth";
@@ -49,7 +49,7 @@ describe("Given an App component", () => {
         name: expectedHeading,
       });
 
-      waitFor(() => expect(heading).toBeInTheDocument());
+      expect(heading).toBeInTheDocument();
     });
 
     test("Then it should show an image with an alternative text 'Drocer's app logo'", () => {
@@ -70,7 +70,7 @@ describe("Given an App component", () => {
 
       const image = screen.getByAltText(expectedAltText);
 
-      waitFor(() => expect(image).toBeInTheDocument());
+      expect(image).toBeInTheDocument();
     });
 
     test("Then it should show two links with the text 'Add' and 'Records'", async () => {
@@ -92,15 +92,15 @@ describe("Given an App component", () => {
         </Provider>,
       );
 
-      const addLink = await screen.findByRole("link", {
+      const addLink = screen.getByRole("link", {
         name: expectedAddText,
       });
-      const recordsLink = await screen.findByRole("link", {
+      const recordsLink = screen.getByRole("link", {
         name: expectedRecordsText,
       });
 
-      waitFor(() => expect(addLink).toBeInTheDocument());
-      waitFor(() => expect(recordsLink).toBeInTheDocument());
+      expect(addLink).toBeInTheDocument();
+      expect(recordsLink).toBeInTheDocument();
     });
 
     describe("And the user clicks on the button 'Logout'", () => {
@@ -122,11 +122,11 @@ describe("Given an App component", () => {
           </Provider>,
         );
 
-        const button = await screen.findByRole("button", { name: buttonText });
+        const button = await screen.getByRole("button", { name: buttonText });
 
         await userEvent.click(button);
 
-        waitFor(() => expect(signOut).toHaveBeenCalled());
+        expect(signOut).toHaveBeenCalled();
       });
     });
 
@@ -158,13 +158,12 @@ describe("Given an App component", () => {
           name: expectedHeading,
         });
 
-        waitFor(() => expect(heading).toBeInTheDocument());
+        expect(heading).toBeInTheDocument();
       });
     });
 
     describe("And the path is '/add-new-record' and the user types 'FKA Twigs', 'LP1', 2014, 4, 'LP1 is the debut studio...', '40:46', 'Young Turks', 'Avant-pop, electronic, art pop R&B, trip hop' and 'http://example.com/image.png' on each input and clicks on the 'Add' button it should be enabled", () => {
       test("Then it should show a heading 'Records'", async () => {
-        const intervalTime = 9000;
         const initialPath = paths.addRecord;
         const textButton = "Add";
         const expectedHeading = "Records";
@@ -247,21 +246,16 @@ describe("Given an App component", () => {
 
         await userEvent.click(button);
 
-        const heading = await screen.findByRole(
-          "heading",
-          {
-            name: expectedHeading,
-          },
-          { interval: intervalTime },
-        );
+        const heading = await screen.findByRole("heading", {
+          name: expectedHeading,
+        });
 
-        waitFor(() => expect(heading).toBeInTheDocument());
+        expect(heading).toBeInTheDocument();
       });
     });
 
     describe(`And the path is '/records and the user click on the Radiohead's cover image'`, () => {
       test("Then it should show a text 'Self-released'", async () => {
-        const intervalTime = 9000;
         const initialPath = paths.records;
         const expectedText = "Self-released";
 
@@ -285,21 +279,15 @@ describe("Given an App component", () => {
           </MemoryRouter>,
         );
 
-        const link = await screen.findByRole(
-          "link",
-          {
-            name: "Link to details about Radiohead's record In Rainbows",
-          },
-          { interval: intervalTime },
-        );
+        const link = await screen.findByRole("link", {
+          name: "Link to details about Radiohead's record In Rainbows",
+        });
 
         await userEvent.click(link);
 
         const recordLabel = await screen.findByText(expectedText);
 
-        await waitFor(() => {
-          expect(recordLabel).toBeInTheDocument();
-        });
+        expect(recordLabel).toBeInTheDocument();
       });
     });
   });
@@ -329,8 +317,8 @@ describe("Given an App component", () => {
         name: expectedRecordsText,
       });
 
-      waitFor(() => expect(addLink).not.toBeInTheDocument());
-      waitFor(() => expect(recordsLink).not.toBeInTheDocument());
+      expect(addLink).not.toBeInTheDocument();
+      expect(recordsLink).not.toBeInTheDocument();
     });
 
     describe("And the user clicks on the button 'Sign in'", () => {
@@ -354,7 +342,7 @@ describe("Given an App component", () => {
 
         await userEvent.click(button);
 
-        waitFor(() => expect(signInWithPopup).toHaveBeenCalled());
+        expect(signInWithPopup).toHaveBeenCalled();
       });
     });
 
@@ -380,7 +368,7 @@ describe("Given an App component", () => {
           name: headingText,
         });
 
-        waitFor(() => expect(heading).toBeInTheDocument());
+        expect(heading).toBeInTheDocument();
       });
     });
   });

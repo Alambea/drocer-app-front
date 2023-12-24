@@ -24,7 +24,7 @@ const RecordCard = ({
   const dispatch = useAppDispatch();
   const { deleteRecord, modifyRecord } = useRecordsApi();
 
-  const delteRecordById = async (id: string) => {
+  const deleteRecordById = async (id: string) => {
     await deleteRecord(id);
     dispatch(deleteRecordActionCreator(id));
   };
@@ -35,7 +35,9 @@ const RecordCard = ({
     };
     const modifiedRecord = await modifyRecord(id, rateUpdate);
 
-    dispatch(modifyRecordActionCreator(modifiedRecord));
+    if (modifiedRecord) {
+      dispatch(modifyRecordActionCreator(modifiedRecord));
+    }
   };
 
   return (
@@ -43,7 +45,7 @@ const RecordCard = ({
       <Button
         className="record__button-icon"
         actionOnClick={() => {
-          delteRecordById(id);
+          deleteRecordById(id);
         }}
       >
         <img

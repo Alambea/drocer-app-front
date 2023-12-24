@@ -12,6 +12,7 @@ import useRecordsApi from "../useRecordsApi";
 import { recordsMock } from "../../mocks/recordsMock";
 import { setupStore } from "../../store";
 import { BrowserRouter } from "react-router-dom";
+import * as utils from "../../utils/showFeedback";
 
 describe("Given a getRecords function", () => {
   const wrapper = ({ children }: PropsWithChildren): React.ReactElement => {
@@ -49,8 +50,12 @@ describe("Given a getRecords function", () => {
   });
 
   describe("When it's called and there's an error on receiving the records", () => {
-    test("Then it should throw an error 'Couldn't get records' when rejecting", () => {
-      const expectedError = new Error("Couldn't get records");
+    test("Then it should call the function showFeedback with 'Couldn't get records' and 'error'", async () => {
+      const expectedErrorMessage = "Couldn't get records";
+      const expectedErrorType = "error";
+
+      const spyShowFeedback = vitest.spyOn(utils, "showFeedback");
+
       const user: Partial<User> = {
         getIdToken: vi.fn().mockResolvedValue("token"),
       };
@@ -69,9 +74,12 @@ describe("Given a getRecords function", () => {
 
       server.resetHandlers(...errorHandlers);
 
-      const recordsPromise = getRecords();
+      await getRecords();
 
-      expect(recordsPromise).rejects.toThrowError(expectedError);
+      expect(spyShowFeedback).toHaveBeenCalledWith(
+        expectedErrorMessage,
+        expectedErrorType,
+      );
     });
   });
 });

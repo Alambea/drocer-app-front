@@ -41,7 +41,9 @@ const RecordDetailPage = (): React.ReactElement => {
       };
       const modifiedRecord = await modifyRecord(record.id, rateUpdate);
 
-      dispatch(modifyRecordActionCreator(modifiedRecord));
+      if (modifiedRecord) {
+        dispatch(modifyRecordActionCreator(modifiedRecord));
+      }
     }
   };
 
