@@ -16,6 +16,7 @@ import useRecordsApi from "../useRecordsApi";
 import { server } from "../../mocks/server";
 import { errorHandlers } from "../../mocks/handlers";
 import { BrowserRouter } from "react-router-dom";
+import * as utils from "../../utils/showFeedback";
 
 describe("Given a getRecordById function", () => {
   const wrapper = ({ children }: PropsWithChildren): React.ReactElement => {
@@ -50,11 +51,14 @@ describe("Given a getRecordById function", () => {
   });
 
   describe("When it's called and there's an error on retrieving the record", () => {
-    test("Then it should throw an error 'Couldn't retrieve record' when rejecting", () => {
+    test("Then it should call the function showFeedback with 'Couldn't retrieve record' and 'error'", async () => {
       server.resetHandlers(...errorHandlers);
 
-      const expectedError = new Error("Couldn't retrieve record");
+      const expectedErrorMessage = "Couldn't retrieve record";
+      const expectedErrorType = "error";
       const idToGet = wrongIdMock;
+
+      const spyShowFeedback = vitest.spyOn(utils, "showFeedback");
 
       const user: Partial<User> = {
         getIdToken: vi.fn().mockResolvedValue("token"),
@@ -74,9 +78,12 @@ describe("Given a getRecordById function", () => {
 
       server.resetHandlers(...errorHandlers);
 
-      const messagePromise = getRecordById(idToGet);
+      await getRecordById(idToGet);
 
-      expect(messagePromise).rejects.toThrowError(expectedError);
+      expect(spyShowFeedback).toHaveBeenCalledWith(
+        expectedErrorMessage,
+        expectedErrorType,
+      );
     });
   });
 });

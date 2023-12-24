@@ -5,6 +5,7 @@ import { PropsWithChildren } from "react";
 import { recordToAddMock, recordsMock } from "../../mocks/recordsMock";
 import { setupStore } from "../../store";
 import { BrowserRouter } from "react-router-dom";
+import * as utils from "../../utils/showFeedback";
 
 describe("Given a addRecord function", () => {
   describe("When it's called and there's no user", () => {
@@ -18,8 +19,11 @@ describe("Given a addRecord function", () => {
       );
     };
 
-    test("Then it should throw an error 'Failed to add record' when rejecting", async () => {
-      const expectedError = new Error("Failed to add record");
+    test("Then it should call the function showFeedback with 'Failed to add record'  and 'error'", async () => {
+      const expectedErrorMessage = "Failed to add record";
+      const expectedFeedbackType = "error";
+
+      const spyShowFeedback = vitest.spyOn(utils, "showFeedback");
 
       const {
         result: {
@@ -27,9 +31,12 @@ describe("Given a addRecord function", () => {
         },
       } = renderHook(() => useRecordsApi(), { wrapper });
 
-      const promise = addRecord(recordToAddMock);
+      await addRecord(recordToAddMock);
 
-      expect(promise).rejects.toThrowError(expectedError);
+      expect(spyShowFeedback).toHaveBeenCalledWith(
+        expectedErrorMessage,
+        expectedFeedbackType,
+      );
     });
   });
 });

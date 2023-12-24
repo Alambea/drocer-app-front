@@ -17,6 +17,7 @@ import { setupStore } from "../../store";
 import { Record } from "../../types";
 import useRecordsApi from "../useRecordsApi";
 import { BrowserRouter } from "react-router-dom";
+import * as utils from "../../utils/showFeedback";
 
 describe("Given an modifyRecord  function", () => {
   describe("When it's called with an id and a update value rating : 5", () => {
@@ -53,7 +54,9 @@ describe("Given an modifyRecord  function", () => {
       expect(updatedRecord).toStrictEqual({ ...updatedRecord, rating: 5 });
     });
 
-    test("Then it should throw an error 'Failed to modify record' when rejecting", () => {
+    test("Then it should call the function showFeedback with 'Failed to modify record' and 'error'", async () => {
+      server.resetHandlers(...errorHandlers);
+
       const recordToUpdate: Partial<Record> = { rating: 5 };
       const user: Partial<User> = {
         getIdToken: vi.fn().mockResolvedValue("token"),
@@ -65,8 +68,10 @@ describe("Given an modifyRecord  function", () => {
       authHook.useIdToken = vi.fn().mockReturnValue(idTokenHook);
       authHook.useAuthState = vi.fn().mockReturnValue(authStateHookMock);
 
-      const expectedError = new Error("Failed to modify record");
-      server.resetHandlers(...errorHandlers);
+      const expectedErrorMessage = "Failed to modify record";
+      const expectedErrorType = "error";
+
+      const spyShowFeedback = vitest.spyOn(utils, "showFeedback");
 
       const {
         result: {
@@ -74,9 +79,12 @@ describe("Given an modifyRecord  function", () => {
         },
       } = renderHook(() => useRecordsApi(), { wrapper });
 
-      const recordsPromise = modifyRecord(wrongIdMock, recordToUpdate);
+      await modifyRecord(wrongIdMock, recordToUpdate);
 
-      expect(recordsPromise).rejects.toThrowError(expectedError);
+      expect(spyShowFeedback).toHaveBeenCalledWith(
+        expectedErrorMessage,
+        expectedErrorType,
+      );
     });
   });
 });

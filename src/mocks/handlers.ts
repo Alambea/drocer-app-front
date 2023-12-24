@@ -2,93 +2,51 @@ import { rest } from "msw";
 import {
   recordApiMock,
   recordGetByIdMock,
-  recordIdMock,
   recordsApiMock,
-  wrongIdMock,
 } from "./recordsMock";
 
+const urlApi = import.meta.env.VITE_API_URL;
+
 export const handlers = [
-  rest.get(`${import.meta.env.VITE_API_URL}/records`, (_req, res, ctx) => {
-    return res(ctx.status(200), ctx.json(recordsApiMock));
-  }),
-
-  rest.delete(
-    `${import.meta.env.VITE_API_URL}/records/${recordIdMock}`,
-    (_req, res, ctx) => {
-      return res(
-        ctx.status(200),
-        ctx.json({ message: "Record deleted successfully" }),
-      );
-    },
+  rest.get(`${urlApi}/records`, (_req, res, ctx) =>
+    res(ctx.status(200), ctx.json(recordsApiMock)),
   ),
 
-  rest.post(`${import.meta.env.VITE_API_URL}/records`, (_req, res, ctx) => {
-    return res(ctx.status(201), ctx.json({ record: recordApiMock }));
-  }),
-
-  rest.get(
-    `${import.meta.env.VITE_API_URL}/records/${recordIdMock}`,
-    (_req, res, ctx) => {
-      return res(ctx.status(200), ctx.json({ record: recordGetByIdMock }));
-    },
+  rest.delete(`${urlApi}/records/:id`, (_req, res, ctx) =>
+    res(ctx.status(200), ctx.json({ message: "Record deleted successfully" })),
   ),
 
-  rest.patch(
-    `${import.meta.env.VITE_API_URL}/records/${recordIdMock}`,
-    (_req, res, ctx) => {
-      return res(
-        ctx.status(200),
-        ctx.json({ record: { ...recordApiMock, rating: 5 } }),
-      );
-    },
+  rest.post(`${urlApi}/records`, (_req, res, ctx) =>
+    res(ctx.status(201), ctx.json({ record: recordApiMock })),
   ),
-  rest.patch(
-    `${import.meta.env.VITE_API_URL}/records/73fc9c6a5c621a08508d534j`,
-    (_req, res, ctx) => {
-      return res(
-        ctx.status(200),
-        ctx.json({ record: { ...recordApiMock, rating: 5 } }),
-      );
-    },
+
+  rest.get(`${urlApi}/records/:id`, (_req, res, ctx) =>
+    res(ctx.status(200), ctx.json({ record: recordGetByIdMock })),
+  ),
+
+  rest.patch(`${urlApi}/records/:id`, (_req, res, ctx) =>
+    res(ctx.status(200), ctx.json({ record: { ...recordApiMock, rating: 5 } })),
   ),
 ];
 
 export const errorHandlers = [
-  rest.get(`${import.meta.env.VITE_API_URL}/records`, (_req, res, ctx) => {
-    return res(ctx.status(404), ctx.json({ error: "Couldn't get records" }));
-  }),
-
-  rest.delete(
-    `${import.meta.env.VITE_API_URL}/records/${wrongIdMock}`,
-    (_req, res, ctx) => {
-      return res(
-        ctx.status(500),
-        ctx.json({ error: "Couldn't delete record" }),
-      );
-    },
+  rest.get(`${urlApi}/records`, (_req, res, ctx) =>
+    res(ctx.status(404), ctx.json({ error: "Couldn't get records" })),
   ),
 
-  rest.post(`${import.meta.env.VITE_API_URL}/records`, (_req, res, ctx) => {
-    return res(ctx.status(500), ctx.json({ error: "Couldn't add record" }));
-  }),
-
-  rest.get(
-    `${import.meta.env.VITE_API_URL}/records/${wrongIdMock}`,
-    (_req, res, ctx) => {
-      return res(
-        ctx.status(500),
-        ctx.json({ error: "Couldn't retrieve record" }),
-      );
-    },
+  rest.delete(`${urlApi}/records/:id`, (_req, res, ctx) =>
+    res(ctx.status(500), ctx.json({ error: "Couldn't delete record" })),
   ),
 
-  rest.patch(
-    `${import.meta.env.VITE_API_URL}/records/${wrongIdMock}`,
-    (_req, res, ctx) => {
-      return res(
-        ctx.status(304),
-        ctx.json({ error: "Failed to modify record" }),
-      );
-    },
+  rest.post(`${urlApi}/records`, (_req, res, ctx) =>
+    res(ctx.status(500), ctx.json({ error: "Couldn't add record" })),
+  ),
+
+  rest.get(`${urlApi}/records/:id`, (_req, res, ctx) =>
+    res(ctx.status(500), ctx.json({ error: "Couldn't retrieve record" })),
+  ),
+
+  rest.patch(`${urlApi}/records/:id`, (_req, res, ctx) =>
+    res(ctx.status(304), ctx.json({ error: "Failed to modify record" })),
   ),
 ];

@@ -5,6 +5,7 @@ import { PropsWithChildren } from "react";
 import { recordIdMock, recordsMock } from "../../mocks/recordsMock";
 import { setupStore } from "../../store";
 import { BrowserRouter } from "react-router-dom";
+import * as utils from "../../utils/showFeedback";
 
 describe("Given a getRecordById function", () => {
   describe("When it's called and there's no user", () => {
@@ -18,9 +19,12 @@ describe("Given a getRecordById function", () => {
       );
     };
 
-    test("Then it should throw an error 'Failed to retrieve record' when rejecting", async () => {
-      const expectedError = new Error("Failed to retrieve record");
+    test("Then it should call the function showFeedback with 'Failed to retrieve record' and 'error'", async () => {
+      const expectedErrorMessage = "Failed to retrieve record";
+      const expectedErrorType = "error";
       const idRecordToGet = recordIdMock;
+
+      const spyShowFeedback = vitest.spyOn(utils, "showFeedback");
 
       const {
         result: {
@@ -28,9 +32,12 @@ describe("Given a getRecordById function", () => {
         },
       } = renderHook(() => useRecordsApi(), { wrapper });
 
-      const promise = getRecordById(idRecordToGet);
+      await getRecordById(idRecordToGet);
 
-      expect(promise).rejects.toThrowError(expectedError);
+      expect(spyShowFeedback).toHaveBeenCalledWith(
+        expectedErrorMessage,
+        expectedErrorType,
+      );
     });
   });
 });

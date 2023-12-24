@@ -16,6 +16,7 @@ import authHook, {
 import { setupStore } from "../../store";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
+import * as utils from "../../utils/showFeedback";
 
 describe("Given an addRecord  function", () => {
   const wrapper = ({ children }: PropsWithChildren): React.ReactElement => {
@@ -52,9 +53,14 @@ describe("Given an addRecord  function", () => {
   });
 
   describe("When it's called and there's an error on posting the record", () => {
-    test("Then it should throw an error 'Couldn't add record' when rejecting", () => {
+    test("Then it should call the function showFeedback with 'Couldn't add record' and 'error'", async () => {
       server.resetHandlers(...errorHandlers);
-      const expectedError = new Error("Couldn't add record");
+
+      const expectedErrorMessage = "Couldn't add record";
+      const expectedErrorType = "error";
+
+      const spyShowFeedback = vitest.spyOn(utils, "showFeedback");
+
       const user: Partial<User> = {
         getIdToken: vi.fn().mockResolvedValue("token"),
       };
@@ -73,9 +79,12 @@ describe("Given an addRecord  function", () => {
 
       server.resetHandlers(...errorHandlers);
 
-      const recordsPromise = addRecord(recordToAddMock);
+      await addRecord(recordToAddMock);
 
-      expect(recordsPromise).rejects.toThrowError(expectedError);
+      expect(spyShowFeedback).toHaveBeenCalledWith(
+        expectedErrorMessage,
+        expectedErrorType,
+      );
     });
   });
 });
