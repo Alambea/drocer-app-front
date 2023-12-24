@@ -11,6 +11,7 @@ import {
 import { paths } from "../routers/paths";
 import { useNavigate } from "react-router-dom";
 import { showFeedback } from "../utils/showFeedback";
+import apiRecordToRecord from "../utils/apiRecordToRecord";
 
 const useRecordsApi = () => {
   axios.defaults.baseURL = import.meta.env.VITE_API_URL;
@@ -142,12 +143,8 @@ const useRecordsApi = () => {
           headers: { Authorization: `Bearer ${token}` },
         });
 
-        const record = {
-          ...apiRecord.record,
-          id: apiRecord.record._id,
-        };
+        const record = apiRecordToRecord(apiRecord.record);
 
-        delete record._id;
         dispatch(hideLoadingActionCreator());
 
         return record;
@@ -183,11 +180,8 @@ const useRecordsApi = () => {
         headers: { Authorization: `Bearer ${token}` },
       });
 
-      const record = {
-        ...apiRecord.record,
-        id: apiRecord.record._id,
-      };
-      delete record._id;
+      const record = apiRecordToRecord(apiRecord.record);
+
       dispatch(hideLoadingActionCreator());
 
       return record;
