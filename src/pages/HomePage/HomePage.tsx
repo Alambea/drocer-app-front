@@ -36,7 +36,7 @@ const HomePage = (): React.ReactElement => {
               width="25"
               height="25"
             />
-            Sign in with Google
+            {"Sign in with Google"}
           </span>
         </Button>
         <Button className="sign-in__button" actionOnClick={loginWithGitHub}>
@@ -48,7 +48,7 @@ const HomePage = (): React.ReactElement => {
               width="25"
               height="25"
             />
-            Sign in with GitHub
+            {"Sign in with GitHub"}
           </span>
         </Button>
       </article>

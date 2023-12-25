@@ -2,7 +2,14 @@ import React from "react";
 import { render, screen } from "@testing-library/react";
 import { BrowserRouter, MemoryRouter } from "react-router-dom";
 import userEvent from "@testing-library/user-event";
-import { Auth, User, signInWithPopup, signOut } from "firebase/auth";
+import {
+  Auth,
+  GithubAuthProvider,
+  GoogleAuthProvider,
+  User,
+  signInWithPopup,
+  signOut,
+} from "firebase/auth";
 import authHook, {
   AuthStateHook,
   IdTokenHook,
@@ -321,9 +328,9 @@ describe("Given an App component", () => {
       expect(recordsLink).not.toBeInTheDocument();
     });
 
-    describe("And the user clicks on the button 'Sign in'", () => {
-      test("Then the received button's function should be called on click", async () => {
-        const buttonText = "Sign in";
+    describe("And the user clicks on the button containing 'sign in with github'", () => {
+      test("Then the received button's function should be called on click with an instance of a GithubAuthProvider", async () => {
+        const buttonText = /sign in with github/i;
         const authStateHookMock: Partial<AuthStateHook> = [null];
 
         authHook.useAuthState = vi.fn().mockReturnValue(authStateHookMock);
@@ -342,7 +349,42 @@ describe("Given an App component", () => {
 
         await userEvent.click(button);
 
-        expect(signInWithPopup).toHaveBeenCalled();
+        expect(signInWithPopup).toHaveBeenCalledWith(
+          expect.objectContaining({}),
+          expect.any(GithubAuthProvider),
+          expect.arrayContaining([]),
+        );
+      });
+    });
+
+    describe("And the user clicks on the button containing 'sign in with google'", () => {
+      test("Then the received button's function should be called on click with an instance of a GoogleAuthProvider", async () => {
+        const buttonText = /sign in with google/i;
+        const authStateHookMock: Partial<AuthStateHook> = [null];
+
+        authHook.useAuthState = vi.fn().mockReturnValue(authStateHookMock);
+
+        const store = setupStore({ recordsState: { records: recordsMock } });
+
+        render(
+          <Provider store={store}>
+            <BrowserRouter>
+              <App />
+            </BrowserRouter>
+          </Provider>,
+        );
+
+        const button = await screen.findByRole("button", {
+          name: buttonText,
+        });
+
+        await userEvent.click(button);
+
+        expect(signInWithPopup).toHaveBeenCalledWith(
+          expect.objectContaining({}),
+          expect.any(GoogleAuthProvider),
+          expect.arrayContaining([]),
+        );
       });
     });
 
