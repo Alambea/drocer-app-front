@@ -4,6 +4,7 @@ import {
   browserLocalPersistence,
   indexedDBLocalPersistence,
   initializeAuth,
+  GoogleAuthProvider,
 } from "firebase/auth";
 
 const firebaseConfig = {
@@ -20,3 +21,4 @@ export const auth = initializeAuth(app, {
   persistence: [indexedDBLocalPersistence, browserLocalPersistence],
 });
 export const gitHubProvider = new GithubAuthProvider();
+export const googleProvider = new GoogleAuthProvider();

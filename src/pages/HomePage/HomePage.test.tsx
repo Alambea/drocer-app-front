@@ -20,8 +20,8 @@ describe("Given a HomePage page", () => {
       expect(heading).toBeInTheDocument();
     });
 
-    test("Then it should show a text 'Access with your GitHub account to your favorite records'", () => {
-      const text = "Access with your GitHub account to your favorite records";
+    test("Then it should show a text 'Select a sign in method to access to your favorite records'", () => {
+      const text = "Select a sign in method to access to your favorite records";
 
       render(
         <BrowserRouter>
@@ -34,8 +34,24 @@ describe("Given a HomePage page", () => {
       expect(textElement).toBeInTheDocument();
     });
 
-    test("Then it should show a button 'Sign in'", () => {
-      const buttonText = "Sign in";
+    test("Then it should show a button containing 'Sign with github'", () => {
+      const buttonText = /sign in with github/i;
+
+      render(
+        <BrowserRouter>
+          <HomePage />
+        </BrowserRouter>,
+      );
+
+      const button = screen.getByRole("button", {
+        name: buttonText,
+      });
+
+      expect(button).toBeInTheDocument();
+    });
+
+    test("Then it should show a button containing 'sign in with google'", () => {
+      const buttonText = /sign in with google/i;
 
       render(
         <BrowserRouter>

@@ -4,17 +4,14 @@
 .sign-in {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
   background-color: rgba(colors.$color-primary-light, 0.1);
-  padding: 0 45px;
-  height: 280px;
+  padding: 25px 30px;
   gap: 15px;
   max-width: 400px;
   border-radius: 4px;
 
   &__title {
-    margin: 0;
     font-weight: 700;
     font-size: utils.pxToRem(36);
     line-height: 46.8px;
@@ -28,13 +25,21 @@
   }
 
   &__button {
-    width: 157px;
+    width: 100%;
+    max-width: 220px;
     height: 48px;
     background-color: colors.$color-primary;
     border-radius: 4px;
     color: colors.$color-main-background;
-    font-size: utils.pxToRem(22);
+    font-size: utils.pxToRem(18);
     font-weight: 500;
     line-height: 28.6px;
+    padding: 0px 15px;
+
+    &-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
   }
 }
