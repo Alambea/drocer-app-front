@@ -18,7 +18,11 @@ import { Provider } from "react-redux";
 import App from "./App";
 import { paths } from "../../routers/paths";
 import { setupStore } from "../../store";
-import { recordMock, recordsMock } from "../../mocks/recordsMock";
+import {
+  recordGetByIdMock,
+  recordMock,
+  recordsMock,
+} from "../../mocks/recordsMock";
 
 beforeEach(() => {
   vi.clearAllMocks();
@@ -261,7 +265,7 @@ describe("Given an App component", () => {
       });
     });
 
-    describe(`And the path is '/records and the user click on the Radiohead's cover image'`, () => {
+    describe("And the path is '/records and the user click on the Radiohead's cover image'", () => {
       test("Then it should show a text 'Self-released'", async () => {
         const initialPath = paths.records;
         const expectedText = "Self-released";
@@ -295,6 +299,43 @@ describe("Given an App component", () => {
         const recordLabel = await screen.findByText(expectedText);
 
         expect(recordLabel).toBeInTheDocument();
+      });
+    });
+
+    describe(`And the path is '/records/modify/${recordGetByIdMock._id}'`, () => {
+      test(`Then it should show a heading "Modify ${recordGetByIdMock.artist}'s ${recordGetByIdMock.record} record"`, async () => {
+        const expectedHeading = `Modify ${recordGetByIdMock.artist}'s ${recordGetByIdMock.record} record`;
+        const recordId = recordGetByIdMock._id;
+        const initialPath = `/records/modify/${recordId}`;
+
+        const user: Partial<User> = {
+          getIdToken: vi.fn().mockResolvedValue("token"),
+        };
+
+        const idTokenHookMock: Partial<IdTokenHook> = [user as User];
+        authHook.useIdToken = vi.fn().mockReturnValue(idTokenHookMock);
+
+        const authStateHookMock: Partial<AuthStateHook> = [user as User];
+        authHook.useAuthState = vi.fn().mockReturnValue(authStateHookMock);
+
+        const store = setupStore({
+          recordsState: { records: [], selectedRecord: recordMock },
+        });
+
+        render(
+          <MemoryRouter initialEntries={[initialPath]}>
+            <Provider store={store}>
+              <App />
+            </Provider>
+          </MemoryRouter>,
+        );
+
+        const heading = await screen.findByRole("heading", {
+          level: 1,
+          name: expectedHeading,
+        });
+
+        expect(heading).toBeInTheDocument();
       });
     });
   });
