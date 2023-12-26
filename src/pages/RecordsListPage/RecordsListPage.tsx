@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { Helmet } from "react-helmet";
-import NoRecordsInformation from "../../components/NoRecordsInformation/NoRecordsInformation";
+import ExtraInformation from "../../components/ExtraInformation/ExtraInformation";
 import RecordsList from "../../components/RecordList/RecordsList";
 import { auth } from "../../firebase";
 import useRecordsApi from "../../hooks/useRecordsApi";
@@ -25,7 +25,7 @@ const RecordsListPage = (): React.ReactElement => {
       (async () => {
         const records = await getRecords();
 
-        if (records) {
+        if (records && records.length > 0) {
           dispatch(loadRecordsActionCreator(records));
 
           preloadImage(records[0].cover);
@@ -47,7 +47,17 @@ const RecordsListPage = (): React.ReactElement => {
               <RecordsList />
             </>
           )
-        : !isLoadingUi && !isLoadingAuth && <NoRecordsInformation />}
+        : !isLoadingUi &&
+          !isLoadingAuth && (
+            <ExtraInformation text="Add your first record">
+              <img
+                src="/images/empty_records.svg"
+                alt="Empty record"
+                width="165"
+                height="114"
+              />
+            </ExtraInformation>
+          )}
     </>
   );
 };
