@@ -17,3 +17,7 @@ export const LazyAddRecordPage = lazy(
 export const LazyRecordDetailPage = lazy(
   () => import("../pages/RecordDetailPage/RecordDetailPage"),
 );
+
+export const LazyModifyRecordPage = lazy(
+  () => import("../pages/ModifyRecordPage/ModifyRecordPage"),
+);

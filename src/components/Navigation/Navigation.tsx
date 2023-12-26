@@ -20,7 +20,7 @@ const Navigation = (): React.ReactElement => {
           <NavLink to={paths.addRecord} className="nav-bar__link">
             <img
               className="nav-bar__icon"
-              src="../images/add_icon.svg"
+              src="/images/add_icon.svg"
               alt="Add icon"
               width="25"
               height="25"
@@ -37,7 +37,7 @@ const Navigation = (): React.ReactElement => {
           >
             <img
               className="nav-bar__icon"
-              src="../images/record_icon.svg"
+              src="/images/record_icon.svg"
               alt="Vinyl icon"
               width="25"
               height="25"
@@ -50,7 +50,7 @@ const Navigation = (): React.ReactElement => {
             <>
               <img
                 className="nav-bar__icon"
-                src="../images/logout_icon.svg"
+                src="/images/logout_icon.svg"
                 alt="Logout icon"
                 width="25"
                 height="25"

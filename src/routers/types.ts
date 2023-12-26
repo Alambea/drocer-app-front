@@ -3,4 +3,5 @@ export interface PathStructure {
   records: string;
   addRecord: string;
   detail: string;
+  modify: string;
 }
