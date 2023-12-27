@@ -15,14 +15,34 @@
     box-shadow: 2px 4px 13px -2px rgba(0, 0, 0, 0.25);
   }
 
-  &__button-icon {
-    position: absolute;
-    top: 22px;
-    right: 22px;
-    background-color: colors.$color-primary;
-    width: 50px;
-    height: 50px;
-    border-radius: 4px;
+  &__modifiers {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    font-size: utils.pxToRem(18);
+    margin: 10px -10px -10px -10px;
+    height: 45px;
+    color: colors.$color-primary;
+  }
+
+  &__modify-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 49%;
+    height: 100%;
+    background-color: #fff;
+    border-radius: 3px;
+  }
+
+  &__delete-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 49%;
+    height: 100%;
+    background-color: #fff;
+    border-radius: 3px;
   }
 
   &__information {

@@ -78,6 +78,11 @@ export const fkaRecordApiMock: RecordApi = {
   _id: "4o099c6a5c987a08508d58jy",
 };
 
+export const fkaRatedRecordApiMock: RecordApi = {
+  ...fkaRecordApiMock,
+  rating: 5,
+};
+
 export const radioheadRecordApiMock = {
   ...radioheadRecordMock,
   _id: recordIdMock,
@@ -86,6 +91,21 @@ export const radioheadRecordApiMock = {
 export const recordsApiMock: RecordsApi = {
   records: [
     { ...radioheadRecordMock, _id: recordIdMock },
+    {
+      ...portisheadRecordMock,
+      _id: "1o8c9c6a5c621a08508d598y",
+    },
+    { ...massiveRecordMock, _id: "12hj7c6a5c621a08508d678e" },
+    {
+      ...oceanRecordMock,
+      _id: "73fc9c6a5c621a08508d534j",
+    },
+  ],
+};
+
+export const modifiedRecordsApiMock: RecordsApi = {
+  records: [
+    { ...radioheadRecordMock, _id: recordIdMock, artist: "Another Artist" },
     {
       ...portisheadRecordMock,
       _id: "1o8c9c6a5c621a08508d598y",

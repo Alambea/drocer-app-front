@@ -23,6 +23,8 @@ import {
   recordMock,
   recordsMock,
 } from "../../mocks/recordsMock";
+import { server } from "../../mocks/server";
+import { modifyHandlers } from "../../mocks/handlers";
 
 beforeEach(() => {
   vi.clearAllMocks();
@@ -302,11 +304,11 @@ describe("Given an App component", () => {
       });
     });
 
-    describe(`And the path is '/records/modify/${radioheadRecordApiMock._id}'`, () => {
+    describe(`And the path is '${paths.modify}/${radioheadRecordApiMock._id}'`, () => {
       test(`Then it should show a heading "Modify ${radioheadRecordApiMock.artist}'s ${radioheadRecordApiMock.record} record"`, async () => {
         const expectedHeading = `Modify ${radioheadRecordApiMock.artist}'s ${radioheadRecordApiMock.record} record`;
         const recordId = radioheadRecordApiMock._id;
-        const initialPath = `/records/modify/${recordId}`;
+        const initialPath = `${paths.modify}/${recordId}`;
 
         const user: Partial<User> = {
           getIdToken: vi.fn().mockResolvedValue("token"),
@@ -336,6 +338,54 @@ describe("Given an App component", () => {
         });
 
         expect(heading).toBeInTheDocument();
+      });
+
+      describe(`And modifies ${radioheadRecordApiMock.artist}'s name and clicks on the Edit Button`, () => {
+        test("Then it should show a 'Another Artist' heading", async () => {
+          server.resetHandlers(...modifyHandlers);
+
+          const expectedHeading = "Another Artist";
+          const nameLabel = "Artist";
+          const modifyButtonText = "Modify";
+          const recordId = radioheadRecordApiMock._id;
+          const initialPath = `${paths.modify}/${recordId}`;
+
+          const user: Partial<User> = {
+            getIdToken: vi.fn().mockResolvedValue("token"),
+          };
+
+          const idTokenHookMock: Partial<IdTokenHook> = [user as User];
+          authHook.useIdToken = vi.fn().mockReturnValue(idTokenHookMock);
+
+          const authStateHookMock: Partial<AuthStateHook> = [user as User];
+          authHook.useAuthState = vi.fn().mockReturnValue(authStateHookMock);
+
+          const store = setupStore({
+            recordsState: { records: [], selectedRecord: recordMock },
+          });
+
+          render(
+            <MemoryRouter initialEntries={[initialPath]}>
+              <Provider store={store}>
+                <App />
+              </Provider>
+            </MemoryRouter>,
+          );
+
+          const artistInput = await screen.findByLabelText(nameLabel);
+          await userEvent.type(artistInput, expectedHeading);
+
+          const modifyButton = await screen.findByRole("button", {
+            name: modifyButtonText,
+          });
+          await userEvent.click(modifyButton);
+
+          const heading = await screen.findByRole("heading", {
+            name: expectedHeading,
+          });
+
+          expect(heading).toBeInTheDocument();
+        });
       });
     });
   });

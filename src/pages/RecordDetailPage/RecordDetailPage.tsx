@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { Helmet } from "react-helmet";
 import { useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Rating from "../../components/Rating/Rating";
 import { auth } from "../../firebase";
 import useRecordsApi from "../../hooks/useRecordsApi";
@@ -13,6 +13,7 @@ import {
 } from "../../store/records/recordsSlice";
 import { Record } from "../../types";
 import "./RecordDetailPage.scss";
+import { paths } from "../../routers/paths";
 
 const RecordDetailPage = (): React.ReactElement => {
   const record = useAppSelector((state) => state.recordsState.selectedRecord);
@@ -94,6 +95,12 @@ const RecordDetailPage = (): React.ReactElement => {
               <span className="record-detail__list-value">{record.genres}</span>
             </li>
           </ul>
+          <Link
+            to={`${paths.modify}/${id}`}
+            className="record-detail__modify-link"
+          >
+            Modify
+          </Link>
         </div>
       </article>
     </>

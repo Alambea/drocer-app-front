@@ -42,20 +42,6 @@ const RecordCard = ({
 
   return (
     <article className="record">
-      <Button
-        className="record__button-icon"
-        actionOnClick={() => {
-          deleteRecordById(id);
-        }}
-      >
-        <img
-          src="/images/delete_icon.svg"
-          alt="Delete record"
-          className="record__delete-icon"
-          width="35"
-          height="31"
-        />
-      </Button>
       <Link
         to={`${paths.records}/${id}`}
         aria-label={`Link to details about ${artist}'s record ${record}`}
@@ -69,6 +55,7 @@ const RecordCard = ({
           {...(isLazy && { loading: "lazy" })}
         />
       </Link>
+
       <div className="record__information">
         <h2 className="record__title">{artist}</h2>
         <span className="record__record-release-date">{`${record}, ${releaseDate}`}</span>
@@ -78,6 +65,19 @@ const RecordCard = ({
         actionOnClick={handleRating}
         isFormElement={false}
       />
+      <div className="record__modifiers">
+        <Link to={`${paths.modify}/${id}`} className="record__modify-link">
+          Modify
+        </Link>
+        <Button
+          className="record__delete-button"
+          actionOnClick={() => {
+            deleteRecordById(id);
+          }}
+        >
+          Delete
+        </Button>
+      </div>
     </article>
   );
 };

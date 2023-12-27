@@ -65,9 +65,9 @@ const App = (): React.ReactElement => {
           }
         />
         <Route
-          path={paths.modify}
+          path={paths.modifyRecord}
           element={
-            <ProtectedRoute destinationPath={paths.modify}>
+            <ProtectedRoute destinationPath={paths.modifyRecord}>
               <Suspense>
                 <LazyModifyRecordPage />
               </Suspense>

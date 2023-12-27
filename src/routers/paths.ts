@@ -5,5 +5,6 @@ export const paths: PathsStructure = {
   records: "/records",
   addRecord: "/add-new-record",
   detail: "/records/:id",
-  modify: "/records/modify/:id",
+  modify: "/records/modify",
+  modifyRecord: "/records/modify/:id",
 };

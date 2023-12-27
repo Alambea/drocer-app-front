@@ -69,7 +69,7 @@ describe("Given a RecordsListPage page", () => {
 
   describe("When it's rendered, has records, and the user clicks on the 'In Rainbows' record delete button", () => {
     test("Then it shouldn't show the heading 'Radiohead'", async () => {
-      const deleteButtonName = "Delete record";
+      const deleteButtonName = "Delete";
       const recordToDelete = recordsMock.find(
         (record) => record.id === recordIdMock,
       )!;
