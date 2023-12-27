@@ -1,7 +1,7 @@
 import { Helmet } from "react-helmet";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import NewRecordForm from "../../components/NewRecordForm/NewRecordForm";
+import RecordForm from "../../components/RecordForm/RecordForm";
 import useRecordsApi from "../../hooks/useRecordsApi";
 import { paths } from "../../routers/paths";
 import { addRecordActionCreator } from "../../store/records/recordsSlice";
@@ -35,7 +35,7 @@ const AddRecordPage = (): React.ReactElement => {
       </Helmet>
       <div className="add-record">
         <h1 className="add-record__title">Add a new record</h1>
-        <NewRecordForm actionOnSubmit={actionOnSubmit} />
+        <RecordForm actionOnSubmit={actionOnSubmit} />
       </div>
     </>
   );

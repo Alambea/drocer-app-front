@@ -7,6 +7,7 @@ import { auth } from "../../firebase";
 import useRecordsApi from "../../hooks/useRecordsApi";
 import { useAppSelector } from "../../store";
 import { loadSelectedRecordActionCreator } from "../../store/records/recordsSlice";
+import RecordForm from "../../components/RecordForm/RecordForm";
 import "./ModifyRecordPage.scss";
 
 const ModifyRecordPage = (): React.ReactElement => {
@@ -29,10 +30,12 @@ const ModifyRecordPage = (): React.ReactElement => {
     }
   }, [dispatch, getRecordById, id, user]);
 
+  scroll(0, 0);
+
   return !isLoadingAuth && !isLoadingUi && record ? (
     <>
       <Helmet>
-        <title>Drocer - Modify {`${record?.record}`} record</title>
+        <title>Drocer - Modify {`${record.record}`} record</title>
         <meta
           name="description"
           content=" Modify your favorite records in Drocer to always have updated your top artists' records"
@@ -42,6 +45,7 @@ const ModifyRecordPage = (): React.ReactElement => {
         <h1 className="modify-record__title">
           Modify {`${record.artist}'s ${record.record}`} record
         </h1>
+        <RecordForm actionOnSubmit={() => {}} recordToUpdate={record} />
       </div>
     </>
   ) : (

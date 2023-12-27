@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { recordMock } from "../../mocks/recordsMock";
-import NewRecordForm from "./NewRecordForm";
+import RecordForm from "./RecordForm";
 
 describe("Given a NewRecordForm component", () => {
   const mockSubmit = vi.fn();
@@ -29,7 +29,7 @@ describe("Given a NewRecordForm component", () => {
 
   describe("When it's rendered", () => {
     test("Then it should show an 'Artist', 'Record', 'Release Year', 'Rating 0/5', 'Description', 'Length', 'Label', 'Genres', and a 'Image URL' fields", async () => {
-      render(<NewRecordForm actionOnSubmit={mockSubmit} />);
+      render(<RecordForm actionOnSubmit={mockSubmit} />);
 
       const artistInput = screen.getByLabelText(artistInputLabel);
       const recordInput = screen.getByLabelText(recordInputLabel);
@@ -56,7 +56,7 @@ describe("Given a NewRecordForm component", () => {
     test("Then it should a button with the text 'Add'", () => {
       const expectedButtonText = "Add";
 
-      render(<NewRecordForm actionOnSubmit={mockSubmit} />);
+      render(<RecordForm actionOnSubmit={mockSubmit} />);
 
       const button = screen.getByRole("button", {
         name: expectedButtonText,
@@ -68,7 +68,7 @@ describe("Given a NewRecordForm component", () => {
     test("Then the Add button should be disabled", async () => {
       const textButton = "Add";
 
-      render(<NewRecordForm actionOnSubmit={mockSubmit} />);
+      render(<RecordForm actionOnSubmit={mockSubmit} />);
 
       const button = screen.getByRole("button", { name: textButton });
 
@@ -80,7 +80,7 @@ describe("Given a NewRecordForm component", () => {
     test("Then the inputs should have the typed value", async () => {
       const userEventConfig = { delay: null };
 
-      render(<NewRecordForm actionOnSubmit={mockSubmit} />);
+      render(<RecordForm actionOnSubmit={mockSubmit} />);
 
       const artistInput = screen.getByLabelText(artistInputLabel);
       const recordInput = screen.getByLabelText(recordInputLabel);
@@ -126,7 +126,7 @@ describe("Given a NewRecordForm component", () => {
       const textButton = "Add";
       const userEventConfig = { delay: null };
 
-      render(<NewRecordForm actionOnSubmit={mockSubmit} />);
+      render(<RecordForm actionOnSubmit={mockSubmit} />);
 
       const artistInput = screen.getByLabelText(artistInputLabel);
       const recordInput = screen.getByLabelText(recordInputLabel);
