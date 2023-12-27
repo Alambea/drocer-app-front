@@ -1,6 +1,8 @@
 import { rest } from "msw";
 import {
+  fkaRatedRecordApiMock,
   fkaRecordApiMock,
+  modifiedRecordsApiMock,
   radioheadRecordApiMock,
   recordsApiMock,
 } from "./recordsMock";
@@ -25,10 +27,21 @@ export const handlers = [
   ),
 
   rest.patch(`${urlApi}/records/:id`, (_req, res, ctx) =>
-    res(
-      ctx.status(200),
-      ctx.json({ record: { ...fkaRecordApiMock, rating: 5 } }),
-    ),
+    res(ctx.status(200), ctx.json({ record: fkaRatedRecordApiMock })),
+  ),
+];
+
+export const modifyHandlers = [
+  rest.get(`${urlApi}/records`, (_req, res, ctx) =>
+    res(ctx.status(200), ctx.json(modifiedRecordsApiMock)),
+  ),
+
+  rest.get(`${urlApi}/records/:id`, (_req, res, ctx) =>
+    res(ctx.status(200), ctx.json({ record: radioheadRecordApiMock })),
+  ),
+
+  rest.patch(`${urlApi}/records/:id`, (_req, res, ctx) =>
+    res(ctx.status(200), ctx.json({ record: radioheadRecordApiMock })),
   ),
 ];
 
