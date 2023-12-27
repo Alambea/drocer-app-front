@@ -58,8 +58,8 @@ describe("Given a RecordCard component", () => {
       expect(textElement).toBeInTheDocument();
     });
 
-    test("Then it should show a button with an alternative text 'Delete record'", () => {
-      const buttonIconAltText = "Delete record";
+    test("Then it should show a button with a text 'Delete'", () => {
+      const buttonText = "Delete";
       const isLazy = false;
 
       render(
@@ -70,9 +70,9 @@ describe("Given a RecordCard component", () => {
         </Provider>,
       );
 
-      const imageIcon = screen.getByAltText(buttonIconAltText);
+      const deleteButton = screen.getByRole("button", { name: buttonText });
 
-      expect(imageIcon).toBeInTheDocument();
+      expect(deleteButton).toBeInTheDocument();
     });
   });
 });
