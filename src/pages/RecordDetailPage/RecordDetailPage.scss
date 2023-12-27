@@ -29,6 +29,10 @@
     margin: 0 13px;
     box-shadow: 2px 4px 13px -2px rgba(0, 0, 0, 0.25);
     animation: 1s ease-out 0s 1 slideLeftFromCenter;
+
+    @media (prefers-reduced-motion) {
+      animation: none;
+    }
   }
 
   &__cover-vinyl {

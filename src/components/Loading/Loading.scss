@@ -1,4 +1,5 @@
 @use "../../styles/variables/colors";
+@use "../../styles/utils";
 
 .loading {
   position: fixed;
@@ -9,42 +10,55 @@
   align-items: center;
 }
 
-.loader {
-  display: inline-block;
-  width: 80px;
-  height: 80px;
-}
-
-.loader:after {
-  content: " ";
-  display: block;
-  width: 64px;
-  height: 64px;
-  margin: 0 auto;
-  border-radius: 50%;
-  border: 6px solid colors.$color-primary;
-  border-color: colors.$color-primary transparent colors.$color-primary
-    transparent;
-  animation: loader 1.2s linear infinite;
-}
-
-.loader:before {
-  content: " ";
-  position: absolute;
-  display: block;
-  width: 20px;
-  height: 20px;
-  margin-left: 29.5px;
-  margin-top: 22.5px;
-  border-radius: 50%;
-  border: 6px solid colors.$color-primary;
-}
-
-@keyframes loader {
-  0% {
-    transform: rotate(0deg);
+@media (prefers-reduced-motion) {
+  .loading:after {
+    content: "Loading ...";
+    display: flex;
+    justify-content: center;
+    font-size: utils.pxToRem(20);
+    color: colors.$color-primary;
+    width: 200px;
   }
-  100% {
-    transform: rotate(360deg);
+}
+
+@media not (prefers-reduced-motion) {
+  .loader {
+    display: inline-block;
+    width: 80px;
+    height: 80px;
+  }
+
+  .loader:after {
+    content: " ";
+    display: block;
+    width: 64px;
+    height: 64px;
+    margin: 0 auto;
+    border-radius: 50%;
+    border: 6px solid colors.$color-primary;
+    border-color: colors.$color-primary transparent colors.$color-primary
+      transparent;
+    animation: loader 1.2s linear infinite;
+  }
+
+  .loader:before {
+    content: " ";
+    position: absolute;
+    display: block;
+    width: 20px;
+    height: 20px;
+    margin-left: 29.5px;
+    margin-top: 22.5px;
+    border-radius: 50%;
+    border: 6px solid colors.$color-primary;
+  }
+
+  @keyframes loader {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
   }
 }
