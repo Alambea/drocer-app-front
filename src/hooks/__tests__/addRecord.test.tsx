@@ -3,7 +3,7 @@ import { PropsWithChildren } from "react";
 import { errorHandlers } from "../../mocks/handlers";
 import {
   recordMock,
-  recordToAddMock,
+  fkaRecordMock,
   recordsMock,
 } from "../../mocks/recordsMock";
 import { server } from "../../mocks/server";
@@ -46,7 +46,7 @@ describe("Given an addRecord  function", () => {
         },
       } = renderHook(() => useRecordsApi(), { wrapper });
 
-      const newRecordCreated = await addRecord(recordToAddMock);
+      const newRecordCreated = await addRecord(fkaRecordMock);
 
       expect(recordMock).toStrictEqual(newRecordCreated);
     });
@@ -79,7 +79,7 @@ describe("Given an addRecord  function", () => {
 
       server.resetHandlers(...errorHandlers);
 
-      await addRecord(recordToAddMock);
+      await addRecord(fkaRecordMock);
 
       expect(spyShowFeedback).toHaveBeenCalledWith(
         expectedErrorMessage,
