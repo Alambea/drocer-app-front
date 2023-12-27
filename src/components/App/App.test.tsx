@@ -19,7 +19,7 @@ import App from "./App";
 import { paths } from "../../routers/paths";
 import { setupStore } from "../../store";
 import {
-  recordGetByIdMock,
+  radioheadRecordApiMock,
   recordMock,
   recordsMock,
 } from "../../mocks/recordsMock";
@@ -302,10 +302,10 @@ describe("Given an App component", () => {
       });
     });
 
-    describe(`And the path is '/records/modify/${recordGetByIdMock._id}'`, () => {
-      test(`Then it should show a heading "Modify ${recordGetByIdMock.artist}'s ${recordGetByIdMock.record} record"`, async () => {
-        const expectedHeading = `Modify ${recordGetByIdMock.artist}'s ${recordGetByIdMock.record} record`;
-        const recordId = recordGetByIdMock._id;
+    describe(`And the path is '/records/modify/${radioheadRecordApiMock._id}'`, () => {
+      test(`Then it should show a heading "Modify ${radioheadRecordApiMock.artist}'s ${radioheadRecordApiMock.record} record"`, async () => {
+        const expectedHeading = `Modify ${radioheadRecordApiMock.artist}'s ${radioheadRecordApiMock.record} record`;
+        const recordId = radioheadRecordApiMock._id;
         const initialPath = `/records/modify/${recordId}`;
 
         const user: Partial<User> = {

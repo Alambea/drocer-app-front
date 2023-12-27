@@ -2,7 +2,7 @@ import { renderHook } from "@testing-library/react";
 import useRecordsApi from "../useRecordsApi";
 import { Provider } from "react-redux";
 import { PropsWithChildren } from "react";
-import { recordToAddMock, recordsMock } from "../../mocks/recordsMock";
+import { fkaRecordMock, recordsMock } from "../../mocks/recordsMock";
 import { setupStore } from "../../store";
 import { BrowserRouter } from "react-router-dom";
 import * as utils from "../../utils/showFeedback";
@@ -31,7 +31,7 @@ describe("Given a addRecord function", () => {
         },
       } = renderHook(() => useRecordsApi(), { wrapper });
 
-      await addRecord(recordToAddMock);
+      await addRecord(fkaRecordMock);
 
       expect(spyShowFeedback).toHaveBeenCalledWith(
         expectedErrorMessage,

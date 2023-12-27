@@ -1,7 +1,7 @@
 import { rest } from "msw";
 import {
-  recordApiMock,
-  recordGetByIdMock,
+  fkaRecordApiMock,
+  radioheadRecordApiMock,
   recordsApiMock,
 } from "./recordsMock";
 
@@ -17,15 +17,18 @@ export const handlers = [
   ),
 
   rest.post(`${urlApi}/records`, (_req, res, ctx) =>
-    res(ctx.status(201), ctx.json({ record: recordApiMock })),
+    res(ctx.status(201), ctx.json({ record: fkaRecordApiMock })),
   ),
 
   rest.get(`${urlApi}/records/:id`, (_req, res, ctx) =>
-    res(ctx.status(200), ctx.json({ record: recordGetByIdMock })),
+    res(ctx.status(200), ctx.json({ record: radioheadRecordApiMock })),
   ),
 
   rest.patch(`${urlApi}/records/:id`, (_req, res, ctx) =>
-    res(ctx.status(200), ctx.json({ record: { ...recordApiMock, rating: 5 } })),
+    res(
+      ctx.status(200),
+      ctx.json({ record: { ...fkaRecordApiMock, rating: 5 } }),
+    ),
   ),
 ];
 
