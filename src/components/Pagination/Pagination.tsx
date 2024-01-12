@@ -8,12 +8,12 @@ interface PaginationProps {
   limitPerPage: number;
 }
 
-const Pagination = ({ currentPage, limitPerPage: limit }: PaginationProps) => {
+const Pagination = ({ currentPage, limitPerPage }: PaginationProps) => {
   const recordCount = useAppSelector((state) => state.recordsState.recordCount);
 
   const nextPage = currentPage ? +currentPage + 1 : 1;
   const previousPage = currentPage ? +currentPage - 1 : 1;
-  const maxPages = Math.ceil(recordCount / limit);
+  const maxPages = Math.ceil(recordCount / limitPerPage);
   const initialPage = 1;
 
   return (
