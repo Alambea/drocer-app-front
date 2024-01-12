@@ -1,0 +1,73 @@
+@use "../../styles/variables/colors";
+
+.pagination {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  height: 48px;
+  width: 100%;
+  margin-bottom: 30px;
+
+  &__previous-page {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    padding: 10px;
+    border-radius: 4px;
+  }
+
+  &__previous-page:hover {
+    border: 1px solid rgba(colors.$font-color-text-light, 0.1);
+  }
+
+  &__next-page {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    padding: 10px;
+    border-radius: 4px;
+  }
+
+  &__next-page:hover {
+    border: 1px solid rgba(colors.$font-color-text-light, 0.1);
+  }
+
+  &__previous-page::before {
+    content: "◁";
+    margin-right: 4px;
+  }
+
+  &__next-page::after {
+    content: "▷";
+    margin-left: 4px;
+  }
+
+  &__pages-list {
+    display: flex;
+    flex-direction: row;
+
+    @media only screen and (max-width: 700px) {
+      display: none;
+    }
+  }
+
+  &__page {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 4px;
+
+    :hover {
+      border: 1px solid rgba(colors.$font-color-text-light, 0.1);
+    }
+  }
+}
+
+.current {
+  font-weight: 600;
+  color: #fff;
+  background-color: colors.$color-primary-light;
+}

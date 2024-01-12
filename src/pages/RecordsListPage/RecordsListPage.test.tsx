@@ -24,7 +24,9 @@ describe("Given a RecordsListPage page", () => {
   describe("When it is rendered and has records", () => {
     test("Then it should show a heading 'Records'", async () => {
       const expectedTitle = "Records";
-      const store = setupStore({ recordsState: { records: recordsMock } });
+      const store = setupStore({
+        recordsState: { records: recordsMock, recordCount: recordsMock.length },
+      });
 
       render(
         <Provider store={store}>
@@ -44,10 +46,12 @@ describe("Given a RecordsListPage page", () => {
     });
   });
 
-  describe("When it is rendered and doesn't have records", () => {
-    test("Then it should show a heading 'Add your first record'", async () => {
-      const expectedHeading = "Add your first record";
-      const store = setupStore({ recordsState: { records: [] } });
+  describe("When it is rendered and doesn't have records on the current selection page but it has on the total count", () => {
+    test("Then it should show a heading 'You don't have more records'", async () => {
+      const expectedHeading = "You don't have more records";
+      const store = setupStore({
+        recordsState: { records: [], recordCount: 3 },
+      });
 
       render(
         <Provider store={store}>
@@ -79,7 +83,9 @@ describe("Given a RecordsListPage page", () => {
       };
       authHook.useIdToken = vi.fn().mockReturnValue([user]);
 
-      const store = setupStore({ recordsState: { records: recordsMock } });
+      const store = setupStore({
+        recordsState: { records: recordsMock, recordCount: 0 },
+      });
 
       render(
         <Provider store={store}>
@@ -114,7 +120,11 @@ describe("Given a RecordsListPage page", () => {
       const expectedButtonNumber = /Solid star number 3/i;
 
       const store = setupStore({
-        recordsState: { records: recordsMock, selectedRecord: recordMock },
+        recordsState: {
+          records: recordsMock,
+          recordCount: 1,
+          selectedRecord: recordMock,
+        },
       });
 
       const user: Partial<User> = {

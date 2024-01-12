@@ -10,7 +10,9 @@ import * as utils from "../../utils/showFeedback";
 describe("Given a getRecordById function", () => {
   describe("When it's called and there's no user", () => {
     const wrapper = ({ children }: PropsWithChildren): React.ReactElement => {
-      const store = setupStore({ recordsState: { records: recordsMock } });
+      const store = setupStore({
+        recordsState: { records: recordsMock, recordCount: recordsMock.length },
+      });
 
       return (
         <BrowserRouter>

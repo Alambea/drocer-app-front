@@ -101,6 +101,7 @@ export const recordsApiMock: RecordsApi = {
       _id: "73fc9c6a5c621a08508d534j",
     },
   ],
+  count: "4",
 };
 
 export const modifiedRecordsApiMock: RecordsApi = {
@@ -116,6 +117,7 @@ export const modifiedRecordsApiMock: RecordsApi = {
       _id: "73fc9c6a5c621a08508d534j",
     },
   ],
+  count: "4",
 };
 
 export const recordsMock: Record[] = [

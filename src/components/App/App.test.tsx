@@ -47,7 +47,9 @@ describe("Given an App component", () => {
       const authStateHookMock: Partial<AuthStateHook> = [user as User];
 
       authHook.useAuthState = vi.fn().mockReturnValue(authStateHookMock);
-      const store = setupStore({ recordsState: { records: recordsMock } });
+      const store = setupStore({
+        recordsState: { records: recordsMock, recordCount: recordsMock.length },
+      });
 
       render(
         <Provider store={store}>
@@ -71,7 +73,9 @@ describe("Given an App component", () => {
       const authStateHookMock: Partial<AuthStateHook> = [user as User];
 
       authHook.useAuthState = vi.fn().mockReturnValue(authStateHookMock);
-      const store = setupStore({ recordsState: { records: recordsMock } });
+      const store = setupStore({
+        recordsState: { records: recordsMock, recordCount: recordsMock.length },
+      });
 
       render(
         <Provider store={store}>
@@ -95,7 +99,9 @@ describe("Given an App component", () => {
       authHook.useAuthState = vi.fn().mockReturnValue(authStateHookMock);
       authHook.useIdToken = vi.fn().mockReturnValue([user]);
 
-      const store = setupStore({ recordsState: { records: recordsMock } });
+      const store = setupStore({
+        recordsState: { records: recordsMock, recordCount: recordsMock.length },
+      });
 
       render(
         <Provider store={store}>
@@ -125,7 +131,12 @@ describe("Given an App component", () => {
         const authStateHookMock: Partial<AuthStateHook> = [user as User];
         authHook.useAuthState = vi.fn().mockReturnValue(authStateHookMock);
 
-        const store = setupStore({ recordsState: { records: recordsMock } });
+        const store = setupStore({
+          recordsState: {
+            records: recordsMock,
+            recordCount: recordsMock.length,
+          },
+        });
 
         render(
           <Provider store={store}>
@@ -158,7 +169,12 @@ describe("Given an App component", () => {
         authHook.useIdToken = vi.fn().mockReturnValue(idTokenHookMock);
         authHook.useAuthState = vi.fn().mockReturnValue(authStateHookMock);
 
-        const store = setupStore({ recordsState: { records: recordsMock } });
+        const store = setupStore({
+          recordsState: {
+            records: recordsMock,
+            recordCount: recordsMock.length,
+          },
+        });
 
         render(
           <Provider store={store}>
@@ -210,7 +226,12 @@ describe("Given an App component", () => {
         authHook.useIdToken = vi.fn().mockReturnValue(idTokenHookMock);
         authHook.useAuthState = vi.fn().mockReturnValue(authStateHookMock);
 
-        const store = setupStore({ recordsState: { records: recordsMock } });
+        const store = setupStore({
+          recordsState: {
+            records: recordsMock,
+            recordCount: recordsMock.length,
+          },
+        });
 
         render(
           <Provider store={store}>
@@ -282,7 +303,12 @@ describe("Given an App component", () => {
         const authStateHookMock: Partial<AuthStateHook> = [user as User];
         authHook.useAuthState = vi.fn().mockReturnValue(authStateHookMock);
 
-        const store = setupStore({ recordsState: { records: recordsMock } });
+        const store = setupStore({
+          recordsState: {
+            records: recordsMock,
+            recordCount: recordsMock.length,
+          },
+        });
 
         render(
           <MemoryRouter initialEntries={[initialPath]}>
@@ -321,7 +347,11 @@ describe("Given an App component", () => {
         authHook.useAuthState = vi.fn().mockReturnValue(authStateHookMock);
 
         const store = setupStore({
-          recordsState: { records: [], selectedRecord: recordMock },
+          recordsState: {
+            records: [],
+            recordCount: 0,
+            selectedRecord: recordMock,
+          },
         });
 
         render(
@@ -361,7 +391,11 @@ describe("Given an App component", () => {
           authHook.useAuthState = vi.fn().mockReturnValue(authStateHookMock);
 
           const store = setupStore({
-            recordsState: { records: [], selectedRecord: recordMock },
+            recordsState: {
+              records: [],
+              recordCount: 0,
+              selectedRecord: recordMock,
+            },
           });
 
           render(
@@ -398,7 +432,9 @@ describe("Given an App component", () => {
       const authStateHookMock: Partial<AuthStateHook> = [null];
       authHook.useAuthState = vi.fn().mockReturnValue(authStateHookMock);
 
-      const store = setupStore({ recordsState: { records: recordsMock } });
+      const store = setupStore({
+        recordsState: { records: recordsMock, recordCount: recordsMock.length },
+      });
 
       render(
         <Provider store={store}>
@@ -426,7 +462,12 @@ describe("Given an App component", () => {
 
         authHook.useAuthState = vi.fn().mockReturnValue(authStateHookMock);
 
-        const store = setupStore({ recordsState: { records: recordsMock } });
+        const store = setupStore({
+          recordsState: {
+            records: recordsMock,
+            recordCount: recordsMock.length,
+          },
+        });
 
         render(
           <Provider store={store}>
@@ -455,7 +496,12 @@ describe("Given an App component", () => {
 
         authHook.useAuthState = vi.fn().mockReturnValue(authStateHookMock);
 
-        const store = setupStore({ recordsState: { records: recordsMock } });
+        const store = setupStore({
+          recordsState: {
+            records: recordsMock,
+            recordCount: recordsMock.length,
+          },
+        });
 
         render(
           <Provider store={store}>
@@ -483,7 +529,9 @@ describe("Given an App component", () => {
       test("Then it should redirect to /home and show a heading 'Welcome'", async () => {
         const headingText = "Welcome";
 
-        const store = setupStore({ recordsState: { records: [] } });
+        const store = setupStore({
+          recordsState: { records: [], recordCount: 0 },
+        });
         const authStateHookMock: Partial<AuthStateHook> = [null];
         const initialPath = paths.records;
 

@@ -8,6 +8,7 @@ describe("Given a recordsReducer reducer", () => {
     test("Then it should return a new state with the received 'In Rainbows' and 'Third' records", () => {
       const currentRecordsState: RecordsState = {
         records: [],
+        recordCount: 0,
       };
       const records: Record[] = recordsMock;
 

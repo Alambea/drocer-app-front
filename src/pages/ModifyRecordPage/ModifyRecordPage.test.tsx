@@ -7,7 +7,7 @@ import ModifyRecordPage from "./ModifyRecordPage";
 
 describe("Given a ModifyRecordPage page", () => {
   const store = setupStore({
-    recordsState: { records: [], selectedRecord: recordMock },
+    recordsState: { records: [], recordCount: 0, selectedRecord: recordMock },
     uiState: { isLoading: false },
   });
 

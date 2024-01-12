@@ -13,10 +13,15 @@ import { recordsMock } from "../../mocks/recordsMock";
 import { setupStore } from "../../store";
 import { BrowserRouter } from "react-router-dom";
 import * as utils from "../../utils/showFeedback";
+import { RecordsState } from "../../store/records/types";
 
 describe("Given a getRecords function", () => {
+  const limit = recordsMock.length;
+  const offset = 0;
   const wrapper = ({ children }: PropsWithChildren): React.ReactElement => {
-    const store = setupStore({ recordsState: { records: recordsMock } });
+    const store = setupStore({
+      recordsState: { records: recordsMock, recordCount: recordsMock.length },
+    });
 
     return (
       <BrowserRouter>
@@ -27,6 +32,10 @@ describe("Given a getRecords function", () => {
 
   describe("When it is called", () => {
     test("Then it should return a list of records when resolving successfully", async () => {
+      const expectedRecordsData: RecordsState = {
+        records: recordsMock,
+        recordCount: recordsMock.length,
+      };
       const user: Partial<User> = {
         getIdToken: vi.fn().mockResolvedValue(null),
       };
@@ -43,9 +52,9 @@ describe("Given a getRecords function", () => {
         },
       } = renderHook(() => useRecordsApi(), { wrapper });
 
-      const records = await getRecords();
+      const records = await getRecords(limit, offset);
 
-      expect(records).toStrictEqual(recordsMock);
+      expect(records).toStrictEqual(expectedRecordsData);
     });
   });
 
@@ -74,7 +83,7 @@ describe("Given a getRecords function", () => {
 
       server.resetHandlers(...errorHandlers);
 
-      await getRecords();
+      await getRecords(limit, offset);
 
       expect(spyShowFeedback).toHaveBeenCalledWith(
         expectedErrorMessage,

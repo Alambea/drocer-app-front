@@ -22,7 +22,9 @@ import * as utils from "../../utils/showFeedback";
 describe("Given an modifyRecord  function", () => {
   describe("When it's called with an id and a update value rating : 5", () => {
     const wrapper = ({ children }: PropsWithChildren): React.ReactElement => {
-      const store = setupStore({ recordsState: { records: recordsMock } });
+      const store = setupStore({
+        recordsState: { records: recordsMock, recordCount: recordsMock.length },
+      });
 
       return (
         <BrowserRouter>

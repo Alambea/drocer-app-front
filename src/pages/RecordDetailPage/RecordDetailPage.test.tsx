@@ -15,7 +15,11 @@ import authHook, {
 describe("Given a RecordDetailPage page", () => {
   const path = `${paths.records}/${recordMock.id}`;
   const store = setupStore({
-    recordsState: { records: [], selectedRecord: recordsMock[0] },
+    recordsState: {
+      records: [],
+      recordCount: 0,
+      selectedRecord: recordsMock[0],
+    },
   });
 
   describe("When it's rendered", () => {

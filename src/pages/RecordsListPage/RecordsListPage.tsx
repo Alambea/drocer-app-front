@@ -43,11 +43,7 @@ const RecordsListPage = (): React.ReactElement => {
 
         const recordsData = await getRecords(limit, offset);
 
-        if (
-          recordsData &&
-          recordsData.records &&
-          recordsData.records.length > 0
-        ) {
+        if (recordsData?.records && recordsData.records.length > 0) {
           dispatch(loadRecordsActionCreator(recordsData.records));
           dispatch(loadRecordCountActionCreator(recordsData.recordCount));
 

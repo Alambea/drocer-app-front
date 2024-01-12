@@ -69,6 +69,7 @@
   }
 
   &__button:disabled {
+    cursor: default;
     background-color: colors.$font-color-text-light;
   }
 }

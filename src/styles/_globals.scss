@@ -37,10 +37,13 @@ textarea,
 button {
   font: inherit;
   border: none;
-  cursor: pointer;
   background-color: transparent;
   color: inherit;
   margin: 0;
+}
+
+button {
+  cursor: pointer;
 }
 
 a {

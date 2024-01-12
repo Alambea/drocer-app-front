@@ -7,6 +7,7 @@ describe("Given a recordsReducer reducer", () => {
     test(`Then it should return a state without the received record with an id ${recordIdMock}`, () => {
       const currentRecordState: RecordsState = {
         records: recordsMock,
+        recordCount: recordsMock.length,
       };
       const recordToDeleteId = recordIdMock;
 
