@@ -30,7 +30,7 @@ const RecordsListPage = (): React.ReactElement => {
   const noRecordsFoundText =
     recordCount === 0 ? "Add your first record" : "You don't have more records";
 
-  const limit = 12;
+  const limitPerPage = 12;
 
   if (!currentPage) {
     currentPage = "1";
@@ -39,9 +39,9 @@ const RecordsListPage = (): React.ReactElement => {
   useEffect(() => {
     if (user && currentPage && +currentPage > 0) {
       (async () => {
-        const offset = (+currentPage - 1) * limit;
+        const offset = (+currentPage - 1) * limitPerPage;
 
-        const recordsData = await getRecords(limit, offset);
+        const recordsData = await getRecords(limitPerPage, offset);
 
         if (recordsData?.records && recordsData.records.length > 0) {
           dispatch(loadRecordsActionCreator(recordsData.records));
@@ -64,7 +64,10 @@ const RecordsListPage = (): React.ReactElement => {
             <>
               <h1 className="records-page__title">Records</h1>
               <RecordsList />
-              <Pagination currentPage={currentPage} limitPerPage={limit} />
+              <Pagination
+                currentPage={currentPage}
+                limitPerPage={limitPerPage}
+              />
             </>
           )
         : !isLoadingUi &&
