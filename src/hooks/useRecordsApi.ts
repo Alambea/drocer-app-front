@@ -20,43 +20,52 @@ const useRecordsApi = () => {
   const navigate = useNavigate();
   const [user] = useIdToken(auth);
 
-  const getRecords = useCallback(async () => {
-    dispatch(showLoadingActionCreator());
-    try {
-      if (!user) {
-        throw new Error();
+  const getRecords = useCallback(
+    async (limit: number, offset?: number) => {
+      dispatch(showLoadingActionCreator());
+
+      try {
+        if (!user) {
+          throw new Error();
+        }
+
+        const token = await user.getIdToken();
+
+        const { data: apiRecords } = await axios.get<{
+          records: RecordApi[];
+          count: string;
+        }>("/records", {
+          headers: { Authorization: `Bearer ${token}` },
+          params: { limit, offset },
+        });
+
+        const records = apiRecords.records.map<Record>(
+          ({ _id, ...records }) => ({
+            ...records,
+            id: _id,
+          }),
+        );
+
+        dispatch(hideLoadingActionCreator());
+
+        return { records, recordCount: +apiRecords.count };
+      } catch (error: unknown) {
+        const axiosError = error as AxiosError;
+        let message = "Couldn't load records";
+
+        if (axiosError.response) {
+          const axiosErrorData = axiosError.response
+            .data as AxiosErrorResponseData;
+          message = axiosErrorData.error;
+        }
+
+        dispatch(hideLoadingActionCreator());
+
+        showFeedback(message, "error");
       }
-
-      const token = await user.getIdToken();
-
-      const { data: apiRecords } = await axios.get<{ records: RecordApi[] }>(
-        "/records",
-        { headers: { Authorization: `Bearer ${token}` } },
-      );
-
-      const records = apiRecords.records.map<Record>(({ _id, ...records }) => ({
-        ...records,
-        id: _id,
-      }));
-
-      dispatch(hideLoadingActionCreator());
-
-      return records;
-    } catch (error: unknown) {
-      const axiosError = error as AxiosError;
-      let message = "Couldn't load records";
-
-      if (axiosError.response) {
-        const axiosErrorData = axiosError.response
-          .data as AxiosErrorResponseData;
-        message = axiosErrorData.error;
-      }
-
-      dispatch(hideLoadingActionCreator());
-
-      showFeedback(message, "error");
-    }
-  }, [dispatch, user]);
+    },
+    [dispatch, user],
+  );
 
   const deleteRecord = async (id: string) => {
     dispatch(showLoadingActionCreator());
