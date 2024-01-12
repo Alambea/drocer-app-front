@@ -11,6 +11,7 @@ describe("Given a recordsReducer reducer", () => {
     test("Then it should return a new state with a record 'LP1'", () => {
       const currentRecordsState: RecordsState = {
         records: recordsMock,
+        recordCount: recordsMock.length,
       };
       const selectedRecord: Record = recordMock;
 

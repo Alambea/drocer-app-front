@@ -17,6 +17,7 @@ export interface RecordApi extends Omit<Record, "id"> {
 
 export interface RecordsApi {
   records: RecordApi[];
+  count: string;
 }
 
 export interface AxiosErrorResponseData {

@@ -4,6 +4,7 @@ import { Record } from "../../types";
 
 const initialRecordsState: RecordsState = {
   records: [],
+  recordCount: 0,
 };
 
 export const recordsSlice = createSlice({
@@ -16,6 +17,14 @@ export const recordsSlice = createSlice({
     ): RecordsState => ({
       ...currentRecordState,
       records: action.payload,
+    }),
+
+    loadRecordCount: (
+      currentRecordState: RecordsState,
+      action: PayloadAction<number>,
+    ): RecordsState => ({
+      ...currentRecordState,
+      recordCount: action.payload,
     }),
 
     deleteRecord: (
@@ -60,6 +69,7 @@ export const recordsSlice = createSlice({
 export const recordsReducer = recordsSlice.reducer;
 export const {
   loadRecords: loadRecordsActionCreator,
+  loadRecordCount: loadRecordCountActionCreator,
   deleteRecord: deleteRecordActionCreator,
   addRecord: addRecordActionCreator,
   loadSelectedRecord: loadSelectedRecordActionCreator,

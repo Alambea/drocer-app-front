@@ -8,6 +8,7 @@ describe("Given a recordsSlice reducer", () => {
     test("Then it should return a new state with the rating property from de modified record updated", () => {
       const currentRecordsState: RecordsState = {
         records: recordsMock,
+        recordCount: recordsMock.length,
       };
       const modifiedRecord: Record = { ...recordsMock[0], rating: 3 };
 

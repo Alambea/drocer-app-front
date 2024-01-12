@@ -8,7 +8,9 @@ import RecordsList from "./RecordsList";
 describe("Given a RecordList component", () => {
   describe("When it is rendered", () => {
     test("Then it should show an 'IRadiohead' and 'Portishead' heading", () => {
-      const store = setupStore({ recordsState: { records: recordsMock } });
+      const store = setupStore({
+        recordsState: { records: recordsMock, recordCount: recordsMock.length },
+      });
 
       render(
         <Provider store={store}>

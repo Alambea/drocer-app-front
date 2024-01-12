@@ -11,7 +11,9 @@ describe("Given a AddRecordPage page", () => {
     test("Then it should show a heading 'Add a new record'", async () => {
       const expectedTitle = "Add a new record";
 
-      const store = setupStore({ recordsState: { records: recordsMock } });
+      const store = setupStore({
+        recordsState: { records: recordsMock, recordCount: recordsMock.length },
+      });
 
       render(
         <Provider store={store}>

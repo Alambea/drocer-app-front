@@ -10,7 +10,9 @@ import * as utils from "../../utils/showFeedback";
 describe("Given a getRecords function", () => {
   describe("When it's called and there's no user", () => {
     const wrapper = ({ children }: PropsWithChildren): React.ReactElement => {
-      const store = setupStore({ recordsState: { records: recordsMock } });
+      const store = setupStore({
+        recordsState: { records: recordsMock, recordCount: recordsMock.length },
+      });
 
       return (
         <BrowserRouter>
@@ -23,6 +25,8 @@ describe("Given a getRecords function", () => {
       const expectedErrorMessage = "Couldn't load records";
       const expectedErrorType = "error";
 
+      const limit = recordsMock.length;
+
       const spyShowFeedback = vitest.spyOn(utils, "showFeedback");
 
       const {
@@ -31,7 +35,7 @@ describe("Given a getRecords function", () => {
         },
       } = renderHook(() => useRecordsApi(), { wrapper });
 
-      await getRecords();
+      await getRecords(limit);
 
       expect(spyShowFeedback).toHaveBeenCalledWith(
         expectedErrorMessage,
