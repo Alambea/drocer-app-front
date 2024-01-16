@@ -7,6 +7,7 @@
   justify-content: center;
   height: 48px;
   width: 100%;
+  min-width: 280px;
   margin-bottom: 30px;
 
   &__previous-page {
@@ -18,7 +19,7 @@
   }
 
   &__previous-page:hover {
-    border: 1px solid rgba(colors.$font-color-text-light, 0.1);
+    background-color: rgba(colors.$color-primary-light, 0.1);
   }
 
   &__next-page {
@@ -30,7 +31,7 @@
   }
 
   &__next-page:hover {
-    border: 1px solid rgba(colors.$font-color-text-light, 0.1);
+    background-color: rgba(colors.$color-primary-light, 0.1);
   }
 
   &__previous-page::before {
@@ -46,10 +47,6 @@
   &__pages-list {
     display: flex;
     flex-direction: row;
-
-    @media only screen and (max-width: 700px) {
-      display: none;
-    }
   }
 
   &__page {
@@ -61,7 +58,16 @@
     border-radius: 4px;
 
     :hover {
-      border: 1px solid rgba(colors.$font-color-text-light, 0.1);
+      background-color: rgba(colors.$color-primary-light, 0.1);
+    }
+  }
+
+  @media only screen and (max-width: 619px) {
+    justify-content: space-between;
+    max-width: 305px;
+
+    &__page {
+      display: none;
     }
   }
 }
