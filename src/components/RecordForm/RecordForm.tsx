@@ -181,11 +181,7 @@ const RecordForm = ({
           aria-required="true"
         />
       </div>
-      <Button
-        className="record-form__button"
-        type="submit"
-        disabled={!canSubmit}
-      >
+      <Button className="solid-light-wide" type="submit" disabled={!canSubmit}>
         {recordToUpdate ? "Modify" : "Add"}
       </Button>
     </form>

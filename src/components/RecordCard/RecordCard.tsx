@@ -70,7 +70,7 @@ const RecordCard = ({
           Modify
         </Link>
         <Button
-          className="record__delete-button"
+          className="solid-light"
           actionOnClick={() => {
             deleteRecordById(id);
           }}
