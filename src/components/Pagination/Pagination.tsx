@@ -1,5 +1,4 @@
-import { Link } from "react-router-dom";
-import { paths } from "../../routers/paths";
+import { Link, useLocation, useSearchParams } from "react-router-dom";
 import { useAppSelector } from "../../store";
 import "./Pagination.scss";
 
@@ -9,7 +8,23 @@ interface PaginationProps {
 }
 
 const Pagination = ({ currentPage, limitPerPage }: PaginationProps) => {
+  const { pathname } = useLocation();
   const recordCount = useAppSelector((state) => state.recordsState.recordCount);
+
+  const [searchParams] = useSearchParams();
+
+  const setUrl = (selectedPage: number) => {
+    if (searchParams.has("page")) {
+      searchParams.delete("page");
+    }
+
+    const urlParamsWithoutPage = searchParams.toString();
+    const urlParamsWithPage = `${
+      urlParamsWithoutPage ? urlParamsWithoutPage + "&" : ""
+    }page=${selectedPage}`;
+
+    return urlParamsWithPage;
+  };
 
   const nextPage = currentPage ? +currentPage + 1 : 1;
   const previousPage = currentPage ? +currentPage - 1 : 1;
@@ -21,8 +36,8 @@ const Pagination = ({ currentPage, limitPerPage }: PaginationProps) => {
       {previousPage >= initialPage && (
         <Link
           to={{
-            pathname: paths.records,
-            search: `page=${previousPage}`,
+            pathname: pathname,
+            search: setUrl(previousPage),
           }}
           className="pagination__previous-page"
         >
@@ -30,41 +45,42 @@ const Pagination = ({ currentPage, limitPerPage }: PaginationProps) => {
         </Link>
       )}
       <ul className="pagination__pages-list">
-        {[...Array(maxPages)].map((_page, pageIndex) => {
-          const pageNumber = pageIndex + 1;
-          const pageId = `page${pageNumber}`;
+        {maxPages > 1 &&
+          [...Array(maxPages)].map((_page, pageIndex) => {
+            const pageNumber = pageIndex + 1;
+            const pageId = `page${pageNumber}`;
 
-          return (
-            <li
-              key={pageId}
-              className={`pagination__page${
-                pageNumber === +currentPage ? "--active" : ""
-              }`}
-            >
-              <Link
-                to={{
-                  pathname: paths.records,
-                  search: `page=${pageNumber}`,
-                }}
+            return (
+              <li
+                key={pageId}
                 className={`pagination__page${
-                  pageNumber === +currentPage ? " current" : " visuallyhidden"
+                  pageNumber === +currentPage ? "--active" : ""
                 }`}
-                aria-label={`Go to Page ${pageNumber}`}
-                {...(pageNumber === +currentPage && {
-                  "aria-current": "page",
-                })}
               >
-                {pageNumber}
-              </Link>
-            </li>
-          );
-        })}
+                <Link
+                  to={{
+                    pathname: pathname,
+                    search: setUrl(pageNumber),
+                  }}
+                  className={`pagination__page${
+                    pageNumber === +currentPage ? " current" : " visuallyhidden"
+                  }`}
+                  aria-label={`Go to Page ${pageNumber}`}
+                  {...(pageNumber === +currentPage && {
+                    "aria-current": "page",
+                  })}
+                >
+                  {pageNumber}
+                </Link>
+              </li>
+            );
+          })}
       </ul>
       {nextPage <= maxPages && (
         <Link
           to={{
-            pathname: paths.records,
-            search: `page=${nextPage}`,
+            pathname: pathname,
+            search: setUrl(nextPage),
           }}
           className="pagination__next-page"
         >

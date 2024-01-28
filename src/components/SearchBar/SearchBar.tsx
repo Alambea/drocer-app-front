@@ -1,15 +1,43 @@
-import React from "react";
+import React, { useState } from "react";
 import Button from "../Button/Button";
 import "./SearchBar.scss";
 
-const SearchBar = (): React.ReactElement => {
+interface SearchBarProps {
+  actionOnSubmit: (updatedSearch: string) => void;
+  currentQuery?: string;
+}
+
+const SearchBar = ({
+  actionOnSubmit,
+  currentQuery,
+}: SearchBarProps): React.ReactElement => {
+  const initialQuery = currentQuery ?? "";
+
+  const [updatedSearch, setUpdatedSearch] = useState<string>(initialQuery);
+
+  const updateSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setUpdatedSearch(() => event.target.value);
+  };
+
+  const submit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    actionOnSubmit(updatedSearch);
+  };
+
   return (
     <search className="search-bar">
-      <form className="search-bar__form">
+      <form className="search-bar__form" onSubmit={submit}>
         <label htmlFor="query" className="search-bar__label">
           Search
         </label>
-        <input type="search" id="query" className="search-bar__input" />
+        <input
+          type="search"
+          id="query"
+          className="search-bar__input"
+          value={updatedSearch}
+          onChange={updateSearch}
+        />
         <Button className="icon search-bar__button" type="submit">
           <img
             src="/images/search_icon.svg"

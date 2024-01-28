@@ -5,4 +5,5 @@ export interface PathStructure {
   detail: string;
   modify: string;
   modifyRecord: string;
+  search: string;
 }

@@ -7,4 +7,5 @@ export const paths: PathsStructure = {
   detail: "/records/:id",
   modify: "/records/modify",
   modifyRecord: "/records/modify/:id",
+  search: "/search",
 };
