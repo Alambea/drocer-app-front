@@ -27,7 +27,7 @@ const HomePage = (): React.ReactElement => {
         <p className="sign-in__text">
           Select a sign in method to access to your favorite records
         </p>
-        <Button className="sign-in__button" actionOnClick={loginWithGoogle}>
+        <Button className="solid-dark" actionOnClick={loginWithGoogle}>
           <span className="sign-in__button-content">
             <img
               src="/images/google_icon.svg"
@@ -39,7 +39,7 @@ const HomePage = (): React.ReactElement => {
             {"Sign in with Google"}
           </span>
         </Button>
-        <Button className="sign-in__button" actionOnClick={loginWithGitHub}>
+        <Button className="solid-dark" actionOnClick={loginWithGitHub}>
           <span className="sign-in__button-content">
             <img
               src="/images/github_icon.svg"

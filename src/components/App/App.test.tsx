@@ -1,4 +1,3 @@
-import React from "react";
 import { render, screen } from "@testing-library/react";
 import { BrowserRouter, MemoryRouter } from "react-router-dom";
 import userEvent from "@testing-library/user-event";
@@ -19,7 +18,10 @@ import App from "./App";
 import { paths } from "../../routers/paths";
 import { setupStore } from "../../store";
 import {
+  oceanRecordMock,
+  portisheadRecordMock,
   radioheadRecordApiMock,
+  radioheadRecordMock,
   recordMock,
   recordsMock,
 } from "../../mocks/recordsMock";
@@ -191,6 +193,67 @@ describe("Given an App component", () => {
       });
     });
 
+    describe("And the path is '/records/search?query=head", () => {
+      test("Then it should show two headings 'Radiohead' and 'Portishead' and not show 'The Ocean'", async () => {
+        const textToSearch = "head";
+        const searchButtonAlt = "Magnifying glass icon";
+
+        // const initialPath = `${paths.records}/search?query=${textToSearch}`;
+        const initialPath = `${paths.records}`;
+        const recordsToShow = [radioheadRecordMock, portisheadRecordMock];
+        const recordsToNotShow = oceanRecordMock;
+
+        const user: Partial<User> = {
+          getIdToken: vi.fn().mockResolvedValue("token"),
+        };
+
+        const idTokenHookMock: Partial<IdTokenHook> = [user as User];
+        const authStateHookMock: Partial<AuthStateHook> = [user as User];
+
+        authHook.useIdToken = vi.fn().mockReturnValue(idTokenHookMock);
+        authHook.useAuthState = vi.fn().mockReturnValue(authStateHookMock);
+
+        const store = setupStore({
+          recordsState: {
+            records: recordsMock,
+            recordCount: recordsMock.length,
+          },
+        });
+
+        render(
+          <Provider store={store}>
+            <MemoryRouter initialEntries={[initialPath]}>
+              <App />
+            </MemoryRouter>
+          </Provider>,
+        );
+
+        const searchInput = await screen.findByLabelText("Search");
+
+        await userEvent.type(searchInput, textToSearch);
+
+        const searchButton = screen.getByRole("button", {
+          name: searchButtonAlt,
+        });
+
+        await userEvent.click(searchButton);
+
+        const heading = await screen.queryByRole("heading", {
+          name: recordsToNotShow.artist,
+        });
+
+        recordsToShow.forEach((recodToShow) => {
+          const heading = screen.getByRole("heading", {
+            name: recodToShow.artist,
+          });
+
+          expect(heading).toBeInTheDocument();
+        });
+
+        expect(heading).not.toBeInTheDocument();
+      });
+    });
+
     describe("And the path is '/add-new-record' and the user types 'FKA Twigs', 'LP1', 2014, 4, 'LP1 is the debut studio...', '40:46', 'Young Turks', 'Avant-pop, electronic, art pop R&B, trip hop' and 'http://example.com/image.png' on each input and clicks on the 'Add' button it should be enabled", () => {
       test("Then it should show a heading 'Records'", async () => {
         const initialPath = paths.addRecord;
@@ -236,9 +299,7 @@ describe("Given an App component", () => {
         render(
           <Provider store={store}>
             <MemoryRouter initialEntries={[initialPath]}>
-              <React.Suspense>
-                <App />
-              </React.Suspense>
+              <App />
             </MemoryRouter>
           </Provider>,
         );

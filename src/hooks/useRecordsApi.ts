@@ -21,7 +21,7 @@ const useRecordsApi = () => {
   const [user] = useIdToken(auth);
 
   const getRecords = useCallback(
-    async (limit: number, offset?: number) => {
+    async (limit: number, offset?: number, query?: string) => {
       dispatch(showLoadingActionCreator());
 
       try {
@@ -36,7 +36,7 @@ const useRecordsApi = () => {
           count: string;
         }>("/records", {
           headers: { Authorization: `Bearer ${token}` },
-          params: { limit, offset },
+          params: { limit, offset, query },
         });
 
         const records = apiRecords.records.map<Record>(

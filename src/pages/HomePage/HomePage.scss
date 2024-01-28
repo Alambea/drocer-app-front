@@ -24,22 +24,9 @@
     line-height: 19.5px;
   }
 
-  &__button {
-    width: 100%;
-    max-width: 220px;
-    height: 48px;
-    background-color: colors.$color-primary;
-    border-radius: 4px;
-    color: colors.$color-main-background;
-    font-size: utils.pxToRem(18);
-    font-weight: 500;
-    line-height: 28.6px;
-    padding: 0px 15px;
-
-    &-content {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
+  &__button-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
 }

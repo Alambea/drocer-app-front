@@ -1,22 +1,25 @@
 import { useEffect } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { Helmet } from "react-helmet";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import ExtraInformation from "../../components/ExtraInformation/ExtraInformation";
+import Pagination from "../../components/Pagination/Pagination";
 import RecordsList from "../../components/RecordList/RecordsList";
+import SearchBar from "../../components/SearchBar/SearchBar";
 import { auth } from "../../firebase";
 import useRecordsApi from "../../hooks/useRecordsApi";
+import { paths } from "../../routers/paths";
 import { useAppDispatch, useAppSelector } from "../../store";
 import {
   loadRecordCountActionCreator,
   loadRecordsActionCreator,
 } from "../../store/records/recordsSlice";
 import { preloadImage } from "../../utils/preloadImage";
-import { useSearchParams } from "react-router-dom";
-import Pagination from "../../components/Pagination/Pagination";
 import "./RecordsListPage.scss";
 
 const RecordsListPage = (): React.ReactElement => {
   const [user, isLoadingAuth] = useAuthState(auth);
+  const navigate = useNavigate();
   const isLoadingUi = useAppSelector((state) => state.uiState.isLoading);
   const records = useAppSelector((state) => state.recordsState.records);
   const recordCount = useAppSelector((state) => state.recordsState.recordCount);
@@ -25,6 +28,7 @@ const RecordsListPage = (): React.ReactElement => {
 
   const [searchParams] = useSearchParams();
   let currentPage = searchParams.get("page");
+  const currentQuery = searchParams.get("query") ?? "";
 
   const hasRecords = records.length > 0;
   const noRecordsFoundText =
@@ -41,7 +45,11 @@ const RecordsListPage = (): React.ReactElement => {
       (async () => {
         const offset = (+currentPage - 1) * limitPerPage;
 
-        const recordsData = await getRecords(limitPerPage, offset);
+        const recordsData = await getRecords(
+          limitPerPage,
+          offset,
+          currentQuery,
+        );
 
         if (recordsData?.records && recordsData.records.length > 0) {
           dispatch(loadRecordsActionCreator(recordsData.records));
@@ -51,7 +59,14 @@ const RecordsListPage = (): React.ReactElement => {
         }
       })();
     }
-  }, [currentPage, dispatch, getRecords, user]);
+  }, [currentPage, dispatch, getRecords, user, currentQuery]);
+
+  const handleSearch = async (querySearch: string) => {
+    navigate({
+      pathname: paths.records + paths.search,
+      search: `query=${querySearch}`,
+    });
+  };
 
   return (
     <>
@@ -63,6 +78,13 @@ const RecordsListPage = (): React.ReactElement => {
         ? !isLoadingAuth && (
             <>
               <h1 className="records-page__title">Records</h1>
+              {user && (
+                <SearchBar
+                  actionOnSubmit={handleSearch}
+                  currentQuery={currentQuery}
+                />
+              )}
+
               <RecordsList />
               <Pagination
                 currentPage={currentPage}

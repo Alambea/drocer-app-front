@@ -1,0 +1,55 @@
+@use "../../styles/variables/colors";
+@use "../../styles/utils";
+
+.button {
+  &--icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    min-width: 44px;
+    background-color: rgba(colors.$color-primary-light, 0.1);
+    border-radius: 3px;
+  }
+
+  &--solid-light {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 49%;
+    height: 100%;
+    background-color: #fff;
+    border-radius: 3px;
+  }
+
+  &--solid-light-wide {
+    width: 157px;
+    height: 48px;
+    margin-top: 75px;
+    margin-bottom: 12px;
+    background-color: colors.$color-primary;
+    border-radius: 4px;
+    color: colors.$color-main-background;
+    font-size: utils.pxToRem(22);
+    font-weight: 500;
+    line-height: 28.6px;
+  }
+
+  &--solid-dark {
+    width: 100%;
+    max-width: 220px;
+    height: 48px;
+    background-color: colors.$color-primary;
+    border-radius: 4px;
+    color: colors.$color-main-background;
+    font-size: utils.pxToRem(18);
+    font-weight: 500;
+    line-height: 28.6px;
+    padding: 0px 15px;
+  }
+
+  :disabled {
+    cursor: default;
+    background-color: colors.$font-color-text-light;
+  }
+}

@@ -1,4 +1,5 @@
 import { ButtonHTMLAttributes } from "react";
+import "./Button.scss";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   className?: string;
@@ -14,7 +15,7 @@ const Button = ({
 }: ButtonProps): React.ReactElement => {
   return (
     <button
-      className={`button ${className}`}
+      className={`button button--${className}`}
       disabled={disabled}
       onClick={actionOnClick}
     >

@@ -34,16 +34,19 @@ const App = (): React.ReactElement => {
             </ProtectedRoute>
           }
         />
-        <Route
-          path={paths.records}
-          element={
-            <ProtectedRoute destinationPath={paths.records}>
-              <Suspense>
-                <LazyRecordsListPage />
-              </Suspense>
-            </ProtectedRoute>
-          }
-        />
+        {[paths.records, paths.records + paths.search].map((path) => (
+          <Route
+            path={path}
+            element={
+              <ProtectedRoute destinationPath={path}>
+                <Suspense>
+                  <LazyRecordsListPage />
+                </Suspense>
+              </ProtectedRoute>
+            }
+            key={path}
+          />
+        ))}
         <Route
           path={paths.addRecord}
           element={

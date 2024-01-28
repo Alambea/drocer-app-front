@@ -104,6 +104,17 @@ export const recordsApiMock: RecordsApi = {
   count: "4",
 };
 
+export const filteredRecordsApiMock: RecordsApi = {
+  records: [
+    { ...radioheadRecordMock, _id: recordIdMock },
+    {
+      ...portisheadRecordMock,
+      _id: "1o8c9c6a5c621a08508d598y",
+    },
+  ],
+  count: "2",
+};
+
 export const modifiedRecordsApiMock: RecordsApi = {
   records: [
     { ...radioheadRecordMock, _id: recordIdMock, artist: "Another Artist" },

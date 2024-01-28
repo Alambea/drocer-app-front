@@ -9,6 +9,7 @@
   width: 100%;
   min-width: 280px;
   margin-bottom: 30px;
+  gap: 10px;
 
   &__previous-page {
     display: flex;
@@ -47,6 +48,7 @@
   &__pages-list {
     display: flex;
     flex-direction: row;
+    gap: 5px;
   }
 
   &__page {
