@@ -34,7 +34,7 @@ const App = (): React.ReactElement => {
             </ProtectedRoute>
           }
         />
-        {[paths.records, paths.records + paths.search].map((path, index) => (
+        {[paths.records, paths.records + paths.search].map((path) => (
           <Route
             path={path}
             element={
@@ -44,7 +44,7 @@ const App = (): React.ReactElement => {
                 </Suspense>
               </ProtectedRoute>
             }
-            key={index + path}
+            key={path}
           />
         ))}
         <Route

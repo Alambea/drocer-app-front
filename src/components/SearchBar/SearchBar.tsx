@@ -26,28 +26,26 @@ const SearchBar = ({
   };
 
   return (
-    <search className="search-bar">
-      <form className="search-bar__form" onSubmit={submit}>
-        <label htmlFor="query" className="search-bar__label">
-          Search
-        </label>
-        <input
-          type="search"
-          id="query"
-          className="search-bar__input"
-          value={updatedSearch}
-          onChange={updateSearch}
+    <form className="search-bar" onSubmit={submit}>
+      <label htmlFor="query" className="search-bar__label">
+        Search
+      </label>
+      <input
+        type="search"
+        id="query"
+        className="search-bar__input"
+        value={updatedSearch}
+        onChange={updateSearch}
+      />
+      <Button className="icon search-bar__button" type="submit">
+        <img
+          src="/images/search_icon.svg"
+          alt="Magnifying glass icon"
+          width="20"
+          height="20"
         />
-        <Button className="icon search-bar__button" type="submit">
-          <img
-            src="/images/search_icon.svg"
-            alt="Magnifying glass icon"
-            width="20"
-            height="20"
-          />
-        </Button>
-      </form>
-    </search>
+      </Button>
+    </form>
   );
 };
 

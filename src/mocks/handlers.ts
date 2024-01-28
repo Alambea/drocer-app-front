@@ -1,5 +1,6 @@
 import { rest } from "msw";
 import {
+  filteredRecordsApiMock,
   fkaRatedRecordApiMock,
   fkaRecordApiMock,
   modifiedRecordsApiMock,
@@ -10,9 +11,18 @@ import {
 const urlApi = import.meta.env.VITE_API_URL;
 
 export const handlers = [
-  rest.get(`${urlApi}/records`, (_req, res, ctx) =>
-    res(ctx.status(200), ctx.json(recordsApiMock)),
-  ),
+  rest.get(`${urlApi}/records`, (req, res, ctx) => {
+    let recordsToRespond = recordsApiMock;
+
+    const url = new URL(req.url);
+    const queryParam = url.searchParams.get("query");
+
+    if (queryParam) {
+      recordsToRespond = filteredRecordsApiMock;
+    }
+
+    return res(ctx.status(200), ctx.json(recordsToRespond));
+  }),
 
   rest.delete(`${urlApi}/records/:id`, (_req, res, ctx) =>
     res(ctx.status(200), ctx.json({ message: "Record deleted successfully" })),

@@ -3,7 +3,18 @@ import Pagination from "./Pagination";
 import { Provider } from "react-redux";
 import { recordsMock } from "../../mocks/recordsMock";
 import { setupStore } from "../../store";
-import { BrowserRouter } from "react-router-dom";
+import reactRouterDom, { BrowserRouter } from "react-router-dom";
+
+const useSearchParamsMockWithQuery: Partial<URLSearchParams> = {
+  has: vi.fn().mockReturnValue(true),
+  delete: vi.fn(),
+  toString: vi.fn().mockReturnValue("query=head"),
+};
+const useSearchParamsMockWithoutQuery: Partial<URLSearchParams> = {
+  has: vi.fn().mockReturnValue(true),
+  delete: vi.fn(),
+  toString: vi.fn().mockReturnValue(""),
+};
 
 describe("Given a Pagination component", () => {
   describe("When it is rendered receives an empty string as a currentPage and a limitPerPage 4 and there're 4 records in the store", () => {
@@ -17,6 +28,10 @@ describe("Given a Pagination component", () => {
         recordsState: { records: recordsMock, recordCount: recordsMock.length },
       });
 
+      reactRouterDom.useSearchParams = vi
+        .fn()
+        .mockReturnValue([{ ...useSearchParamsMockWithQuery }]);
+
       render(
         <BrowserRouter>
           <Provider store={store}>
@@ -29,7 +44,7 @@ describe("Given a Pagination component", () => {
       const previousLink = screen.getByRole("link", {
         name: expectedPreviousLink,
       });
-
+      screen.debug();
       expect(nextLink).toBeInTheDocument();
       expect(previousLink).toBeInTheDocument();
     });
@@ -45,6 +60,10 @@ describe("Given a Pagination component", () => {
       const store = setupStore({
         recordsState: { records: recordsMock, recordCount: recordsMock.length },
       });
+
+      reactRouterDom.useSearchParams = vi
+        .fn()
+        .mockReturnValue([{ ...useSearchParamsMockWithoutQuery }]);
 
       render(
         <BrowserRouter>

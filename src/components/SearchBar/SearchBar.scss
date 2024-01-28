@@ -1,14 +1,11 @@
 @use "../../styles/variables/colors";
 
 .search-bar {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
   height: 44px;
   margin-bottom: 30px;
-
-  &__form {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-end;
-  }
 
   &__label {
     font-weight: 600;
